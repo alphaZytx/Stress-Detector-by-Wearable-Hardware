@@ -1,0 +1,74 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.vite/
+.vite/
+*.log
+npm-debug.log*
+*.tsbuildinfo
+
+# Data - DO NOT COMMIT (large + redistribution-restricted)
+data/raw/WESAD/
+data/raw/wesad/
+data/wesad/
+data/interim/*.parquet
+data/features/*.parquet
+*.pkl
+*.sqlite
+*.sqlite3
+*.db
+
+# Keep these (small, needed for demo)
+!data/raw/baseline.csv
+!data/raw/stress.csv
+!data/raw/motion_artifact.csv
+!data/demo/canned_session.json
+!data/models/*.joblib
+
+# Environment + secrets
+.env
+.env.local
+.env.production
+*.key
+secrets/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build artifacts
+reports/figures/*.png.tmp
+*.pdf.tmp
+
+# Claude / AI tooling
+.claude/
+.aider*
+
+# Internal / personal docs - not for the public repo
+CLAUDE.md
+HANDOFF.md
+docs/TEAMMATE_HANDOFF.md
+docs/TEAMMATE_HANDOFF.pdf
+*.pdf
+
+# Personal recorded-session dumps (may contain user data)
+reports/sessions/

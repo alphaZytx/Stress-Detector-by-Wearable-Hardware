@@ -1,0 +1,200 @@
+/*
+ * Design tokens - the single source of truth for the dashboard's visual system.
+ *
+ * AESTHETIC: "Neo-Brutalist" (2026-06-19 redesign, anti-AI-slop).
+ *   Flat blocks of color, NO gradients/glass/blur. Thick 2px ink borders, sharp
+ *   corners, hard OFFSET shadows (e.g. 4px 4px 0 0 ink) that snap on press.
+ *   Bold Space Grotesk display + monospace labels. Engineering-grid paper
+ *   background. Confident, raw, intentional - the opposite of soft AI gradients.
+ *
+ * The historical token *names* (--clinical-*, --wellness-*) are RETAINED for
+ * compatibility but now describe ONE flat brutalist palette.
+ *
+ * Stress-state colors (consistent everywhere):
+ *   calm/baseline → green   (--clinical-success)
+ *   moderate      → orange  (--clinical-warning)
+ *   high          → red      (--clinical-danger)
+ */
+
+:root {
+  /* ---- typography ---- */
+  --font-display: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Monaco, monospace;
+  --tracking-tight: -0.02em;
+  --tracking-label: 0.12em;
+
+  /* ---- radii: sharp. brutalist surfaces are square. ---- */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 2px;
+
+  /* ---- spacing scale (4px base) ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ---- motion (snappy, not floaty) ---- */
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --ease-breath: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 120ms;
+  --dur-base: 180ms;
+  --dur-slow: 400ms;
+
+  /* ===================== BRUTALIST - LIGHT ===================== */
+  --brut-ink: #111111;
+
+  --clinical-bg: #f3f1ea;
+  /* engineering-grid paper */
+  --clinical-bg-grad:
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(17, 17, 17, 0.05) 31px 32px),
+    repeating-linear-gradient(90deg, transparent 0 31px, rgba(17, 17, 17, 0.05) 31px 32px);
+  --clinical-surface: #ffffff;
+  --clinical-surface-2: #ece9df;
+  /* flat fills - no gradients */
+  --clinical-surface-grad: #ffffff;
+  --clinical-surface-raised: #ffffff;
+  --clinical-border: #111111;
+  --clinical-border-strong: #111111;
+  --clinical-text: #111111;
+  --clinical-muted: #44423b;
+  --clinical-faint: #6f6c63;
+  --clinical-accent: #0047ff;
+  --clinical-accent-2: #0047ff;
+  --clinical-accent-grad: #0047ff; /* flat */
+  --clinical-accent-soft: #dfe6ff;
+  --clinical-success: #00935a; /* green - calm */
+  --clinical-warning: #ff7a00; /* orange - moderate */
+  --clinical-danger: #e5102e; /* red - high */
+
+  /* hard OFFSET shadows - the brutalist signature */
+  --ring-highlight: 0 0 0 0 transparent;
+  --glass-highlight: 0 0 0 0 transparent;
+  --shadow-sm: 2px 2px 0 0 var(--brut-ink);
+  --shadow-card: 4px 4px 0 0 var(--brut-ink);
+  --shadow-md: 6px 6px 0 0 var(--brut-ink);
+  --shadow-lg: 8px 8px 0 0 var(--brut-ink);
+  --shadow-float: 10px 10px 0 0 var(--brut-ink);
+
+  /* ===================== WELLNESS (same flat palette) - LIGHT ===================== */
+  --wellness-bg: #f3f1ea;
+  --wellness-bg-grad:
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(17, 17, 17, 0.05) 31px 32px),
+    repeating-linear-gradient(90deg, transparent 0 31px, rgba(17, 17, 17, 0.05) 31px 32px);
+  --wellness-surface: #ffffff;
+  --wellness-surface-glass: #ffffff;
+  --wellness-text: #111111;
+  --wellness-muted: #44423b;
+  --wellness-faint: #6f6c63;
+  --wellness-accent: #0047ff;
+  --wellness-accent-2: #00935a;
+  --wellness-accent-3: #ff7a00;
+  --wellness-accent-grad: #0047ff;
+  --wellness-glow: transparent;
+  --wellness-glow-strong: transparent;
+}
+
+/*
+ * ===================== DARK - "QUIET DARK" =====================
+ *
+ * Dark mode is deliberately NOT an inverted brutalism. Inverting that system
+ * put pure-white 2px borders on near-black (glare on every edge, the brightest
+ * pixels landing on the least important element) and kept hard BLACK offset
+ * shadows, which are invisible on a black canvas - so the elevation system
+ * silently vanished and every surface read as one flat plane.
+ *
+ * Instead: a calm, low-glare instrument panel.
+ *   - Canvas is a deep blue-slate (#0e1116), not pure black - pure black against
+ *     bright text maximises halation/eye strain on LCD/OLED.
+ *   - Depth comes from LAYERED SURFACES (bg → surface → surface-2) plus soft
+ *     ambient shadows and a 1px inset top highlight, not from borders.
+ *   - Borders are hairline white at 8–16% alpha: they separate, they don't shout.
+ *   - Corners soften (radii > 0) and accents are desaturated so they sit on the
+ *     dark ground instead of vibrating against it.
+ *
+ * Light mode keeps the brutalist system untouched. Structural dark overrides
+ * (border width, radii, surface treatment) live in index.css.
+ */
+[data-theme="dark"] {
+  --brut-ink: #000000;
+
+  /* ---- radii: soft in dark. sharp corners + hairlines read as unfinished. ---- */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 14px;
+  --radius-2xl: 16px;
+
+  /* ---- canvas ---- */
+  --clinical-bg: #0e1116;
+  /* Barely-there grid + a soft overhead wash so the plane has a light source. */
+  --clinical-bg-grad:
+    radial-gradient(1200px 600px at 50% -10%, rgba(91, 140, 255, 0.07), transparent 70%),
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(255, 255, 255, 0.018) 31px 32px),
+    repeating-linear-gradient(90deg, transparent 0 31px, rgba(255, 255, 255, 0.018) 31px 32px);
+
+  /* ---- layered surfaces: each step ~+4% lightness ---- */
+  --clinical-surface: #151a21;
+  /* Also the "empty track" fill for the dial arc, sliders and progress rings -
+   * kept a step lighter than a pure surface step so an unfilled track stays
+   * legible against the raised card it sits on. */
+  --clinical-surface-2: #262e3a;
+  --clinical-surface-grad: #151a21;
+  --clinical-surface-raised: #191f27;
+
+  /* ---- hairline borders, not ink slabs ---- */
+  --clinical-border: rgba(255, 255, 255, 0.09);
+  --clinical-border-strong: rgba(255, 255, 255, 0.17);
+
+  /* ---- type: off-white, never #fff (pure white on dark over-contrasts) ---- */
+  --clinical-text: #e7ecf3;
+  --clinical-muted: #9aa5b4;
+  --clinical-faint: #6d7788;
+
+  /* ---- accents: desaturated so they don't buzz on the dark ground ---- */
+  --clinical-accent: #5b8cff;
+  --clinical-accent-2: #7aa2ff;
+  --clinical-accent-grad: #5b8cff;
+  --clinical-accent-soft: #18243d;
+  --clinical-success: #3ecf8e; /* calm */
+  --clinical-warning: #f0a43a; /* moderate */
+  --clinical-danger: #f2686f; /* high */
+
+  /* ---- elevation: soft ambient shadow + inset top highlight ---- */
+  --ring-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-card:
+    0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px -14px rgba(0, 0, 0, 0.7);
+  --shadow-md:
+    0 2px 6px rgba(0, 0, 0, 0.4), 0 16px 34px -18px rgba(0, 0, 0, 0.75);
+  --shadow-lg:
+    0 4px 12px rgba(0, 0, 0, 0.45), 0 26px 56px -22px rgba(0, 0, 0, 0.8);
+  --shadow-float:
+    0 8px 20px rgba(0, 0, 0, 0.5), 0 44px 84px -28px rgba(0, 0, 0, 0.85);
+
+  /* ===================== WELLNESS (same quiet palette) - DARK ===================== */
+  --wellness-bg: #0e1116;
+  --wellness-bg-grad:
+    radial-gradient(1200px 600px at 50% -10%, rgba(91, 140, 255, 0.07), transparent 70%),
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(255, 255, 255, 0.018) 31px 32px),
+    repeating-linear-gradient(90deg, transparent 0 31px, rgba(255, 255, 255, 0.018) 31px 32px);
+  --wellness-surface: #151a21;
+  --wellness-surface-glass: rgba(24, 30, 39, 0.72);
+  --wellness-text: #e7ecf3;
+  --wellness-muted: #9aa5b4;
+  --wellness-faint: #6d7788;
+  --wellness-accent: #5b8cff;
+  --wellness-accent-2: #3ecf8e;
+  --wellness-accent-3: #f0a43a;
+  --wellness-accent-grad: #5b8cff;
+  --wellness-glow: rgba(91, 140, 255, 0.16);
+  --wellness-glow-strong: rgba(91, 140, 255, 0.26);
+}

@@ -1,0 +1,2712 @@
+{
+  "session_id": "DEMO",
+  "duration_s": 180,
+  "events": [
+    {
+      "t_s": 0,
+      "phase": "baseline",
+      "narration": "Resting state."
+    },
+    {
+      "t_s": 60,
+      "phase": "stress",
+      "narration": "Cognitive stress task begins."
+    },
+    {
+      "t_s": 135,
+      "phase": "breathing",
+      "narration": "Breathing exercise - recovery."
+    },
+    {
+      "t_s": 165,
+      "phase": "baseline",
+      "narration": "Returned to baseline."
+    }
+  ],
+  "samples": [
+    {
+      "timestamp_ms": 0,
+      "bpm": 63.7,
+      "avg_bpm": 70.0,
+      "temp_c": 34.19,
+      "gsr": 112.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 1000,
+      "bpm": 62.4,
+      "avg_bpm": 68.0,
+      "temp_c": 34.19,
+      "gsr": 111.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 2000,
+      "bpm": 75.9,
+      "avg_bpm": 70.0,
+      "temp_c": 34.25,
+      "gsr": 111.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 3000,
+      "bpm": 74.8,
+      "avg_bpm": 68.0,
+      "temp_c": 34.25,
+      "gsr": 107.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 4000,
+      "bpm": 71.3,
+      "avg_bpm": 72.0,
+      "temp_c": 34.25,
+      "gsr": 109.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 5000,
+      "bpm": 83.1,
+      "avg_bpm": 74.0,
+      "temp_c": 34.25,
+      "gsr": 106.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 6000,
+      "bpm": 71.3,
+      "avg_bpm": 73.0,
+      "temp_c": 34.25,
+      "gsr": 111.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 7000,
+      "bpm": 63.0,
+      "avg_bpm": 72.0,
+      "temp_c": 34.25,
+      "gsr": 105.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 8000,
+      "bpm": 66.5,
+      "avg_bpm": 70.0,
+      "temp_c": 34.25,
+      "gsr": 102.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 9000,
+      "bpm": 83.2,
+      "avg_bpm": 70.0,
+      "temp_c": 34.25,
+      "gsr": 105.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 10000,
+      "bpm": 66.5,
+      "avg_bpm": 69.0,
+      "temp_c": 34.25,
+      "gsr": 106.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 11000,
+      "bpm": 73.1,
+      "avg_bpm": 71.0,
+      "temp_c": 34.25,
+      "gsr": 101.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 12000,
+      "bpm": 65.8,
+      "avg_bpm": 66.0,
+      "temp_c": 34.25,
+      "gsr": 107.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 13000,
+      "bpm": 66.5,
+      "avg_bpm": 67.0,
+      "temp_c": 34.25,
+      "gsr": 95.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 14000,
+      "bpm": 68.1,
+      "avg_bpm": 68.0,
+      "temp_c": 34.25,
+      "gsr": 94.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 15000,
+      "bpm": 78.7,
+      "avg_bpm": 69.0,
+      "temp_c": 34.25,
+      "gsr": 96.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 16000,
+      "bpm": 66.6,
+      "avg_bpm": 70.0,
+      "temp_c": 34.25,
+      "gsr": 96.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 17000,
+      "bpm": 68.8,
+      "avg_bpm": 70.0,
+      "temp_c": 34.25,
+      "gsr": 96.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 18000,
+      "bpm": 81.0,
+      "avg_bpm": 70.0,
+      "temp_c": 34.25,
+      "gsr": 91.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 19000,
+      "bpm": 66.5,
+      "avg_bpm": 70.0,
+      "temp_c": 34.25,
+      "gsr": 89.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 20000,
+      "bpm": 68.0,
+      "avg_bpm": 70.0,
+      "temp_c": 34.25,
+      "gsr": 92.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 21000,
+      "bpm": 83.2,
+      "avg_bpm": 72.0,
+      "temp_c": 34.25,
+      "gsr": 89.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 22000,
+      "bpm": 67.3,
+      "avg_bpm": 72.0,
+      "temp_c": 34.19,
+      "gsr": 82.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 23000,
+      "bpm": 66.6,
+      "avg_bpm": 71.0,
+      "temp_c": 34.19,
+      "gsr": 83.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 24000,
+      "bpm": 65.1,
+      "avg_bpm": 70.0,
+      "temp_c": 34.19,
+      "gsr": 85.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 25000,
+      "bpm": 78.7,
+      "avg_bpm": 69.0,
+      "temp_c": 34.19,
+      "gsr": 82.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 26000,
+      "bpm": 65.1,
+      "avg_bpm": 68.0,
+      "temp_c": 34.19,
+      "gsr": 81.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 27000,
+      "bpm": 75.8,
+      "avg_bpm": 73.0,
+      "temp_c": 34.25,
+      "gsr": 80.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 28000,
+      "bpm": 93.6,
+      "avg_bpm": 77.0,
+      "temp_c": 34.25,
+      "gsr": 80.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 29000,
+      "bpm": 66.5,
+      "avg_bpm": 77.0,
+      "temp_c": 34.25,
+      "gsr": 79.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 30000,
+      "bpm": 68.1,
+      "avg_bpm": 75.0,
+      "temp_c": 34.25,
+      "gsr": 77.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 31000,
+      "bpm": 83.2,
+      "avg_bpm": 72.0,
+      "temp_c": 34.25,
+      "gsr": 74.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 32000,
+      "bpm": 63.0,
+      "avg_bpm": 71.0,
+      "temp_c": 34.25,
+      "gsr": 63.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 33000,
+      "bpm": 65.1,
+      "avg_bpm": 70.0,
+      "temp_c": 34.25,
+      "gsr": 69.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 34000,
+      "bpm": 78.8,
+      "avg_bpm": 72.0,
+      "temp_c": 34.25,
+      "gsr": 70.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 35000,
+      "bpm": 76.8,
+      "avg_bpm": 74.0,
+      "temp_c": 34.25,
+      "gsr": 68.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 36000,
+      "bpm": 83.1,
+      "avg_bpm": 79.0,
+      "temp_c": 34.25,
+      "gsr": 65.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 37000,
+      "bpm": 93.5,
+      "avg_bpm": 86.0,
+      "temp_c": 34.25,
+      "gsr": 64.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 38000,
+      "bpm": 74.9,
+      "avg_bpm": 86.0,
+      "temp_c": 34.25,
+      "gsr": 64.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 39000,
+      "bpm": 68.0,
+      "avg_bpm": 82.0,
+      "temp_c": 34.25,
+      "gsr": 63.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 40000,
+      "bpm": 71.3,
+      "avg_bpm": 76.0,
+      "temp_c": 34.25,
+      "gsr": 61.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 41000,
+      "bpm": 81.0,
+      "avg_bpm": 73.0,
+      "temp_c": 34.25,
+      "gsr": 64.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 42000,
+      "bpm": 76.7,
+      "avg_bpm": 72.0,
+      "temp_c": 34.25,
+      "gsr": 64.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 43000,
+      "bpm": 81.0,
+      "avg_bpm": 74.0,
+      "temp_c": 34.25,
+      "gsr": 62.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 44000,
+      "bpm": 78.7,
+      "avg_bpm": 74.0,
+      "temp_c": 34.25,
+      "gsr": 59.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 45000,
+      "bpm": 71.3,
+      "avg_bpm": 76.0,
+      "temp_c": 34.25,
+      "gsr": 53.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 46000,
+      "bpm": 65.1,
+      "avg_bpm": 73.0,
+      "temp_c": 34.25,
+      "gsr": 50.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 47000,
+      "bpm": 71.3,
+      "avg_bpm": 68.0,
+      "temp_c": 34.25,
+      "gsr": 53.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 48000,
+      "bpm": 78.7,
+      "avg_bpm": 69.0,
+      "temp_c": 34.25,
+      "gsr": 55.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 49000,
+      "bpm": 83.2,
+      "avg_bpm": 74.0,
+      "temp_c": 34.25,
+      "gsr": 49.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 50000,
+      "bpm": 66.5,
+      "avg_bpm": 74.0,
+      "temp_c": 34.25,
+      "gsr": 49.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 51000,
+      "bpm": 99.8,
+      "avg_bpm": 79.0,
+      "temp_c": 34.25,
+      "gsr": 30.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 52000,
+      "bpm": 95.1,
+      "avg_bpm": 82.0,
+      "temp_c": 34.25,
+      "gsr": 48.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 53000,
+      "bpm": 95.1,
+      "avg_bpm": 82.0,
+      "temp_c": 34.25,
+      "gsr": 49.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 54000,
+      "bpm": 95.1,
+      "avg_bpm": 82.0,
+      "temp_c": 34.25,
+      "gsr": 49.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 55000,
+      "bpm": 95.1,
+      "avg_bpm": 82.0,
+      "temp_c": 34.25,
+      "gsr": 44.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 56000,
+      "bpm": null,
+      "avg_bpm": 82.0,
+      "temp_c": 34.19,
+      "gsr": 47.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 57000,
+      "bpm": null,
+      "avg_bpm": 82.0,
+      "temp_c": 34.19,
+      "gsr": 47.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 58000,
+      "bpm": null,
+      "avg_bpm": 82.0,
+      "temp_c": 34.19,
+      "gsr": 44.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 59000,
+      "bpm": null,
+      "avg_bpm": 70.0,
+      "temp_c": 34.19,
+      "gsr": 50.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 60000,
+      "bpm": 74.8,
+      "avg_bpm": 89.0,
+      "temp_c": 33.94,
+      "gsr": 80.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 61000,
+      "bpm": 65.1,
+      "avg_bpm": 70.0,
+      "temp_c": 33.94,
+      "gsr": 80.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 62000,
+      "bpm": 61.7,
+      "avg_bpm": 68.0,
+      "temp_c": 33.88,
+      "gsr": 80.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 63000,
+      "bpm": 85.6,
+      "avg_bpm": 71.0,
+      "temp_c": 33.88,
+      "gsr": 80.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 64000,
+      "bpm": 73.0,
+      "avg_bpm": 70.0,
+      "temp_c": 33.88,
+      "gsr": 77.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 65000,
+      "bpm": 47.5,
+      "avg_bpm": 66.0,
+      "temp_c": 33.88,
+      "gsr": 75.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 66000,
+      "bpm": 73.0,
+      "avg_bpm": 69.0,
+      "temp_c": 33.88,
+      "gsr": 80.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 67000,
+      "bpm": 45.7,
+      "avg_bpm": 59.0,
+      "temp_c": 34.19,
+      "gsr": 75.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 68000,
+      "bpm": 78.8,
+      "avg_bpm": 72.0,
+      "temp_c": 34.19,
+      "gsr": 78.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 69000,
+      "bpm": 78.8,
+      "avg_bpm": 72.0,
+      "temp_c": 34.19,
+      "gsr": 81.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 70000,
+      "bpm": null,
+      "avg_bpm": 63.0,
+      "temp_c": 34.19,
+      "gsr": 85.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 71000,
+      "bpm": 80.9,
+      "avg_bpm": 71.0,
+      "temp_c": 34.19,
+      "gsr": 85.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 72000,
+      "bpm": 80.9,
+      "avg_bpm": 66.0,
+      "temp_c": 34.19,
+      "gsr": 90.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 73000,
+      "bpm": 74.9,
+      "avg_bpm": 75.0,
+      "temp_c": 34.19,
+      "gsr": 87.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 74000,
+      "bpm": 74.8,
+      "avg_bpm": 74.0,
+      "temp_c": 34.19,
+      "gsr": 82.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 75000,
+      "bpm": 76.8,
+      "avg_bpm": 80.0,
+      "temp_c": 34.19,
+      "gsr": 82.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 76000,
+      "bpm": 80.9,
+      "avg_bpm": 82.0,
+      "temp_c": 34.19,
+      "gsr": 85.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 77000,
+      "bpm": 80.9,
+      "avg_bpm": 82.0,
+      "temp_c": 34.06,
+      "gsr": 107.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 78000,
+      "bpm": 40.8,
+      "avg_bpm": 73.0,
+      "temp_c": 34.06,
+      "gsr": 93.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 79000,
+      "bpm": 80.9,
+      "avg_bpm": 63.0,
+      "temp_c": 34.06,
+      "gsr": 87.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 80000,
+      "bpm": 76.8,
+      "avg_bpm": 62.0,
+      "temp_c": 34.06,
+      "gsr": 86.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 81000,
+      "bpm": 66.5,
+      "avg_bpm": 69.0,
+      "temp_c": 34.06,
+      "gsr": 98.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 82000,
+      "bpm": 79.9,
+      "avg_bpm": 75.0,
+      "temp_c": 33.94,
+      "gsr": 100.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 83000,
+      "bpm": 69.7,
+      "avg_bpm": 73.0,
+      "temp_c": 33.94,
+      "gsr": 105.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 84000,
+      "bpm": 78.7,
+      "avg_bpm": 76.0,
+      "temp_c": 33.94,
+      "gsr": 106.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 85000,
+      "bpm": 78.8,
+      "avg_bpm": 75.0,
+      "temp_c": 33.94,
+      "gsr": 106.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 86000,
+      "bpm": 78.7,
+      "avg_bpm": 82.0,
+      "temp_c": 33.94,
+      "gsr": 98.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 87000,
+      "bpm": 84.4,
+      "avg_bpm": 84.0,
+      "temp_c": 34.12,
+      "gsr": 100.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 88000,
+      "bpm": 81.0,
+      "avg_bpm": 82.0,
+      "temp_c": 34.12,
+      "gsr": 100.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 89000,
+      "bpm": 76.7,
+      "avg_bpm": 82.0,
+      "temp_c": 34.12,
+      "gsr": 98.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 90000,
+      "bpm": 83.2,
+      "avg_bpm": 81.0,
+      "temp_c": 34.12,
+      "gsr": 95.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 91000,
+      "bpm": 76.8,
+      "avg_bpm": 78.0,
+      "temp_c": 34.12,
+      "gsr": 97.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 92000,
+      "bpm": 103.3,
+      "avg_bpm": 82.0,
+      "temp_c": 34.25,
+      "gsr": 103.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 93000,
+      "bpm": 73.0,
+      "avg_bpm": 79.0,
+      "temp_c": 34.25,
+      "gsr": 95.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 94000,
+      "bpm": 73.0,
+      "avg_bpm": 79.0,
+      "temp_c": 34.25,
+      "gsr": 96.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 95000,
+      "bpm": null,
+      "avg_bpm": 67.0,
+      "temp_c": 34.25,
+      "gsr": 93.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 96000,
+      "bpm": null,
+      "avg_bpm": 67.0,
+      "temp_c": 34.25,
+      "gsr": 97.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 97000,
+      "bpm": 96.6,
+      "avg_bpm": 59.0,
+      "temp_c": 34.19,
+      "gsr": 97.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 98000,
+      "bpm": 96.6,
+      "avg_bpm": 65.0,
+      "temp_c": 34.19,
+      "gsr": 92.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 99000,
+      "bpm": 81.0,
+      "avg_bpm": 85.0,
+      "temp_c": 34.19,
+      "gsr": 99.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 100000,
+      "bpm": 85.6,
+      "avg_bpm": 82.0,
+      "temp_c": 34.19,
+      "gsr": 102.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 101000,
+      "bpm": 74.8,
+      "avg_bpm": 76.0,
+      "temp_c": 34.19,
+      "gsr": 112.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 102000,
+      "bpm": 67.3,
+      "avg_bpm": 76.0,
+      "temp_c": 34.31,
+      "gsr": 112.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 103000,
+      "bpm": 74.9,
+      "avg_bpm": 73.0,
+      "temp_c": 34.31,
+      "gsr": 111.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 104000,
+      "bpm": 76.7,
+      "avg_bpm": 74.0,
+      "temp_c": 34.31,
+      "gsr": 110.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 105000,
+      "bpm": 69.7,
+      "avg_bpm": 74.0,
+      "temp_c": 34.31,
+      "gsr": 97.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 106000,
+      "bpm": 62.4,
+      "avg_bpm": 70.0,
+      "temp_c": 34.31,
+      "gsr": 107.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 107000,
+      "bpm": 82.1,
+      "avg_bpm": 72.0,
+      "temp_c": 34.31,
+      "gsr": 106.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 108000,
+      "bpm": 68.0,
+      "avg_bpm": 69.0,
+      "temp_c": 34.31,
+      "gsr": 112.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 109000,
+      "bpm": 73.1,
+      "avg_bpm": 72.0,
+      "temp_c": 34.31,
+      "gsr": 112.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 110000,
+      "bpm": 76.7,
+      "avg_bpm": 70.0,
+      "temp_c": 34.31,
+      "gsr": 123.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 111000,
+      "bpm": 65.1,
+      "avg_bpm": 70.0,
+      "temp_c": 34.31,
+      "gsr": 128.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 112000,
+      "bpm": 72.2,
+      "avg_bpm": 71.0,
+      "temp_c": 34.31,
+      "gsr": 139.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 113000,
+      "bpm": 83.2,
+      "avg_bpm": 72.0,
+      "temp_c": 34.31,
+      "gsr": 134.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 114000,
+      "bpm": 83.2,
+      "avg_bpm": 72.0,
+      "temp_c": 34.31,
+      "gsr": 130.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 115000,
+      "bpm": null,
+      "avg_bpm": 66.0,
+      "temp_c": 34.31,
+      "gsr": 142.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 116000,
+      "bpm": 63.7,
+      "avg_bpm": 63.0,
+      "temp_c": 34.31,
+      "gsr": 141.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 117000,
+      "bpm": 96.6,
+      "avg_bpm": 67.0,
+      "temp_c": 34.31,
+      "gsr": 132.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 118000,
+      "bpm": 96.6,
+      "avg_bpm": 67.0,
+      "temp_c": 34.31,
+      "gsr": 129.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 119000,
+      "bpm": 78.8,
+      "avg_bpm": 72.0,
+      "temp_c": 34.31,
+      "gsr": 129.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 120000,
+      "bpm": 73.0,
+      "avg_bpm": 72.0,
+      "temp_c": 34.31,
+      "gsr": 139.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 121000,
+      "bpm": 73.1,
+      "avg_bpm": 66.0,
+      "temp_c": 34.25,
+      "gsr": 143.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 122000,
+      "bpm": 63.0,
+      "avg_bpm": 71.0,
+      "temp_c": 34.25,
+      "gsr": 150.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 123000,
+      "bpm": 88.1,
+      "avg_bpm": 74.0,
+      "temp_c": 34.25,
+      "gsr": 146.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 124000,
+      "bpm": 90.8,
+      "avg_bpm": 78.0,
+      "temp_c": 34.25,
+      "gsr": 143.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 125000,
+      "bpm": 57.6,
+      "avg_bpm": 76.0,
+      "temp_c": 34.25,
+      "gsr": 142.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 126000,
+      "bpm": 78.8,
+      "avg_bpm": 74.0,
+      "temp_c": 34.25,
+      "gsr": 139.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 127000,
+      "bpm": 92.0,
+      "avg_bpm": 79.0,
+      "temp_c": 34.25,
+      "gsr": 139.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 128000,
+      "bpm": 41.0,
+      "avg_bpm": 67.0,
+      "temp_c": 34.25,
+      "gsr": 141.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 129000,
+      "bpm": 107.0,
+      "avg_bpm": 79.0,
+      "temp_c": 34.25,
+      "gsr": 139.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 130000,
+      "bpm": 45.4,
+      "avg_bpm": 71.0,
+      "temp_c": 34.25,
+      "gsr": 139.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 131000,
+      "bpm": 99.8,
+      "avg_bpm": 85.0,
+      "temp_c": 34.25,
+      "gsr": 144.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 132000,
+      "bpm": 99.8,
+      "avg_bpm": 85.0,
+      "temp_c": 34.25,
+      "gsr": 146.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 133000,
+      "bpm": null,
+      "avg_bpm": 66.0,
+      "temp_c": 34.25,
+      "gsr": 146.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 134000,
+      "bpm": 90.8,
+      "avg_bpm": 78.0,
+      "temp_c": 34.25,
+      "gsr": 146.0,
+      "source_label": "stress"
+    },
+    {
+      "timestamp_ms": 135000,
+      "bpm": 77.46,
+      "avg_bpm": 72.03333333333333,
+      "temp_c": 34.248,
+      "gsr": 143.7,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 136000,
+      "bpm": 88.57333333333334,
+      "avg_bpm": 85.13333333333333,
+      "temp_c": 34.306,
+      "gsr": 140.33333333333331,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 137000,
+      "bpm": 73.83,
+      "avg_bpm": 76.6,
+      "temp_c": 34.304,
+      "gsr": 137.10000000000002,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 138000,
+      "bpm": 59.459999999999994,
+      "avg_bpm": 72.33333333333333,
+      "temp_c": 34.30200000000001,
+      "gsr": 135.53333333333333,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 139000,
+      "bpm": 69.08333333333333,
+      "avg_bpm": 69.33333333333334,
+      "temp_c": 34.300000000000004,
+      "gsr": 128.0,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 140000,
+      "bpm": 71.10000000000001,
+      "avg_bpm": 67.4,
+      "temp_c": 34.298,
+      "gsr": 121.6,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 141000,
+      "bpm": 88.51333333333332,
+      "avg_bpm": 74.39999999999999,
+      "temp_c": 34.33566666666667,
+      "gsr": 120.83333333333333,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 142000,
+      "bpm": 53.9,
+      "avg_bpm": 71.2,
+      "temp_c": 34.32933333333334,
+      "gsr": 115.93333333333334,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 143000,
+      "bpm": 55.96999999999999,
+      "avg_bpm": 71.0,
+      "temp_c": 34.323,
+      "gsr": 108.0,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 144000,
+      "bpm": 72.83333333333334,
+      "avg_bpm": 66.66666666666667,
+      "temp_c": 34.31666666666667,
+      "gsr": 114.00000000000001,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 145000,
+      "bpm": 80.97999999999999,
+      "avg_bpm": 66.76666666666667,
+      "temp_c": 34.31033333333333,
+      "gsr": 109.76666666666665,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 146000,
+      "bpm": 70.5,
+      "avg_bpm": 68.4,
+      "temp_c": 34.328,
+      "gsr": 105.8,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 147000,
+      "bpm": 98.39333333333335,
+      "avg_bpm": 77.63333333333333,
+      "temp_c": 34.32366666666667,
+      "gsr": 104.93333333333334,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 148000,
+      "bpm": 62.34666666666667,
+      "avg_bpm": 73.46666666666667,
+      "temp_c": 34.31933333333333,
+      "gsr": 96.13333333333334,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 149000,
+      "bpm": 84.75,
+      "avg_bpm": 76.0,
+      "temp_c": 34.315,
+      "gsr": 96.0,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 150000,
+      "bpm": 83.74666666666667,
+      "avg_bpm": 75.26666666666667,
+      "temp_c": 34.31066666666666,
+      "gsr": 96.2,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 151000,
+      "bpm": null,
+      "avg_bpm": 63.96666666666667,
+      "temp_c": 34.306333333333335,
+      "gsr": 90.53333333333333,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 152000,
+      "bpm": 63.92,
+      "avg_bpm": 56.400000000000006,
+      "temp_c": 34.30200000000001,
+      "gsr": 74.4,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 153000,
+      "bpm": 81.67666666666666,
+      "avg_bpm": 58.833333333333336,
+      "temp_c": 34.29766666666667,
+      "gsr": 77.96666666666667,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 154000,
+      "bpm": 84.76666666666667,
+      "avg_bpm": 63.66666666666667,
+      "temp_c": 34.29333333333334,
+      "gsr": 76.33333333333334,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 155000,
+      "bpm": 44.56,
+      "avg_bpm": 56.6,
+      "temp_c": 34.289,
+      "gsr": 69.30000000000001,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 156000,
+      "bpm": 66.11333333333333,
+      "avg_bpm": 62.93333333333334,
+      "temp_c": 34.284666666666666,
+      "gsr": 68.60000000000001,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 157000,
+      "bpm": 61.22333333333333,
+      "avg_bpm": 61.83333333333333,
+      "temp_c": 34.28033333333333,
+      "gsr": 65.83333333333333,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 158000,
+      "bpm": 65.58,
+      "avg_bpm": 56.599999999999994,
+      "temp_c": 34.276,
+      "gsr": 68.2,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 159000,
+      "bpm": 83.08333333333333,
+      "avg_bpm": 67.5,
+      "temp_c": 34.27166666666667,
+      "gsr": 68.66666666666666,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 160000,
+      "bpm": 67.51333333333332,
+      "avg_bpm": 67.8,
+      "temp_c": 34.26733333333333,
+      "gsr": 61.199999999999996,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 161000,
+      "bpm": 72.73,
+      "avg_bpm": 70.5,
+      "temp_c": 34.269,
+      "gsr": 57.9,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 162000,
+      "bpm": 74.83333333333333,
+      "avg_bpm": 71.53333333333333,
+      "temp_c": 34.26266666666667,
+      "gsr": 51.733333333333334,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 163000,
+      "bpm": 70.13333333333334,
+      "avg_bpm": 72.36666666666666,
+      "temp_c": 34.25633333333333,
+      "gsr": 46.43333333333334,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 164000,
+      "bpm": 81.0,
+      "avg_bpm": 75.0,
+      "temp_c": 34.25,
+      "gsr": 44.0,
+      "source_label": "breathing"
+    },
+    {
+      "timestamp_ms": 165000,
+      "bpm": 73.0,
+      "avg_bpm": 73.0,
+      "temp_c": 34.25,
+      "gsr": 17.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 166000,
+      "bpm": 66.6,
+      "avg_bpm": 71.0,
+      "temp_c": 34.19,
+      "gsr": 48.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 167000,
+      "bpm": 74.9,
+      "avg_bpm": 68.0,
+      "temp_c": 34.19,
+      "gsr": 58.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 168000,
+      "bpm": 65.1,
+      "avg_bpm": 67.0,
+      "temp_c": 34.19,
+      "gsr": 64.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 169000,
+      "bpm": 63.7,
+      "avg_bpm": 66.0,
+      "temp_c": 34.19,
+      "gsr": 73.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 170000,
+      "bpm": 59.9,
+      "avg_bpm": 65.0,
+      "temp_c": 34.19,
+      "gsr": 74.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 171000,
+      "bpm": 76.8,
+      "avg_bpm": 65.0,
+      "temp_c": 34.19,
+      "gsr": 73.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 172000,
+      "bpm": 67.3,
+      "avg_bpm": 66.0,
+      "temp_c": 34.19,
+      "gsr": 72.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 173000,
+      "bpm": 74.9,
+      "avg_bpm": 69.0,
+      "temp_c": 34.19,
+      "gsr": 76.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 174000,
+      "bpm": 88.1,
+      "avg_bpm": 77.0,
+      "temp_c": 34.19,
+      "gsr": 69.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 175000,
+      "bpm": 74.9,
+      "avg_bpm": 79.0,
+      "temp_c": 34.19,
+      "gsr": 71.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 176000,
+      "bpm": 71.3,
+      "avg_bpm": 78.0,
+      "temp_c": 34.25,
+      "gsr": 71.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 177000,
+      "bpm": 68.0,
+      "avg_bpm": 74.0,
+      "temp_c": 34.25,
+      "gsr": 73.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 178000,
+      "bpm": 69.7,
+      "avg_bpm": 73.0,
+      "temp_c": 34.25,
+      "gsr": 74.0,
+      "source_label": "baseline"
+    },
+    {
+      "timestamp_ms": 179000,
+      "bpm": 71.3,
+      "avg_bpm": 73.0,
+      "temp_c": 34.25,
+      "gsr": 73.0,
+      "source_label": "baseline"
+    }
+  ],
+  "features": [
+    {
+      "hr_mean": 71.55666666666666,
+      "hr_std": 7.64296761886301,
+      "hr_min": 62.4,
+      "hr_max": 93.6,
+      "hr_range": 31.199999999999996,
+      "hr_slope": 0.13951056729699754,
+      "hr_pnn_proxy": 0.6551724137931034,
+      "gsr_mean": 96.1,
+      "gsr_std": 11.16753299092724,
+      "gsr_min": 79.0,
+      "gsr_max": 112.0,
+      "gsr_range": 33.0,
+      "gsr_slope": -1.2322580645161285,
+      "gsr_auc": 2787.5,
+      "gsr_peaks": 1.0,
+      "temp_mean": 34.236000000000004,
+      "temp_std": 0.02581098402912556,
+      "temp_slope": -0.0005205784204667136,
+      "timestamp_ms": 29000
+    },
+    {
+      "hr_mean": 71.89333333333335,
+      "hr_std": 7.944850135664041,
+      "hr_min": 63.0,
+      "hr_max": 93.6,
+      "hr_range": 30.599999999999994,
+      "hr_slope": 0.05561735261401542,
+      "hr_pnn_proxy": 0.6896551724137931,
+      "gsr_mean": 89.53333333333333,
+      "gsr_std": 12.738032472260691,
+      "gsr_min": 63.0,
+      "gsr_max": 111.0,
+      "gsr_range": 48.0,
+      "gsr_slope": -1.4042269187986656,
+      "gsr_auc": 2598.0,
+      "gsr_peaks": 0.0,
+      "temp_mean": 34.24,
+      "temp_std": 0.02274294130736796,
+      "temp_slope": -0.0006006674082311307,
+      "timestamp_ms": 34000
+    },
+    {
+      "hr_mean": 72.86666666666666,
+      "hr_std": 8.470693222998985,
+      "hr_min": 63.0,
+      "hr_max": 93.6,
+      "hr_range": 30.599999999999994,
+      "hr_slope": 0.31047830923248104,
+      "hr_pnn_proxy": 0.6896551724137931,
+      "gsr_mean": 82.7,
+      "gsr_std": 13.146784056737328,
+      "gsr_min": 63.0,
+      "gsr_max": 107.0,
+      "gsr_range": 44.0,
+      "gsr_slope": -1.4587319243604,
+      "gsr_auc": 2396.5,
+      "gsr_peaks": 1.0,
+      "temp_mean": 34.24,
+      "temp_std": 0.022742941307367964,
+      "temp_slope": 6.67408231369118e-05,
+      "timestamp_ms": 39000
+    },
+    {
+      "hr_mean": 74.49,
+      "hr_std": 8.369622823454863,
+      "hr_min": 63.0,
+      "hr_max": 93.6,
+      "hr_range": 30.599999999999994,
+      "hr_slope": 0.26462736373748635,
+      "hr_pnn_proxy": 0.6206896551724138,
+      "gsr_mean": 76.26666666666667,
+      "gsr_std": 12.01129736405756,
+      "gsr_min": 59.0,
+      "gsr_max": 96.0,
+      "gsr_range": 37.0,
+      "gsr_slope": -1.326807563959954,
+      "gsr_auc": 2210.5,
+      "gsr_peaks": 1.0,
+      "temp_mean": 34.24,
+      "temp_std": 0.022742941307367964,
+      "temp_slope": 0.0007341490545055688,
+      "timestamp_ms": 44000
+    },
+    {
+      "hr_mean": 74.75666666666665,
+      "hr_std": 8.331232608780601,
+      "hr_min": 63.0,
+      "hr_max": 93.6,
+      "hr_range": 30.599999999999994,
+      "hr_slope": 0.18538375973303706,
+      "hr_pnn_proxy": 0.6551724137931034,
+      "gsr_mean": 69.33333333333333,
+      "gsr_std": 11.980827595999262,
+      "gsr_min": 49.0,
+      "gsr_max": 92.0,
+      "gsr_range": 43.0,
+      "gsr_slope": -1.3196885428253602,
+      "gsr_auc": 2009.5,
+      "gsr_peaks": 1.0,
+      "temp_mean": 34.24,
+      "temp_std": 0.022742941307367964,
+      "temp_slope": 0.0014015572858736113,
+      "timestamp_ms": 49000
+    },
+    {
+      "hr_mean": 78.13666666666667,
+      "hr_std": 10.626430397292674,
+      "hr_min": 63.0,
+      "hr_max": 99.8,
+      "hr_range": 36.8,
+      "hr_slope": 0.467875417130146,
+      "hr_pnn_proxy": 0.6206896551724138,
+      "gsr_mean": 62.46666666666667,
+      "gsr_std": 12.453315119728737,
+      "gsr_min": 30.0,
+      "gsr_max": 82.0,
+      "gsr_range": 52.0,
+      "gsr_slope": -1.3223581757508338,
+      "gsr_auc": 1808.5,
+      "gsr_peaks": 1.0,
+      "temp_mean": 34.246,
+      "temp_std": 0.015222487902148321,
+      "temp_slope": 0.0007474972191324595,
+      "timestamp_ms": 54000
+    },
+    {
+      "hr_mean": 79.21153846153847,
+      "hr_std": 10.921843321457304,
+      "hr_min": 63.0,
+      "hr_max": 99.8,
+      "hr_range": 36.8,
+      "hr_slope": 0.7447863247863251,
+      "hr_pnn_proxy": 0.56,
+      "gsr_mean": 56.8,
+      "gsr_std": 10.564742926519711,
+      "gsr_min": 30.0,
+      "gsr_max": 77.0,
+      "gsr_range": 47.0,
+      "gsr_slope": -1.0638487208008902,
+      "gsr_auc": 1640.5,
+      "gsr_peaks": 1.0,
+      "temp_mean": 34.242000000000004,
+      "temp_std": 0.02074475421850641,
+      "temp_slope": -0.0013882091212457988,
+      "timestamp_ms": 59000
+    },
+    {
+      "hr_mean": 79.28846153846153,
+      "hr_std": 10.927335518710017,
+      "hr_min": 61.7,
+      "hr_max": 99.8,
+      "hr_range": 38.099999999999994,
+      "hr_slope": 0.0954188034188033,
+      "hr_pnn_proxy": 0.6,
+      "gsr_mean": 58.266666666666666,
+      "gsr_std": 12.68703746113449,
+      "gsr_min": 30.0,
+      "gsr_max": 80.0,
+      "gsr_range": 50.0,
+      "gsr_slope": 0.10767519466073472,
+      "gsr_auc": 1675.5,
+      "gsr_peaks": 0.0,
+      "temp_mean": 34.18433333333334,
+      "temp_std": 0.12971276844956509,
+      "temp_slope": -0.010556173526140362,
+      "timestamp_ms": 64000
+    },
+    {
+      "hr_mean": 76.5,
+      "hr_std": 13.553361206726542,
+      "hr_min": 45.7,
+      "hr_max": 99.8,
+      "hr_range": 54.099999999999994,
+      "hr_slope": -0.36321367521367476,
+      "hr_pnn_proxy": 0.6,
+      "gsr_mean": 60.43333333333333,
+      "gsr_std": 14.665660885053981,
+      "gsr_min": 30.0,
+      "gsr_max": 81.0,
+      "gsr_range": 51.0,
+      "gsr_slope": 0.9145717463848727,
+      "gsr_auc": 1742.0,
+      "gsr_peaks": 0.0,
+      "temp_mean": 34.15366666666667,
+      "temp_std": 0.1466283910348574,
+      "temp_slope": -0.01087652947719757,
+      "timestamp_ms": 69000
+    },
+    {
+      "hr_mean": 76.472,
+      "hr_std": 13.790199418427566,
+      "hr_min": 45.7,
+      "hr_max": 99.8,
+      "hr_range": 54.099999999999994,
+      "hr_slope": -0.3133846153846155,
+      "hr_pnn_proxy": 0.5833333333333334,
+      "gsr_mean": 64.4,
+      "gsr_std": 17.604074763413784,
+      "gsr_min": 30.0,
+      "gsr_max": 90.0,
+      "gsr_range": 60.0,
+      "gsr_slope": 1.681868743047832,
+      "gsr_auc": 1864.5,
+      "gsr_peaks": 0.0,
+      "temp_mean": 34.143666666666675,
+      "temp_std": 0.14150626483836495,
+      "temp_slope": -0.006115684093436573,
+      "timestamp_ms": 74000
+    },
+    {
+      "hr_mean": 76.1,
+      "hr_std": 15.35548219149543,
+      "hr_min": 40.8,
+      "hr_max": 99.8,
+      "hr_range": 59.0,
+      "hr_slope": -0.6836153846153825,
+      "hr_pnn_proxy": 0.5,
+      "gsr_mean": 70.86666666666666,
+      "gsr_std": 19.313624516232654,
+      "gsr_min": 30.0,
+      "gsr_max": 107.0,
+      "gsr_range": 77.0,
+      "gsr_slope": 1.9426028921023366,
+      "gsr_auc": 2058.0,
+      "gsr_peaks": 1.0,
+      "temp_mean": 34.120666666666665,
+      "temp_std": 0.13564490491678893,
+      "temp_slope": -0.003030033370410971,
+      "timestamp_ms": 79000
+    },
+    {
+      "hr_mean": 72.9,
+      "hr_std": 12.617679395726194,
+      "hr_min": 40.8,
+      "hr_max": 95.1,
+      "hr_range": 54.3,
+      "hr_slope": 0.03330769230769144,
+      "hr_pnn_proxy": 0.625,
+      "gsr_mean": 79.86666666666666,
+      "gsr_std": 17.590619234622505,
+      "gsr_min": 44.0,
+      "gsr_max": 107.0,
+      "gsr_range": 63.0,
+      "gsr_slope": 1.730367074527253,
+      "gsr_auc": 2321.0,
+      "gsr_peaks": 1.0,
+      "temp_mean": 34.077,
+      "temp_std": 0.13104750389023723,
+      "temp_slope": -0.0018442714126806713,
+      "timestamp_ms": 84000
+    },
+    {
+      "hr_mean": 73.34482758620689,
+      "hr_std": 11.343833636665988,
+      "hr_min": 40.8,
+      "hr_max": 85.6,
+      "hr_range": 44.8,
+      "hr_slope": 0.391921182266009,
+      "hr_pnn_proxy": 0.5357142857142857,
+      "gsr_mean": 88.86666666666666,
+      "gsr_std": 10.288035680387171,
+      "gsr_min": 75.0,
+      "gsr_max": 107.0,
+      "gsr_range": 32.0,
+      "gsr_slope": 0.9882091212458295,
+      "gsr_auc": 2577.0,
+      "gsr_peaks": 3.0,
+      "temp_mean": 34.05133333333334,
+      "temp_std": 0.12322486687390527,
+      "temp_slope": 0.0025094549499447183,
+      "timestamp_ms": 89000
+    },
+    {
+      "hr_mean": 75.03793103448275,
+      "hr_std": 12.204490209787059,
+      "hr_min": 40.8,
+      "hr_max": 103.3,
+      "hr_range": 62.5,
+      "hr_slope": 0.5687192118226589,
+      "hr_pnn_proxy": 0.5357142857142857,
+      "gsr_mean": 91.83333333333333,
+      "gsr_std": 9.724066601189433,
+      "gsr_min": 75.0,
+      "gsr_max": 107.0,
+      "gsr_range": 32.0,
+      "gsr_slope": 0.8540600667408242,
+      "gsr_auc": 2669.5,
+      "gsr_peaks": 5.0,
+      "temp_mean": 34.10033333333333,
+      "temp_std": 0.11496576201974859,
+      "temp_slope": 0.0011056729699671119,
+      "timestamp_ms": 94000
+    },
+    {
+      "hr_mean": 78.75925925925925,
+      "hr_std": 10.937875593876651,
+      "hr_min": 40.8,
+      "hr_max": 103.3,
+      "hr_range": 62.5,
+      "hr_slope": 0.5111721611721604,
+      "hr_pnn_proxy": 0.5384615384615384,
+      "gsr_mean": 94.8,
+      "gsr_std": 7.355035807128197,
+      "gsr_min": 82.0,
+      "gsr_max": 107.0,
+      "gsr_range": 25.0,
+      "gsr_slope": 0.4111234705228045,
+      "gsr_auc": 2752.0,
+      "gsr_peaks": 5.0,
+      "temp_mean": 34.12500000000001,
+      "temp_std": 0.10384836425587397,
+      "temp_slope": 0.002436040044494131,
+      "timestamp_ms": 99000
+    },
+    {
+      "hr_mean": 78.36785714285713,
+      "hr_std": 11.020958268863064,
+      "hr_min": 40.8,
+      "hr_max": 103.3,
+      "hr_range": 62.5,
+      "hr_slope": 0.3330322933771207,
+      "hr_pnn_proxy": 0.5925925925925926,
+      "gsr_mean": 98.73333333333333,
+      "gsr_std": 7.882470002057308,
+      "gsr_min": 82.0,
+      "gsr_max": 112.0,
+      "gsr_range": 30.0,
+      "gsr_slope": 0.47519466073414945,
+      "gsr_auc": 2866.0,
+      "gsr_peaks": 4.0,
+      "temp_mean": 34.13699999999999,
+      "temp_std": 0.11721333335948393,
+      "temp_slope": 0.008936596218020674,
+      "timestamp_ms": 104000
+    },
+    {
+      "hr_mean": 78.1892857142857,
+      "hr_std": 9.27922168214851,
+      "hr_min": 62.4,
+      "hr_max": 103.3,
+      "hr_range": 40.9,
+      "hr_slope": -0.15755336617405577,
+      "hr_pnn_proxy": 0.7037037037037037,
+      "gsr_mean": 101.4,
+      "gsr_std": 6.841052550594828,
+      "gsr_min": 86.0,
+      "gsr_max": 112.0,
+      "gsr_range": 26.0,
+      "gsr_slope": 0.3982202447163524,
+      "gsr_auc": 2943.0,
+      "gsr_peaks": 4.0,
+      "temp_mean": 34.16999999999999,
+      "temp_std": 0.13025174563659273,
+      "temp_slope": 0.012947719688543219,
+      "timestamp_ms": 109000
+    },
+    {
+      "hr_mean": 78.50357142857142,
+      "hr_std": 9.364728235279168,
+      "hr_min": 62.4,
+      "hr_max": 103.3,
+      "hr_range": 40.9,
+      "hr_slope": -0.38546798029556506,
+      "hr_pnn_proxy": 0.6666666666666666,
+      "gsr_mean": 106.7,
+      "gsr_std": 12.72832843807804,
+      "gsr_min": 92.0,
+      "gsr_max": 139.0,
+      "gsr_range": 47.0,
+      "gsr_slope": 1.1103448275862067,
+      "gsr_auc": 3083.0,
+      "gsr_peaks": 3.0,
+      "temp_mean": 34.22366666666666,
+      "temp_std": 0.10515943013884596,
+      "temp_slope": 0.009915461624027639,
+      "timestamp_ms": 114000
+    },
+    {
+      "hr_mean": 79.04444444444444,
+      "hr_std": 11.076250869916828,
+      "hr_min": 62.4,
+      "hr_max": 103.3,
+      "hr_range": 40.9,
+      "hr_slope": -0.19352869352869537,
+      "hr_pnn_proxy": 0.7307692307692307,
+      "gsr_mean": 112.4,
+      "gsr_std": 16.12366006194324,
+      "gsr_min": 92.0,
+      "gsr_max": 142.0,
+      "gsr_range": 50.0,
+      "gsr_slope": 1.6302558398220264,
+      "gsr_auc": 3260.0,
+      "gsr_peaks": 4.0,
+      "temp_mean": 34.267333333333326,
+      "temp_std": 0.06090882577649563,
+      "temp_slope": 0.005236929922136283,
+      "timestamp_ms": 119000
+    },
+    {
+      "hr_mean": 78.25555555555556,
+      "hr_std": 10.810868225765763,
+      "hr_min": 62.4,
+      "hr_max": 96.6,
+      "hr_range": 34.199999999999996,
+      "hr_slope": -0.05885225885225971,
+      "hr_pnn_proxy": 0.6923076923076923,
+      "gsr_mean": 120.23333333333333,
+      "gsr_std": 18.214589327454412,
+      "gsr_min": 92.0,
+      "gsr_max": 150.0,
+      "gsr_range": 58.0,
+      "gsr_slope": 1.9276974416017827,
+      "gsr_auc": 3489.0,
+      "gsr_peaks": 3.0,
+      "temp_mean": 34.278,
+      "temp_std": 0.04656474913568342,
+      "temp_slope": 0.0021624026696331154,
+      "timestamp_ms": 124000
+    },
+    {
+      "hr_mean": 76.38275862068966,
+      "hr_std": 13.47821175520798,
+      "hr_min": 41.0,
+      "hr_max": 107.0,
+      "hr_range": 66.0,
+      "hr_slope": 0.2131034482758616,
+      "hr_pnn_proxy": 0.7857142857142857,
+      "gsr_mean": 127.63333333333334,
+      "gsr_std": 15.392526922421517,
+      "gsr_min": 97.0,
+      "gsr_max": 150.0,
+      "gsr_range": 53.0,
+      "gsr_slope": 1.5134593993325924,
+      "gsr_auc": 3708.5,
+      "gsr_peaks": 4.0,
+      "temp_mean": 34.284,
+      "temp_std": 0.037563738934758985,
+      "temp_slope": -0.0010278086763066902,
+      "timestamp_ms": 129000
+    },
+    {
+      "hr_mean": 77.55714285714286,
+      "hr_std": 16.26196262975132,
+      "hr_min": 41.0,
+      "hr_max": 107.0,
+      "hr_range": 66.0,
+      "hr_slope": 0.45894909688013275,
+      "hr_pnn_proxy": 0.7777777777777778,
+      "gsr_mean": 133.43333333333334,
+      "gsr_std": 13.818237158223893,
+      "gsr_min": 97.0,
+      "gsr_max": 150.0,
+      "gsr_range": 53.0,
+      "gsr_slope": 1.264738598442715,
+      "gsr_auc": 3881.5,
+      "gsr_peaks": 3.0,
+      "temp_mean": 34.282000000000004,
+      "temp_std": 0.030444975804296646,
+      "temp_slope": -0.0029899888765295307,
+      "timestamp_ms": 134000
+    },
+    {
+      "hr_mean": 78.02523809523811,
+      "hr_std": 16.381229759043652,
+      "hr_min": 41.0,
+      "hr_max": 107.0,
+      "hr_range": 66.0,
+      "hr_slope": 0.011691297208540346,
+      "hr_pnn_proxy": 0.8148148148148148,
+      "gsr_mean": 138.45555555555555,
+      "gsr_std": 6.65298212357841,
+      "gsr_min": 123.0,
+      "gsr_max": 150.0,
+      "gsr_range": 27.0,
+      "gsr_slope": 0.29349647756766944,
+      "gsr_auc": 4028.166666666667,
+      "gsr_peaks": 4.0,
+      "temp_mean": 34.279,
+      "temp_std": 0.029728657948995107,
+      "temp_slope": -0.0015773081201334851,
+      "timestamp_ms": 139000
+    },
+    {
+      "hr_mean": 76.66511904761906,
+      "hr_std": 17.417080318370772,
+      "hr_min": 41.0,
+      "hr_max": 107.0,
+      "hr_range": 66.0,
+      "hr_slope": -0.41002098157270567,
+      "hr_pnn_proxy": 0.7777777777777778,
+      "gsr_mean": 136.0011111111111,
+      "gsr_std": 10.652107460914769,
+      "gsr_min": 108.0,
+      "gsr_max": 150.0,
+      "gsr_range": 42.0,
+      "gsr_slope": -0.6483426028921008,
+      "gsr_auc": 3952.0333333333333,
+      "gsr_peaks": 2.0,
+      "temp_mean": 34.28075555555555,
+      "temp_std": 0.03226660175415526,
+      "temp_slope": 0.0007955506117911405,
+      "timestamp_ms": 144000
+    },
+    {
+      "hr_mean": 76.13425287356323,
+      "hr_std": 16.917951555626736,
+      "hr_min": 41.0,
+      "hr_max": 107.0,
+      "hr_range": 66.0,
+      "hr_slope": -0.06378653530377776,
+      "hr_pnn_proxy": 0.8214285714285714,
+      "gsr_mean": 130.65555555555557,
+      "gsr_std": 16.622977988022896,
+      "gsr_min": 96.0,
+      "gsr_max": 150.0,
+      "gsr_range": 54.0,
+      "gsr_slope": -1.6334149054504965,
+      "gsr_auc": 3802.1666666666665,
+      "gsr_peaks": 1.0,
+      "temp_mean": 34.2823,
+      "temp_std": 0.03396463678186767,
+      "temp_slope": 0.003005339265851231,
+      "timestamp_ms": 149000
+    },
+    {
+      "hr_mean": 76.21440476190477,
+      "hr_std": 16.971075782425107,
+      "hr_min": 41.0,
+      "hr_max": 107.0,
+      "hr_range": 66.0,
+      "hr_slope": 0.036191388432769006,
+      "hr_pnn_proxy": 0.8148148148148148,
+      "gsr_mean": 120.47000000000001,
+      "gsr_std": 23.197533146033063,
+      "gsr_min": 74.4,
+      "gsr_max": 146.0,
+      "gsr_range": 71.6,
+      "gsr_slope": -2.4570930663700388,
+      "gsr_auc": 3504.933333333334,
+      "gsr_peaks": 0.0,
+      "temp_mean": 34.28896666666667,
+      "temp_std": 0.03179066466988868,
+      "temp_slope": 0.0027969595847239003,
+      "timestamp_ms": 154000
+    },
+    {
+      "hr_mean": 74.22011904761905,
+      "hr_std": 15.352613039668412,
+      "hr_min": 44.56,
+      "hr_max": 99.8,
+      "hr_range": 55.239999999999995,
+      "hr_slope": -0.3784026637474889,
+      "hr_pnn_proxy": 0.7407407407407407,
+      "gsr_mean": 108.49,
+      "gsr_std": 28.22000615036142,
+      "gsr_min": 65.83333333333333,
+      "gsr_max": 146.0,
+      "gsr_range": 80.16666666666667,
+      "gsr_slope": -3.1514942528735603,
+      "gsr_auc": 3150.866666666667,
+      "gsr_peaks": 0.0,
+      "temp_mean": 34.294022222222225,
+      "temp_std": 0.027234884849139433,
+      "temp_slope": 0.0010205413422323688,
+      "timestamp_ms": 159000
+    },
+    {
+      "hr_mean": 72.70942528735632,
+      "hr_std": 11.943144612259275,
+      "hr_min": 44.56,
+      "hr_max": 98.39333333333335,
+      "hr_range": 53.83333333333334,
+      "hr_slope": -0.07466995073891743,
+      "hr_pnn_proxy": 0.7142857142857143,
+      "gsr_mean": 93.16555555555554,
+      "gsr_std": 29.74820575848731,
+      "gsr_min": 44.0,
+      "gsr_max": 143.7,
+      "gsr_range": 99.69999999999999,
+      "gsr_slope": -3.3526214312198728,
+      "gsr_auc": 2701.116666666667,
+      "gsr_peaks": 0.0,
+      "temp_mean": 34.29586666666667,
+      "temp_std": 0.024493896338770707,
+      "temp_slope": -0.0016308490915833218,
+      "timestamp_ms": 164000
+    },
+    {
+      "hr_mean": 71.84367816091952,
+      "hr_std": 11.478622758519545,
+      "hr_min": 44.56,
+      "hr_max": 98.39333333333335,
+      "hr_range": 53.83333333333334,
+      "hr_slope": -0.14096880131362904,
+      "hr_pnn_proxy": 0.7142857142857143,
+      "gsr_mean": 79.01,
+      "gsr_std": 26.438025775321265,
+      "gsr_min": 17.0,
+      "gsr_max": 121.6,
+      "gsr_range": 104.6,
+      "gsr_slope": -2.7203485354097148,
+      "gsr_auc": 2273.0,
+      "gsr_peaks": 0.0,
+      "temp_mean": 34.280866666666675,
+      "temp_std": 0.043576558779874944,
+      "temp_slope": -0.004489581015943331,
+      "timestamp_ms": 169000
+    },
+    {
+      "hr_mean": 72.6948275862069,
+      "hr_std": 10.817228673719036,
+      "hr_min": 44.56,
+      "hr_max": 98.39333333333335,
+      "hr_range": 53.83333333333334,
+      "hr_slope": -0.19533990147783412,
+      "hr_pnn_proxy": 0.7142857142857143,
+      "gsr_mean": 71.79777777777778,
+      "gsr_std": 20.289364432324845,
+      "gsr_min": 17.0,
+      "gsr_max": 109.76666666666665,
+      "gsr_range": 92.76666666666665,
+      "gsr_slope": -1.44072673340749,
+      "gsr_auc": 2064.55,
+      "gsr_peaks": 0.0,
+      "temp_mean": 34.259111111111125,
+      "temp_std": 0.05032677382342283,
+      "temp_slope": -0.005483129403040905,
+      "timestamp_ms": 174000
+    },
+    {
+      "hr_mean": 71.2544827586207,
+      "hr_std": 9.003299231078293,
+      "hr_min": 44.56,
+      "hr_max": 88.1,
+      "hr_range": 43.53999999999999,
+      "hr_slope": 0.03222331691297032,
+      "hr_pnn_proxy": 0.6071428571428571,
+      "gsr_mean": 66.77666666666667,
+      "gsr_std": 14.759027758736066,
+      "gsr_min": 17.0,
+      "gsr_max": 96.2,
+      "gsr_range": 79.2,
+      "gsr_slope": -0.20797182054134214,
+      "gsr_auc": 1918.7000000000003,
+      "gsr_peaks": 0.0,
+      "temp_mean": 34.24556666666667,
+      "temp_std": 0.04345765984534661,
+      "temp_slope": -0.0036751205042638525,
+      "timestamp_ms": 179000
+    }
+  ],
+  "predictions": [
+    {
+      "timestamp_ms": 29000,
+      "label": "baseline",
+      "confidence": 0.9662489638522223,
+      "smoothed_label": "baseline",
+      "smoothed_confidence": 0.9662489638522223,
+      "raw_proba": {
+        "baseline": 0.9662489638522223,
+        "stress": 0.033751036147777705
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.07097684037323407,
+        "random_forest": 0.06,
+        "xgboost": 0.011534144170582294,
+        "mlp": 0.00038522789583167845
+      }
+    },
+    {
+      "timestamp_ms": 34000,
+      "label": "baseline",
+      "confidence": 0.9601562131275353,
+      "smoothed_label": "baseline",
+      "smoothed_confidence": 0.9650304137072849,
+      "raw_proba": {
+        "baseline": 0.9601562131275353,
+        "stress": 0.03984378687246471
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.0904679754837227,
+        "random_forest": 0.08333333333333333,
+        "xgboost": 0.004747853148728609,
+        "mlp": 0.00010293051040557362
+      }
+    },
+    {
+      "timestamp_ms": 39000,
+      "label": "baseline",
+      "confidence": 0.965498554853667,
+      "smoothed_label": "baseline",
+      "smoothed_confidence": 0.9651240419365613,
+      "raw_proba": {
+        "baseline": 0.965498554853667,
+        "stress": 0.03450144514633306
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.06386581754810171,
+        "random_forest": 0.07333333333333333,
+        "xgboost": 0.0014498981181532145,
+        "mlp": 3.898451160161958e-06
+      }
+    },
+    {
+      "timestamp_ms": 44000,
+      "label": "baseline",
+      "confidence": 0.9749138171264498,
+      "smoothed_label": "baseline",
+      "smoothed_confidence": 0.967081996974539,
+      "raw_proba": {
+        "baseline": 0.9749138171264498,
+        "stress": 0.025086182873550193
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.03809004862878784,
+        "random_forest": 0.01,
+        "xgboost": 0.0008867662982083857,
+        "mlp": 1.3102282258847046e-07
+      }
+    },
+    {
+      "timestamp_ms": 49000,
+      "label": "baseline",
+      "confidence": 0.9748717068327707,
+      "smoothed_label": "baseline",
+      "smoothed_confidence": 0.9686399389461854,
+      "raw_proba": {
+        "baseline": 0.9748717068327707,
+        "stress": 0.025128293167229317
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.03848055518676238,
+        "random_forest": 0.01,
+        "xgboost": 0.0009128737146966159,
+        "mlp": 6.194683200793129e-08
+      }
+    },
+    {
+      "timestamp_ms": 54000,
+      "label": "baseline",
+      "confidence": 0.9721587525545735,
+      "smoothed_label": "baseline",
+      "smoothed_confidence": 0.969343701667863,
+      "raw_proba": {
+        "baseline": 0.9721587525545735,
+        "stress": 0.027841247445426532
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.05197489430364183,
+        "random_forest": 0.023333333333333334,
+        "xgboost": 0.0009090122184716165,
+        "mlp": 3.2748030346900236e-11
+      }
+    },
+    {
+      "timestamp_ms": 59000,
+      "label": "baseline",
+      "confidence": 0.9727605445002032,
+      "smoothed_label": "baseline",
+      "smoothed_confidence": 0.970027070234331,
+      "raw_proba": {
+        "baseline": 0.9727605445002032,
+        "stress": 0.027239455499796734
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.052811797889721866,
+        "random_forest": 0.016666666666666666,
+        "xgboost": 0.004794548265635967,
+        "mlp": 7.11698844935109e-07
+      }
+    },
+    {
+      "timestamp_ms": 64000,
+      "label": "baseline",
+      "confidence": 0.8544149983760473,
+      "smoothed_label": "baseline",
+      "smoothed_confidence": 0.9469046558626742,
+      "raw_proba": {
+        "baseline": 0.8544149983760473,
+        "stress": 0.1455850016239527
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.29073343719005784,
+        "random_forest": 0.25,
+        "xgboost": 0.052266109734773636,
+        "mlp": 0.0018380818207386954
+      }
+    },
+    {
+      "timestamp_ms": 69000,
+      "label": "baseline",
+      "confidence": 0.7676755354635701,
+      "smoothed_label": "baseline",
+      "smoothed_confidence": 0.9110588317828534,
+      "raw_proba": {
+        "baseline": 0.7676755354635701,
+        "stress": 0.23232446453642988
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.2971124055707181,
+        "random_forest": 0.5466666666666666,
+        "xgboost": 0.70820152759552,
+        "mlp": 0.7736597995968895
+      }
+    },
+    {
+      "timestamp_ms": 74000,
+      "label": "baseline",
+      "confidence": 0.768543273842905,
+      "smoothed_label": "baseline",
+      "smoothed_confidence": 0.8825557201948637,
+      "raw_proba": {
+        "baseline": 0.768543273842905,
+        "stress": 0.23145672615709506
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.27969750159323553,
+        "random_forest": 0.5633333333333334,
+        "xgboost": 0.7431373000144958,
+        "mlp": 0.9986733854471666
+      }
+    },
+    {
+      "timestamp_ms": 79000,
+      "label": "baseline",
+      "confidence": 0.7684717132938607,
+      "smoothed_label": "baseline",
+      "smoothed_confidence": 0.8597389188146631,
+      "raw_proba": {
+        "baseline": 0.7684717132938607,
+        "stress": 0.2315282867061393
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.2929036674914525,
+        "random_forest": 0.59,
+        "xgboost": 0.8987939953804016,
+        "mlp": 0.999615355703878
+      }
+    },
+    {
+      "timestamp_ms": 84000,
+      "label": "baseline",
+      "confidence": 0.7298637976935978,
+      "smoothed_label": "baseline",
+      "smoothed_confidence": 0.83376389459045,
+      "raw_proba": {
+        "baseline": 0.7298637976935978,
+        "stress": 0.27013620230640223
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.2984286900095559,
+        "random_forest": 0.6466666666666666,
+        "xgboost": 0.9094971418380737,
+        "mlp": 0.9999999169882043
+      }
+    },
+    {
+      "timestamp_ms": 89000,
+      "label": "stress",
+      "confidence": 0.9303448779012952,
+      "smoothed_label": "baseline",
+      "smoothed_confidence": 0.680942140092101,
+      "raw_proba": {
+        "baseline": 0.06965512209870484,
+        "stress": 0.9303448779012952
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.939273737066316,
+        "random_forest": 0.8833333333333333,
+        "xgboost": 0.99003005027771,
+        "mlp": 0.9999999999999976
+      }
+    },
+    {
+      "timestamp_ms": 94000,
+      "label": "stress",
+      "confidence": 0.94957355004626,
+      "smoothed_label": "baseline",
+      "smoothed_confidence": 0.5548390020644287,
+      "raw_proba": {
+        "baseline": 0.050426449953740016,
+        "stress": 0.94957355004626
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.9637826495719938,
+        "random_forest": 0.9533333333333334,
+        "xgboost": 0.9923965334892273,
+        "mlp": 0.9999999999999993
+      }
+    },
+    {
+      "timestamp_ms": 99000,
+      "label": "stress",
+      "confidence": 0.9387046833164037,
+      "smoothed_label": "stress",
+      "smoothed_confidence": 0.5438697350117379,
+      "raw_proba": {
+        "baseline": 0.061295316683596335,
+        "stress": 0.9387046833164037
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.9083689851063423,
+        "random_forest": 0.9666666666666667,
+        "xgboost": 0.996600329875946,
+        "mlp": 0.9999999999914031
+      }
+    },
+    {
+      "timestamp_ms": 104000,
+      "label": "stress",
+      "confidence": 0.9569947631874517,
+      "smoothed_label": "stress",
+      "smoothed_confidence": 0.6264947406468806,
+      "raw_proba": {
+        "baseline": 0.04300523681254831,
+        "stress": 0.9569947631874517
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.9747482887955222,
+        "random_forest": 0.99,
+        "xgboost": 0.9984265565872192,
+        "mlp": 0.9999999999981222
+      }
+    },
+    {
+      "timestamp_ms": 109000,
+      "label": "stress",
+      "confidence": 0.9222709967386173,
+      "smoothed_label": "stress",
+      "smoothed_confidence": 0.6856499918652279,
+      "raw_proba": {
+        "baseline": 0.07772900326138266,
+        "stress": 0.9222709967386173
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.9352022976911355,
+        "random_forest": 0.8433333333333334,
+        "xgboost": 0.9536418914794922,
+        "mlp": 0.9999999118909191
+      }
+    },
+    {
+      "timestamp_ms": 114000,
+      "label": "stress",
+      "confidence": 0.8437354909872635,
+      "smoothed_label": "stress",
+      "smoothed_confidence": 0.7172670916896351,
+      "raw_proba": {
+        "baseline": 0.15626450901273647,
+        "stress": 0.8437354909872635
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.7228988580869925,
+        "random_forest": 0.89,
+        "xgboost": 0.9493522047996521,
+        "mlp": 0.9999999999999987
+      }
+    },
+    {
+      "timestamp_ms": 119000,
+      "label": "stress",
+      "confidence": 0.9485746421097216,
+      "smoothed_label": "stress",
+      "smoothed_confidence": 0.7635286017736524,
+      "raw_proba": {
+        "baseline": 0.051425357890278356,
+        "stress": 0.9485746421097216
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.9608478080758153,
+        "random_forest": 0.9433333333333334,
+        "xgboost": 0.9649986624717712,
+        "mlp": 1.0
+      }
+    },
+    {
+      "timestamp_ms": 124000,
+      "label": "stress",
+      "confidence": 0.9294637391313999,
+      "smoothed_label": "stress",
+      "smoothed_confidence": 0.796715629245202,
+      "raw_proba": {
+        "baseline": 0.0705362608686001,
+        "stress": 0.9294637391313999
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.905265770983347,
+        "random_forest": 0.9066666666666666,
+        "xgboost": 0.9275425672531128,
+        "mlp": 1.0
+      }
+    },
+    {
+      "timestamp_ms": 129000,
+      "label": "stress",
+      "confidence": 0.9514937026189215,
+      "smoothed_label": "stress",
+      "smoothed_confidence": 0.8276712439199461,
+      "raw_proba": {
+        "baseline": 0.04850629738107848,
+        "stress": 0.9514937026189215
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.9492359724982508,
+        "random_forest": 0.9866666666666667,
+        "xgboost": 0.9993256330490112,
+        "mlp": 1.0
+      }
+    },
+    {
+      "timestamp_ms": 134000,
+      "label": "stress",
+      "confidence": 0.9538043416095219,
+      "smoothed_label": "stress",
+      "smoothed_confidence": 0.8528978634578613,
+      "raw_proba": {
+        "baseline": 0.04619565839047812,
+        "stress": 0.9538043416095219
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.9532476089986992,
+        "random_forest": 0.9966666666666667,
+        "xgboost": 0.9997881054878235,
+        "mlp": 1.0
+      }
+    },
+    {
+      "timestamp_ms": 139000,
+      "label": "stress",
+      "confidence": 0.9462932341245028,
+      "smoothed_label": "stress",
+      "smoothed_confidence": 0.8715769375911897,
+      "raw_proba": {
+        "baseline": 0.053706765875497164,
+        "stress": 0.9462932341245028
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.9454605778511411,
+        "random_forest": 0.96,
+        "xgboost": 0.9998112320899963,
+        "mlp": 0.9999999999580387
+      }
+    },
+    {
+      "timestamp_ms": 144000,
+      "label": "stress",
+      "confidence": 0.9480667265323437,
+      "smoothed_label": "stress",
+      "smoothed_confidence": 0.8868748953794205,
+      "raw_proba": {
+        "baseline": 0.051933273467656305,
+        "stress": 0.9480667265323437
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.936920012868977,
+        "random_forest": 0.98,
+        "xgboost": 0.9933930039405823,
+        "mlp": 0.9999879466349817
+      }
+    },
+    {
+      "timestamp_ms": 149000,
+      "label": "stress",
+      "confidence": 0.8681203323322227,
+      "smoothed_label": "stress",
+      "smoothed_confidence": 0.883123982769981,
+      "raw_proba": {
+        "baseline": 0.13187966766777726,
+        "stress": 0.8681203323322227
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.7845167615680622,
+        "random_forest": 0.8733333333333333,
+        "xgboost": 0.9700120687484741,
+        "mlp": 0.9943519393646947
+      }
+    },
+    {
+      "timestamp_ms": 154000,
+      "label": "baseline",
+      "confidence": 0.5678570633479845,
+      "smoothed_label": "stress",
+      "smoothed_confidence": 0.792927773546388,
+      "raw_proba": {
+        "baseline": 0.5678570633479845,
+        "stress": 0.4321429366520155
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.2982174228730275,
+        "random_forest": 0.85,
+        "xgboost": 0.6392578482627869,
+        "mlp": 1.0833983477684606e-12
+      }
+    },
+    {
+      "timestamp_ms": 159000,
+      "label": "baseline",
+      "confidence": 0.5912603498725914,
+      "smoothed_label": "stress",
+      "smoothed_confidence": 0.7160901488625921,
+      "raw_proba": {
+        "baseline": 0.5912603498725914,
+        "stress": 0.40873965012740865
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.2978427802765696,
+        "random_forest": 0.7866666666666666,
+        "xgboost": 0.5144466757774353,
+        "mlp": 1.9445395435662382e-35
+      }
+    },
+    {
+      "timestamp_ms": 164000,
+      "label": "baseline",
+      "confidence": 0.7542198704351446,
+      "smoothed_label": "stress",
+      "smoothed_confidence": 0.6220281450030448,
+      "raw_proba": {
+        "baseline": 0.7542198704351446,
+        "stress": 0.24578012956485537
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.29784277747342464,
+        "random_forest": 0.6733333333333333,
+        "xgboost": 0.9010477662086487,
+        "mlp": 5.132307924344344e-50
+      }
+    },
+    {
+      "timestamp_ms": 169000,
+      "label": "baseline",
+      "confidence": 0.8209599611989638,
+      "smoothed_label": "stress",
+      "smoothed_confidence": 0.5334305237626431,
+      "raw_proba": {
+        "baseline": 0.8209599611989638,
+        "stress": 0.17904003880103625
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.29784277639262646,
+        "random_forest": 0.5466666666666666,
+        "xgboost": 0.8740400671958923,
+        "mlp": 5.226270332785795e-35
+      }
+    },
+    {
+      "timestamp_ms": 174000,
+      "label": "baseline",
+      "confidence": 0.8598556847704649,
+      "smoothed_label": "baseline",
+      "smoothed_confidence": 0.5452267179439785,
+      "raw_proba": {
+        "baseline": 0.8598556847704649,
+        "stress": 0.14014431522953505
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.2970805078950315,
+        "random_forest": 0.4633333333333333,
+        "xgboost": 0.8809532523155212,
+        "mlp": 1.6353885309812836e-07
+      }
+    },
+    {
+      "timestamp_ms": 179000,
+      "label": "baseline",
+      "confidence": 0.876852058576166,
+      "smoothed_label": "baseline",
+      "smoothed_confidence": 0.6115517860704159,
+      "raw_proba": {
+        "baseline": 0.876852058576166,
+        "stress": 0.123147941423834
+      },
+      "calibration_applied": false,
+      "model_type": "stacking",
+      "base_probabilities": {
+        "svm": 0.28410469297963953,
+        "random_forest": 0.29,
+        "xgboost": 0.36420488357543945,
+        "mlp": 1.1411800472194187e-12
+      }
+    }
+  ]
+}

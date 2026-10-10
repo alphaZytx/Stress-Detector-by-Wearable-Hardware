@@ -1,0 +1,187 @@
+@import "./design/tokens.css";
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    border-color: var(--clinical-border);
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    /* engineering-grid paper - flat, no gradients */
+    background: var(--clinical-bg-grad), var(--clinical-bg);
+    background-attachment: fixed;
+    color: var(--clinical-text);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  /* Chunky high-contrast focus ring (a11y + on-theme). */
+  :focus-visible {
+    outline: 3px solid var(--clinical-accent);
+    outline-offset: 2px;
+    border-radius: 0;
+  }
+
+  /* Tabular figures for biosignal readouts - display font, never jitter width. */
+  .tnum {
+    font-family: var(--font-display);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  /* Square, high-contrast scrollbars. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--clinical-border) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: var(--clinical-border);
+    border: 3px solid transparent;
+    background-clip: padding-box;
+  }
+}
+
+@layer components {
+  /* Flat brutalist card: solid fill, thick ink border, hard offset shadow. */
+  .surface-card {
+    background: var(--clinical-surface);
+    border: 2px solid var(--clinical-border);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* The one elevated "hero" surface per screen - deeper hard shadow. */
+  .surface-raised {
+    background: var(--clinical-surface);
+    border: 2px solid var(--clinical-border);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Wellness panel - same flat brutalist treatment (no glass). */
+  .surface-glass {
+    background: var(--wellness-surface);
+    border: 2px solid var(--clinical-border);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Eyebrow label - monospace, wide-tracked, uppercase. */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--clinical-faint);
+  }
+
+  /* Brand / emphasis text - flat accent (no gradient). */
+  .text-aurora {
+    color: var(--clinical-accent);
+  }
+}
+
+/* =====================================================================
+ * DARK MODE - structural overrides
+ *
+ * Tokens can retune color, shadow and radius, but the brutalist border WIDTH
+ * and `rounded-none` are baked into ~30 component class lists. Dark mode
+ * retunes them here instead of forking every component. Light mode is
+ * untouched. See design/tokens.css for the rationale.
+ * ===================================================================== */
+
+/* Native form controls, scrollbars and focus rings follow the dark canvas. */
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* 2px of 9%-alpha white reads as a smudge; 1px reads as a deliberate line. */
+[data-theme="dark"] .border-2 {
+  border-width: 1px;
+}
+
+/* Sharp corners belong to the light/brutalist system. Dark softens. */
+[data-theme="dark"] .rounded-none {
+  border-radius: var(--radius-md);
+}
+
+/* Surfaces: depth from fill + ambient shadow + a 1px top highlight - the
+ * hairline border only separates, it never carries the elevation. */
+[data-theme="dark"] .surface-card {
+  border-width: 1px;
+  box-shadow: var(--shadow-card), var(--ring-highlight);
+}
+
+[data-theme="dark"] .surface-raised {
+  background: var(--clinical-surface-raised);
+  border-width: 1px;
+  box-shadow: var(--shadow-lg), var(--ring-highlight);
+}
+
+/* The wellness panel earns real glass in dark - it reads as calm, not gimmicky,
+ * against the deep ground (and degrades to a solid fill without backdrop support). */
+[data-theme="dark"] .surface-glass {
+  background: var(--wellness-surface-glass);
+  border-width: 1px;
+  box-shadow: var(--shadow-md), var(--glass-highlight);
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  [data-theme="dark"] .surface-glass {
+    backdrop-filter: blur(14px) saturate(130%);
+  }
+}
+
+/* A 3px hard ring is right on paper; on dark a softer haloed ring is legible
+ * without flaring. Still 3:1+ against every surface. */
+[data-theme="dark"] :focus-visible {
+  outline: 2px solid var(--clinical-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 5px rgba(91, 140, 255, 0.18);
+}
+
+/* Scrollbars: a hairline border-color thumb would be nearly invisible. */
+[data-theme="dark"] * {
+  scrollbar-color: rgba(255, 255, 255, 0.16) transparent;
+}
+
+[data-theme="dark"] *::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+}
+
+[data-theme="dark"] *::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.26);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

@@ -1,0 +1,61 @@
+service:
+  host: 127.0.0.1
+  port: 8010
+  log_level: INFO
+
+input:
+  # Hardware-free default. These generated samples still pass through the real
+  # feature extraction and trained SVM; only the sensor input is simulated.
+  source: synthetic          # synthetic | csv_replay | serial | tcp
+  synthetic:
+    speed: 2.0               # Gentle demo pace; real hardware streams at 1 Hz
+    seed: 42                 # reproducible random stream; change for a new run
+    baseline_s: 60
+    stress_s: 60
+    recovery_s: 60
+  csv_replay:
+    files:
+      - data/raw/revised_sensors_baseline__1_.csv
+      - data/raw/revised_sensors_stress__1_.csv
+    loop: true
+    speed: 1.0               # 1.0 = realtime, 10.0 = 10x faster (raise for e2e)
+  serial:
+    # ESP32 over USB. On macOS the port is typically /dev/tty.usbserial-XXXX or
+    # /dev/tty.SLAB_USBtoUART - run `ls /dev/tty.*` with the device plugged in.
+    # To use real hardware: set input.source above to `serial` and the port here.
+    port: /dev/tty.usbserial-0001
+    baudrate: 115200
+  tcp:
+    host: 0.0.0.0
+    port: 9000
+
+inference:
+  # Which classifier to serve. Switching models is a config change, never a
+  # code change. Supported: svm | random_forest | xgboost | mlp | soft_voting |
+  # stacking (ensemble_soft / ensemble_stack are accepted aliases).
+  #   svm      - the Phase 1 baseline, always available
+  #   stacking - the proposed ensemble (4 base models → LogisticRegression)
+  # See reports/ensemble_report.md for the LOSO comparison behind this choice.
+  model_type: stacking
+
+  # Combined (WESAD+PROJECT) model: WESAD-only does not transfer to project
+  # raw-ADC hardware (reads everything as baseline). Combined separates the
+  # project conditions cleanly. See HANDOFF.md "CRITICAL FINDING". v2 models
+  # retrained on post-PRE.1 (z-score gsr_peaks) features at Phase 4.1.
+  # A glob resolves to the highest _v<N> present, so a version bump needs no
+  # config edit.
+  model_path: data/models/ensemble_stack_v*.joblib
+
+  # Served if model_path does not exist - e.g. a fresh clone where
+  # scripts/train_all_models.py has not been run yet. The SVM baseline keeps
+  # the application working instead of failing startup.
+  fallback_model_path: data/models/svm_combined_v4.joblib
+
+  smoothing:
+    method: ema              # ema | majority
+    window: 6                # last 6 predictions (= 30s at 5s stride)
+    ema_alpha: 0.2           # Lower alpha reduces rapid baseline/stress flips
+
+session:
+  db_path: data/sessions.sqlite
+  export_dir: reports/sessions

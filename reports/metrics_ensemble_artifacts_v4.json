@@ -1,0 +1,248 @@
+{
+  "version": "v4",
+  "artifacts": {
+    "svm base model": "data/models/svm_combined_v4.joblib",
+    "random_forest base model": "data/models/rf_combined_v4.joblib",
+    "xgboost base model": "data/models/xgb_combined_v4.joblib",
+    "mlp base model": "data/models/mlp_combined_v4.joblib",
+    "soft-voting ensemble (equal weights)": "data/models/ensemble_soft_v4.joblib",
+    "stacking ensemble (LogisticRegression meta-model)": "data/models/ensemble_stack_v4.joblib"
+  },
+  "dataset": {
+    "description": "WESAD (15 subjects) + project (1 subject, 'PROJECT'); 30 s windows at 5 s stride; features_wesad_v1.parquet + features_v1.parquet",
+    "n_subjects": 16,
+    "n_windows": 5462,
+    "n_features": 18,
+    "feature_names": [
+      "hr_mean",
+      "hr_std",
+      "hr_min",
+      "hr_max",
+      "hr_range",
+      "hr_slope",
+      "hr_pnn_proxy",
+      "gsr_mean",
+      "gsr_std",
+      "gsr_min",
+      "gsr_max",
+      "gsr_range",
+      "gsr_slope",
+      "gsr_auc",
+      "gsr_peaks",
+      "temp_mean",
+      "temp_std",
+      "temp_slope"
+    ],
+    "class_counts": {
+      "baseline": 3498,
+      "stress": 1964
+    },
+    "windows_per_subject": {
+      "PROJECT": 102,
+      "S10": 371,
+      "S11": 362,
+      "S13": 358,
+      "S14": 361,
+      "S15": 362,
+      "S16": 360,
+      "S17": 370,
+      "S2": 341,
+      "S3": 346,
+      "S4": 348,
+      "S5": 358,
+      "S6": 356,
+      "S7": 355,
+      "S8": 357,
+      "S9": 355
+    }
+  },
+  "base_model_params": {
+    "svm": {},
+    "random_forest": {},
+    "xgboost": {},
+    "mlp": {}
+  },
+  "base_model_grouped_cv_f1_macro": {
+    "svm": null,
+    "random_forest": null,
+    "xgboost": null,
+    "mlp": null
+  },
+  "soft_voting_weights": {
+    "svm": 0.25,
+    "random_forest": 0.25,
+    "xgboost": 0.25,
+    "mlp": 0.25
+  },
+  "soft_voting_derived_weights_experiment": {
+    "svm": 0.26620867865027287,
+    "random_forest": 0.23479639923322526,
+    "xgboost": 0.2446185919460272,
+    "mlp": 0.2543763301704748
+  },
+  "stacking_meta_coefficients": {
+    "svm": 4.469550277337345,
+    "random_forest": 3.3745252916734865,
+    "xgboost": -0.9560819410820173,
+    "mlp": 0.2227618129132069
+  },
+  "soft_voting_metadata": {
+    "model_type": "soft_voting",
+    "model_version": "v4",
+    "feature_names": [
+      "hr_mean",
+      "hr_std",
+      "hr_min",
+      "hr_max",
+      "hr_range",
+      "hr_slope",
+      "hr_pnn_proxy",
+      "gsr_mean",
+      "gsr_std",
+      "gsr_min",
+      "gsr_max",
+      "gsr_range",
+      "gsr_slope",
+      "gsr_auc",
+      "gsr_peaks",
+      "temp_mean",
+      "temp_std",
+      "temp_slope"
+    ],
+    "feature_schema_version": "v1",
+    "label_map": {
+      "baseline": 0,
+      "stress": 1
+    },
+    "base_model_names": [
+      "svm",
+      "random_forest",
+      "xgboost",
+      "mlp"
+    ],
+    "base_model_params": {
+      "svm": {},
+      "random_forest": {},
+      "xgboost": {},
+      "mlp": {}
+    },
+    "meta_model": null,
+    "weights": {
+      "svm": 0.25,
+      "random_forest": 0.25,
+      "xgboost": 0.25,
+      "mlp": 0.25
+    },
+    "threshold": 0.5,
+    "random_seed": 42,
+    "dataset": "WESAD (15 subjects) + project (1 subject, 'PROJECT'); 30 s windows at 5 s stride; features_wesad_v1.parquet + features_v1.parquet",
+    "n_subjects": 16,
+    "n_windows": 5462,
+    "trained_at": "2026-10-07T09:37:21+00:00",
+    "library_versions": {
+      "scikit-learn": "1.6.1",
+      "numpy": "2.4.6",
+      "xgboost": "3.0.5"
+    },
+    "evaluation": {}
+  },
+  "stacking_metadata": {
+    "model_type": "stacking",
+    "model_version": "v4",
+    "feature_names": [
+      "hr_mean",
+      "hr_std",
+      "hr_min",
+      "hr_max",
+      "hr_range",
+      "hr_slope",
+      "hr_pnn_proxy",
+      "gsr_mean",
+      "gsr_std",
+      "gsr_min",
+      "gsr_max",
+      "gsr_range",
+      "gsr_slope",
+      "gsr_auc",
+      "gsr_peaks",
+      "temp_mean",
+      "temp_std",
+      "temp_slope"
+    ],
+    "feature_schema_version": "v1",
+    "label_map": {
+      "baseline": 0,
+      "stress": 1
+    },
+    "base_model_names": [
+      "svm",
+      "random_forest",
+      "xgboost",
+      "mlp"
+    ],
+    "base_model_params": {
+      "svm": {},
+      "random_forest": {},
+      "xgboost": {},
+      "mlp": {}
+    },
+    "meta_model": "LogisticRegression",
+    "weights": null,
+    "threshold": 0.5,
+    "random_seed": 42,
+    "dataset": "WESAD (15 subjects) + project (1 subject, 'PROJECT'); 30 s windows at 5 s stride; features_wesad_v1.parquet + features_v1.parquet",
+    "n_subjects": 16,
+    "n_windows": 5462,
+    "trained_at": "2026-10-07T09:37:30+00:00",
+    "library_versions": {
+      "scikit-learn": "1.6.1",
+      "numpy": "2.4.6",
+      "xgboost": "3.0.5"
+    },
+    "evaluation": {}
+  },
+  "inference_latency_ms": {
+    "svm": {
+      "mean_ms": 0.1735052097501466,
+      "median_ms": 0.17070899775717407,
+      "p95_ms": 0.190177093463717,
+      "max_ms": 0.25883299531415105,
+      "n_repeats": 200
+    },
+    "random_forest": {
+      "mean_ms": 12.944617045577615,
+      "median_ms": 13.161062001017854,
+      "p95_ms": 13.779502400575439,
+      "max_ms": 33.700875006616116,
+      "n_repeats": 200
+    },
+    "xgboost": {
+      "mean_ms": 0.10989188449457288,
+      "median_ms": 0.10460399789735675,
+      "p95_ms": 0.1405059461831115,
+      "max_ms": 0.2373750030528754,
+      "n_repeats": 200
+    },
+    "mlp": {
+      "mean_ms": 0.14145372944767587,
+      "median_ms": 0.13931249122833833,
+      "p95_ms": 0.15518685977440327,
+      "max_ms": 0.21054199896752834,
+      "n_repeats": 200
+    },
+    "soft_voting": {
+      "mean_ms": 12.964903565080022,
+      "median_ms": 12.758417004079092,
+      "p95_ms": 14.20483480396797,
+      "max_ms": 24.380499991821125,
+      "n_repeats": 200
+    },
+    "stacking": {
+      "mean_ms": 13.423691279240302,
+      "median_ms": 13.14466700569028,
+      "p95_ms": 14.268872595857829,
+      "max_ms": 44.45075000694487,
+      "n_repeats": 200
+    }
+  }
+}

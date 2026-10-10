@@ -1,0 +1,14 @@
+paths:
+  data_raw: data/raw
+  data_interim: data/interim
+  data_features: data/features
+  data_wesad_raw: data/wesad/raw
+  data_models: data/models
+  reports: reports
+sampling:
+  sensors_hz: 1
+windowing:
+  window_s: 30
+  stride_s: 5
+  min_valid_bpm_fraction: 0.7
+random_seed: 42

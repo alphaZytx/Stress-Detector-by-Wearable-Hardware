@@ -1,0 +1,12 @@
+flowchart LR
+    subgraph Hardware
+        S["MAX30105 heart rate<br/>GSR skin conductance<br/>MLX90614 temperature"]
+        E["ESP32 · 1 Hz"]
+        S --> E
+    end
+    E -->|"5-field CSV / JSON"| SRC["Sensor source"]
+    SRC --> FS["FeatureStreamer<br/>30 s window · 5 s stride<br/>18 features"]
+    FS --> INF["Classifier + smoothing"]
+    INF --> WS["FastAPI + WebSocket"]
+    WS --> UI["React dashboard"]
+    WS --> DB["SQLite sessions"]
