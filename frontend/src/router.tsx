@@ -11,6 +11,7 @@ import { Calibration } from "@/routes/Calibration";
 import { Settings } from "@/routes/Settings";
 import { Breathing } from "@/routes/Breathing";
 import { Explain } from "@/routes/Explain";
+import { Sensors } from "@/routes/Sensors";
 
 /** "/" → /live when authed, else /login. */
 function RootRedirect() {
@@ -33,6 +34,7 @@ export const router = createBrowserRouter([
         element: <AppShell />,
         children: [
           { path: "/live", element: <Live /> },
+          { path: "/sensors", element: <Sensors /> },
           { path: "/history", element: <History /> },
           { path: "/history/:sessionId", element: <SessionDetail /> },
           { path: "/calibration", element: <Calibration /> },

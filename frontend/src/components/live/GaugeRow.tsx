@@ -5,7 +5,9 @@ import {
   ArrowUpRight,
   Droplets,
   HeartPulse,
+  ScanLine,
   Thermometer,
+  Wind,
 } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { cssVar } from "@/design/tokens";
@@ -65,7 +67,7 @@ function useRecent(seconds: number) {
   return useMemo(() => samples.slice(-seconds), [samples, seconds]);
 }
 
-export function GaugeRow() {
+export function GaugeRow({ forceAll = false }: { forceAll?: boolean }) {
   const sensors = useSettingsStore((s) => s.sensors);
   const recent30 = useRecent(30);
   const recent60 = useRecent(60);
@@ -87,16 +89,18 @@ export function GaugeRow() {
   );
   const displayGsr = smoothedLatest(recentVitals.map((sample) => sample.gsr));
   const displayTemp = smoothedLatest(recentVitals.map((sample) => sample.temp_c));
+  const latest = recentVitals[recentVitals.length - 1];
+  const contactValid = latest?.finger_present !== false;
 
   const cards: React.ReactNode[] = [];
 
-  if (sensors.hr)
+  if (forceAll || sensors.hr)
     cards.push(
       <GaugeCard
         key="hr"
         icon={<HeartPulse className="h-3.5 w-3.5" aria-hidden />}
         label="Heart rate"
-        value={fmtBpm(displayBpm)}
+        value={contactValid ? fmtBpm(displayBpm) : "0"}
         unit="bpm"
       >
         <div className="flex items-center gap-1 text-xs text-clinical-muted">
@@ -105,7 +109,7 @@ export function GaugeRow() {
       </GaugeCard>,
     );
 
-  if (sensors.gsr)
+  if (forceAll || sensors.gsr)
     cards.push(
       <GaugeCard
         key="gsr"
@@ -118,13 +122,13 @@ export function GaugeRow() {
       </GaugeCard>,
     );
 
-  if (sensors.temp)
+  if (forceAll || sensors.temp)
     cards.push(
       <GaugeCard
         key="temp"
         icon={<Thermometer className="h-3.5 w-3.5" aria-hidden />}
-        label="Temperature"
-        value={fmtTemp(displayTemp)}
+        label="Object temperature"
+        value={fmtTemp(contactValid ? displayTemp : null)}
         unit="°C"
       >
         <div className="flex items-center gap-1 text-xs text-clinical-muted">
@@ -132,6 +136,50 @@ export function GaugeRow() {
         </div>
       </GaugeCard>,
     );
+
+  cards.push(
+    <GaugeCard
+      key="spo2"
+      icon={<Wind className="h-3.5 w-3.5" aria-hidden />}
+      label="SpO2"
+      value={fmt(latest?.spo2, 1)}
+      unit="%"
+    >
+      <div className="text-xs text-clinical-muted">Live sensor value · not a model input</div>
+    </GaugeCard>,
+  );
+
+  cards.push(
+    <GaugeCard
+      key="ambient-temp"
+      icon={<Thermometer className="h-3.5 w-3.5" aria-hidden />}
+      label="Ambient temperature"
+      value={fmtTemp(contactValid ? latest?.ambient_temp_c : null)}
+      unit="°C"
+    />,
+  );
+
+  cards.push(
+    <GaugeCard
+      key="ir"
+      icon={<ScanLine className="h-3.5 w-3.5" aria-hidden />}
+      label="PPG infrared"
+      value={fmt(latest?.ir, 0)}
+    />,
+  );
+
+  cards.push(
+    <GaugeCard
+      key="contact"
+      icon={<ScanLine className="h-3.5 w-3.5" aria-hidden />}
+      label="Finger contact"
+      value={latest?.finger_present == null ? "—" : latest.finger_present ? "Present" : "Not detected"}
+    >
+      {latest?.finger_present === false && (
+        <div className="text-xs font-medium text-clinical-warning">Stress prediction paused</div>
+      )}
+    </GaugeCard>,
+  );
 
   // Use accent ref to avoid unused var when no sparkline-accent card present.
   void accent;

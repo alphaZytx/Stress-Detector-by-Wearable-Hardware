@@ -60,7 +60,8 @@ const FORMATS: { id: Format; label: string }[] = [
 ];
 
 /** CSV column order, mirroring the service's SensorSample (see api/types.ts). */
-const CSV_HEADER = "t,bpm,avg_bpm,gsr,temp_c";
+const CSV_HEADER =
+  "t,bpm,spo2,object_temp_c,ambient_temp_c,gsr,ir,finger_present";
 
 function fmtStreamClock(ms: number): string {
   const total = Math.floor(ms / 1000);
@@ -83,50 +84,40 @@ function pad(
 /** One packet as a plain-text line - also what the copy button writes out. */
 function toText(s: SensorSample, format: Format): string {
   const t = fmtStreamClock(s.timestamp_ms);
-  if (format === "json") return JSON.stringify(s);
+  const visible =
+    s.finger_present === false
+      ? { ...s, temp_c: null, ambient_temp_c: null }
+      : s;
+  if (format === "json") return JSON.stringify(visible);
   if (format === "csv") {
     const n = (v: number | null | undefined, d: number) =>
       v == null || !Number.isFinite(v) ? "" : v.toFixed(d);
     return [
       t,
-      n(s.bpm, 0),
-      n(s.avg_bpm, 0),
+      s.finger_present === false ? "0" : n(s.bpm, 0),
+      n(s.spo2, 1),
+      n(visible.temp_c, 2),
+      n(visible.ambient_temp_c, 2),
       n(s.gsr, 1),
-      n(s.temp_c, 2),
+      n(s.ir, 0),
+      s.finger_present == null ? "" : String(s.finger_present),
     ].join(",");
   }
-  const flags = [s.bpm == null ? "DROP" : null].filter(Boolean);
+  const bpm = s.finger_present === false ? "0" : pad(s.bpm, 0, 1).trim();
+  const spo2 = s.spo2 == null ? "--" : s.spo2.toFixed(1);
+  const objectTemp = visible.temp_c == null ? "--" : visible.temp_c.toFixed(2);
+  const ambientTemp =
+    visible.ambient_temp_c == null ? "--" : visible.ambient_temp_c.toFixed(2);
+  const gsr = Number.isFinite(s.gsr) ? s.gsr.toFixed(2) : "--";
+  const ir = s.ir == null ? "--" : s.ir.toFixed(0);
   return (
-    `${t}  bpm=${pad(s.bpm, 0, 3)}  avg=${pad(s.avg_bpm, 0, 3)}  ` +
-    `gsr=${pad(s.gsr, 1, 6)}  temp=${pad(s.temp_c, 2, 6)}` +
-    (flags.length ? `  ${flags.join(" ")}` : "")
-  );
-}
-
-/** A key=value pair with the key dimmed - the console's only "syntax". */
-function Field({
-  name,
-  value,
-  color,
-}: {
-  name: string;
-  value: string;
-  color: string;
-}) {
-  return (
-    <>
-      <span style={{ color: T.dim }}>{name}=</span>
-      <span style={{ color }}>{value}</span>
-      <span>{"  "}</span>
-    </>
-  );
-}
-
-function Flag({ label, color }: { label: string; color: string }) {
-  return (
-    <span className="ml-2" style={{ color }}>
-      [{label}]
-    </span>
+    `BPM: ${bpm || "--"} | SPO2: ${spo2} | ObjTemp: ${objectTemp} | ` +
+    `AmbTemp: ${ambientTemp} | GSR: ${gsr} | IR: ${ir}` +
+    (s.finger_present === false
+      ? " | No finger"
+      : s.bpm == null
+        ? " | [DROP]"
+        : "")
   );
 }
 
@@ -162,19 +153,9 @@ function Line({
         style={{ color: T.text }}
       >
         {format === "aligned" ? (
-          <>
-            <span style={{ color: T.ts }}>{fmtStreamClock(sample.timestamp_ms)}</span>
-            <span>{"  "}</span>
-            <Field
-              name="bpm"
-              value={pad(sample.bpm, 0, 3)}
-              color={dropped ? T.warn : T.bpm}
-            />
-            <Field name="avg" value={pad(sample.avg_bpm, 0, 3)} color={T.dim} />
-            <Field name="gsr" value={pad(sample.gsr, 1, 6)} color={T.gsr} />
-            <Field name="temp" value={pad(sample.temp_c, 2, 6)} color={T.temp} />
-            {dropped && <Flag label="DROP" color={T.warn} />}
-          </>
+          <span style={{ color: dropped ? T.warn : T.text }}>
+            {toText(sample, "aligned")}
+          </span>
         ) : (
           <span style={{ color: dropped ? T.warn : T.text }}>
             {toText(sample, format)}
@@ -188,7 +169,13 @@ function Line({
           className="whitespace-pre-wrap border-l-2 px-3 py-1 leading-[18px]"
           style={{ borderColor: T.rule, color: T.dim, background: "rgba(255,255,255,0.03)" }}
         >
-          {JSON.stringify(sample, null, 2)}
+          {JSON.stringify(
+            sample.finger_present === false
+              ? { ...sample, temp_c: null, ambient_temp_c: null }
+              : sample,
+            null,
+            2,
+          )}
         </div>
       )}
     </>

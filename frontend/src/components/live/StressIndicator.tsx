@@ -103,7 +103,7 @@ export function StressIndicator() {
         <div className="text-right">
           <div className="eyebrow">P(stress)</div>
           <div className="tnum text-stat-lg font-extrabold text-clinical-text">
-            {pred ? fmtPercent(display) : "-"}
+            {pred ? fmtPercent(display, 1) : "-"}
           </div>
           {pred?.calibration_applied && (
             <div className="mt-1 inline-flex items-center gap-1 rounded-full bg-clinical-accent-soft px-2 py-0.5 text-xs font-medium text-clinical-accent">

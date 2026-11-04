@@ -409,7 +409,7 @@ export function ModelInputPanel({ className }: { className?: string }) {
         <Stage
           icon={<Binary className="h-3.5 w-3.5" aria-hidden />}
           label="Feature vector"
-          value="22"
+          value="18"
           detail="standardised, then fed to the model"
           active={hasFeatures}
         />
@@ -469,7 +469,7 @@ export function ModelInputPanel({ className }: { className?: string }) {
       <div className="mt-4 flex flex-wrap items-center gap-2 px-5">
         <div className="flex flex-wrap gap-1">
           <FilterChip active={group === "all"} onClick={() => setGroup("all")}>
-            All 22
+            All 18
           </FilterChip>
           {FEATURE_GROUPS.map((g) => (
             <FilterChip

@@ -22,6 +22,8 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import re
+import time
 from typing import AsyncIterator
 
 from ..config import SerialConfig
@@ -37,6 +39,16 @@ _SAMPLE_PERIOD_MS = 1000  # 1 Hz data - fixed stream clock (see module docstring
 _RECONNECT_BACKOFF_S = 2.0
 _MAX_RECONNECT_ATTEMPTS = 5
 
+_LABELED_LINE = re.compile(
+    r"BPM:\s*(?P<bpm>[\d.]+)\s*\|\s*"
+    r"SPO2:\s*(?P<spo2>[\d.]+)\s*\|\s*"
+    r"ObjTemp:\s*(?P<object_temp>NA|[-\d.]+)\s*\|\s*"
+    r"AmbTemp:\s*(?P<ambient_temp>NA|[-\d.]+)\s*\|\s*"
+    r"GSR:\s*(?P<gsr>[-\d.]+)\s*\|\s*"
+    r"IR:\s*(?P<ir>[-\d.]+)(?P<no_finger>\s*\|\s*No finger)?",
+    re.IGNORECASE,
+)
+
 
 class SerialSource(SensorSource):
     def __init__(self, cfg: SerialConfig):
@@ -45,12 +57,20 @@ class SerialSource(SensorSource):
         self._serial = None
         self._running = False
         self._sample_idx = 0
+        self._last_labeled_emit_s: float | None = None
+        self._last_malformed_warning_s: float | None = None
 
     def _open(self):
         """Open the serial port. Returns the handle or None (logged on failure)."""
         try:
             import serial  # pyserial - lazy import so its absence doesn't break import
             handle = serial.Serial(self._port, self._baudrate, timeout=1)
+            # Opening a NodeMCU serial device can expose a stale/mid-packet USB
+            # buffer (and some boards reset on DTR). Give it one second to
+            # settle, then discard that startup data so parsing begins on a
+            # complete firmware line.
+            time.sleep(1.0)
+            handle.reset_input_buffer()
             logger.info("SerialSource opened %s @ %d", self._port, self._baudrate)
             return handle
         except Exception as exc:  # noqa: BLE001 - log and stay down, never crash
@@ -82,6 +102,47 @@ class SerialSource(SensorSource):
         line = line.strip()
         if not line:
             return None
+
+        # Firmware lifecycle messages are expected and are not sensor packets.
+        if line.startswith(("MLX90614 ", "MAX30105 ", "I2C ")):
+            logger.debug("SerialSource firmware status: %s", line)
+            return None
+
+        # Current NodeMCU firmware diagnostic format.
+        labeled = _LABELED_LINE.search(line)
+        if labeled:
+            groups = labeled.groupdict()
+            finger_present = not bool(groups["no_finger"])
+            raw_bpm = self._to_float(groups["bpm"])
+            raw_spo2 = self._to_float(groups["spo2"])
+            bpm = valid_bpm(raw_bpm) if finger_present else None
+            object_temp = (
+                None if groups["object_temp"].upper() == "NA"
+                else self._to_float(groups["object_temp"])
+            )
+            ambient_temp = (
+                None if groups["ambient_temp"].upper() == "NA"
+                else self._to_float(groups["ambient_temp"])
+            )
+            ts_ms = self._sample_idx * _SAMPLE_PERIOD_MS
+            self._sample_idx += 1
+            return SensorSample(
+                timestamp_ms=ts_ms,
+                bpm=bpm,
+                avg_bpm=bpm,
+                # Temperature is meaningful for this device only when the
+                # finger/contact gate is satisfied. Do not leak a room/object
+                # reading into either the dashboard or the model buffer.
+                temp_c=object_temp if finger_present else None,
+                gsr=self._to_float(groups["gsr"]),
+                # Display the live firmware value. SpO2 is not a model feature.
+                spo2=raw_spo2,
+                ambient_temp_c=ambient_temp if finger_present else None,
+                ir=self._to_float(groups["ir"]),
+                finger_present=finger_present,
+                source_label=None,
+            )
+
         # Tolerate an optional leading tag (e.g. "DATA," or "CSV,") some firmwares
         # prefix; strip it if the first token isn't numeric.
         parts = line.split(",")
@@ -94,7 +155,13 @@ class SerialSource(SensorSource):
         if parts and not _looks_numeric(parts[0]):
             parts = parts[1:]
         if len(parts) < _MIN_FIELDS:
-            logger.warning("SerialSource: short/malformed line skipped: %r", line)
+            now = time.monotonic()
+            if (
+                self._last_malformed_warning_s is None
+                or now - self._last_malformed_warning_s >= 5.0
+            ):
+                logger.warning("SerialSource: short/malformed line skipped: %r", line)
+                self._last_malformed_warning_s = now
             return None
 
         f = self._to_float
@@ -156,6 +223,17 @@ class SerialSource(SensorSource):
             if not raw:
                 continue  # idle timeout, no data this tick
             line = raw.decode("utf-8", errors="replace")
+            # The current sketch prints diagnostics every 500 ms, while the
+            # training pipeline is 1 Hz. Keep the newest labelled reading at
+            # most once per second instead of compressing a 30-second window.
+            if _LABELED_LINE.search(line):
+                now = time.monotonic()
+                if (
+                    self._last_labeled_emit_s is not None
+                    and now - self._last_labeled_emit_s < 1.0
+                ):
+                    continue
+                self._last_labeled_emit_s = now
             sample = self._parse_line(line)
             if sample is not None:
                 yield sample

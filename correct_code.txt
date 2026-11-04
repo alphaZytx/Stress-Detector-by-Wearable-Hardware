@@ -1,0 +1,273 @@
+ #include <Wire.h>
+#include <MAX30105.h>
+#include <heartRate.h>
+#include <Adafruit_MLX90614.h>
+#include <LoRa.h>
+#include <SPI.h>
+
+const int GSR = A0;
+
+MAX30105 particleSensor;
+Adafruit_MLX90614 mlx = Adafruit_MLX90614();
+
+const byte RATE_SIZE = 4;
+byte rates[RATE_SIZE];
+byte rateSpot = 0;
+byte validRateCount = 0;
+
+const long FINGER_IR_THRESHOLD = 50000;
+const byte LED_BRIGHTNESS = 30;
+const byte SAMPLE_AVERAGE = 4;
+const byte LED_MODE = 2;
+const int SENSOR_SAMPLE_RATE = 400;
+const int EFFECTIVE_SAMPLE_RATE = SENSOR_SAMPLE_RATE / SAMPLE_AVERAGE;
+const int PULSE_WIDTH = 411;
+const int ADC_RANGE = 4096;
+
+long lastBeat = 0;
+float beatsPerMinute = 0;
+int beatAvg = 0;
+
+float bpmSum = 0;
+int bpmCount = 0;
+
+float gsrSum = 0;
+int gsrCount = 0;
+
+float objTempSum = 0, ambientTempSum = 0;
+int objTempCount = 0, ambientTempCount = 0;
+
+unsigned long lastSendTime = 0;
+const unsigned long sendInterval = 30000;
+
+static float irDC = 0;
+float filteredIR = 0;
+
+static float prevIR = 0;
+static float prevDiff = 0;
+
+static float redDC = 0;
+static float spo2 = 0;
+
+bool mlxAvailable = false;
+float objTempC = NAN;
+float ambientTempC = NAN;
+unsigned long lastTempReadTime = 0;
+unsigned long lastMlxRetryTime = 0;
+byte mlxReadFailures = 0;
+const unsigned long tempReadInterval = 250;
+const unsigned long mlxRetryInterval = 5000;
+
+long latestIR = 0;
+bool fingerPresent = false;
+unsigned long lastFingerTime = 0;
+
+unsigned long lastPrintTime = 0;
+const unsigned long printInterval = 500;
+
+void updateTemperature() {
+    unsigned long now = millis();
+
+    if (!mlxAvailable) {
+        if (now - lastMlxRetryTime < mlxRetryInterval) return;
+        lastMlxRetryTime = now;
+        mlxAvailable = mlx.begin(MLX90614_I2CADDR, &Wire);
+        if (mlxAvailable) Serial.println("MLX90614 connected at 0x5A.");
+        return;
+    }
+
+    if (now - lastTempReadTime < tempReadInterval) return;
+    lastTempReadTime = now;
+
+    float rawObject = NAN;
+    float rawAmbient = NAN;
+
+    // A short retry handles occasional I2C read failures without returning NAN.
+    for (byte attempt = 0; attempt < 3; attempt++) {
+        rawObject = mlx.readObjectTempC();
+        delay(5);
+        rawAmbient = mlx.readAmbientTempC();
+        if (!isnan(rawObject) && !isnan(rawAmbient)) break;
+        delay(10);
+        yield();
+    }
+
+    bool receivedReading = false;
+
+    if (!isnan(rawObject) && rawObject > -70.0 && rawObject < 380.0) {
+        objTempC = isnan(objTempC) ? rawObject : (0.2 * rawObject + 0.8 * objTempC);
+        objTempSum += rawObject;
+        objTempCount++;
+        receivedReading = true;
+    }
+
+    if (!isnan(rawAmbient) && rawAmbient > -40.0 && rawAmbient < 125.0) {
+        ambientTempC = isnan(ambientTempC) ? rawAmbient : (0.2 * rawAmbient + 0.8 * ambientTempC);
+        ambientTempSum += rawAmbient;
+        ambientTempCount++;
+        receivedReading = true;
+    }
+
+    if (receivedReading) {
+        mlxReadFailures = 0;
+    } else if (++mlxReadFailures >= 5) {
+        Serial.println("MLX90614 stopped responding; retrying connection.");
+        mlxAvailable = false;
+        mlxReadFailures = 0;
+        lastMlxRetryTime = now;
+    }
+}
+
+void setup() {
+    Serial.begin(115200);
+    Wire.begin(4, 5);
+    Wire.setClock(100000);
+    delay(100);
+
+    Serial.println("\nI2C scan:");
+    byte devicesFound = 0;
+    for (byte address = 1; address < 127; address++) {
+        Wire.beginTransmission(address);
+        if (Wire.endTransmission() == 0) {
+            Serial.print("  Found device at 0x");
+            if (address < 16) Serial.print('0');
+            Serial.println(address, HEX);
+            devicesFound++;
+        }
+        yield();
+    }
+    if (devicesFound == 0) Serial.println("  No I2C devices found.");
+
+    if (!particleSensor.begin(Wire, I2C_SPEED_STANDARD)) {
+        Serial.println("MAX30105 not found!");
+        while (true) delay(1000);
+    }
+
+    // 400 raw samples/s averaged by 4 gives a stable 100 Hz output stream.
+    particleSensor.setup(LED_BRIGHTNESS, SAMPLE_AVERAGE, LED_MODE,
+                         SENSOR_SAMPLE_RATE, PULSE_WIDTH, ADC_RANGE);
+    particleSensor.setPulseAmplitudeGreen(0);
+    Serial.print("MAX30105 effective sample rate: ");
+    Serial.print(EFFECTIVE_SAMPLE_RATE);
+    Serial.println(" Hz");
+
+    mlxAvailable = mlx.begin(MLX90614_I2CADDR, &Wire);
+    if (mlxAvailable) Serial.println("MLX90614 connected at 0x5A.");
+    else Serial.println("MLX90614 not found at 0x5A; BPM/GSR will continue.");
+    lastMlxRetryTime = millis();
+}
+
+void loop() {
+    particleSensor.check();
+
+    // Process every FIFO sample exactly once at the effective 100 Hz rate.
+    while (particleSensor.available()) {
+        long redValue = particleSensor.getFIFORed();
+        long irValue = particleSensor.getFIFOIR();
+        particleSensor.nextSample();
+
+        latestIR = irValue;
+        fingerPresent = irValue >= FINGER_IR_THRESHOLD;
+        bool beatDetected = checkForBeat(irValue);
+
+        if (fingerPresent) {
+            lastFingerTime = millis();
+
+            if (beatDetected) {
+                unsigned long now = millis();
+
+                if (lastBeat != 0) {
+                    float bpm = 60000.0 / (now - lastBeat);
+
+                    if (bpm >= 45.0 && bpm <= 150.0) {
+                        beatsPerMinute = bpm;
+                        rates[rateSpot++] = (byte)(bpm + 0.5);
+                        rateSpot %= RATE_SIZE;
+                        if (validRateCount < RATE_SIZE) validRateCount++;
+
+                        int sum = 0;
+                        for (byte i = 0; i < validRateCount; i++) sum += rates[i];
+                        beatAvg = (sum + validRateCount / 2) / validRateCount;
+
+                        bpmSum += beatAvg;
+                        bpmCount++;
+                    }
+                }
+
+                lastBeat = now;
+            }
+        }
+
+        // Keep the existing SpO2 calculation, but feed it real FIFO samples.
+        if (irDC == 0 || redDC == 0) {
+            irDC = irValue;
+            redDC = redValue;
+        }
+
+        irDC = 0.95 * irDC + 0.05 * irValue;
+        redDC = 0.95 * redDC + 0.05 * redValue;
+        filteredIR = irValue - irDC;
+
+        float irAC = filteredIR;
+        float redAC = redValue - redDC;
+
+        if (fingerPresent && irDC > 0 && redDC > 0 &&
+            abs(irAC) > 300 && abs(redAC) > 300) {
+            float R = (redAC / redDC) / (irAC / irDC);
+            float newSpO2 = 110.0 - (25.0 * R);
+            spo2 = 0.8 * spo2 + 0.2 * newSpO2;
+            if (spo2 > 100) spo2 = 100;
+            if (spo2 < 80) spo2 = 80;
+        }
+    }
+
+    if (!fingerPresent && millis() - lastFingerTime > 2000) {
+        beatsPerMinute = 0;
+        beatAvg = 0;
+        validRateCount = 0;
+        rateSpot = 0;
+        lastBeat = 0;
+        spo2 = 0;
+    }
+
+    updateTemperature();
+
+   
+    int sensorValue = analogRead(GSR);
+    float gsrVoltage = sensorValue * (1.0 / 1023.0);
+    float gsr_MicroSiemens = gsrVoltage * 384.615;
+
+    if (gsr_MicroSiemens >= 0 && gsr_MicroSiemens <= 5.0) {
+        gsrSum += gsr_MicroSiemens;
+        gsrCount++;
+    }
+
+    if (millis() - lastPrintTime >= printInterval) {
+        lastPrintTime = millis();
+
+        Serial.print("BPM: ");
+        Serial.print(beatAvg);
+
+        Serial.print(" | SPO2: ");
+        Serial.print(spo2, 1);
+
+        Serial.print(" | ObjTemp: ");
+        if (isnan(objTempC)) Serial.print("NA");
+        else Serial.print(objTempC, 2);
+
+        Serial.print(" | AmbTemp: ");
+        if (isnan(ambientTempC)) Serial.print("NA");
+        else Serial.print(ambientTempC, 2);
+
+        Serial.print(" | GSR: ");
+        Serial.print(gsr_MicroSiemens, 2);
+
+        Serial.print(" | IR: ");
+        Serial.print(latestIR);
+
+        if (!fingerPresent) Serial.print(" | No finger");
+        Serial.println();
+    }
+
+    delay(1);
+}

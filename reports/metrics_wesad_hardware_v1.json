@@ -1,0 +1,59 @@
+{
+  "dataset": "WESAD-only",
+  "n_subjects": 15,
+  "n_windows": 5360,
+  "n_features": 18,
+  "feature_names": [
+    "hr_mean",
+    "hr_std",
+    "hr_min",
+    "hr_max",
+    "hr_range",
+    "hr_slope",
+    "hr_pnn_proxy",
+    "gsr_mean",
+    "gsr_std",
+    "gsr_min",
+    "gsr_max",
+    "gsr_range",
+    "gsr_slope",
+    "gsr_auc",
+    "gsr_peaks",
+    "temp_mean",
+    "temp_std",
+    "temp_slope"
+  ],
+  "best_params": {
+    "C": 1,
+    "gamma": "scale",
+    "kernel": "rbf"
+  },
+  "accuracy_mean": 0.8820135567196502,
+  "accuracy_std": 0.11696761356775649,
+  "macro_f1_mean": 0.8609567776427604,
+  "macro_f1_std": 0.14862105551632424,
+  "weighted_f1_mean": 0.8809119010248785,
+  "precision_per_class": [
+    0.9006849315068494,
+    0.8448275862068966
+  ],
+  "recall_per_class": [
+    0.9163763066202091,
+    0.8183716075156576
+  ],
+  "f1_per_class": [
+    0.9084628670120898,
+    0.8313891834570519
+  ],
+  "confusion_matrix": [
+    [
+      3156,
+      288
+    ],
+    [
+      348,
+      1568
+    ]
+  ],
+  "n_folds": 15
+}

@@ -26,6 +26,7 @@ class Runtime:
         # Calibration is loaded at session start and held for the session's
         # duration. None → predictions pass through unmodified.
         self._calibration: CalibrationOffsets | None = None
+        self._finger_present: bool | None = None
 
     async def start_session(
         self,
@@ -69,6 +70,12 @@ class Runtime:
         async for sample in self.source.stream():
             await self.broadcaster.push_sample(sample)
 
+            if sample.finger_present is False and self._finger_present is not False:
+                self.streamer.reset()
+                self.engine.reset_smoothing()
+                logger.info("Finger contact lost: cleared feature window and prediction smoothing")
+            self._finger_present = sample.finger_present
+
             # This whole background task is shared by every connected client
             # for the lifetime of the process (see app.py's lifespan handler).
             # A single bad sample raising here - a NaN feature, a transient
@@ -77,7 +84,18 @@ class Runtime:
             # recover short of restarting the process. Log it and keep
             # streaming the next sample instead.
             try:
-                features = self.streamer.push(sample)
+                # Contact-loss packets are still broadcast and may be recorded,
+                # but they must not refill the freshly cleared model window.
+                features = (
+                    None
+                    if sample.finger_present is False
+                    else self.streamer.push(sample)
+                )
+                # An explicit hardware "No finger" state is a quality gate,
+                # not a physiological zero. Keep the invalid sample in the
+                # rolling buffer, but never emit a stress result for it.
+                if sample.finger_present is False:
+                    features = None
                 pred = None
                 if features is not None:
                     self._emit_count += 1
@@ -86,10 +104,13 @@ class Runtime:
                     )
                     await self.broadcaster.push_prediction(features, pred)
                     logger.info(
-                        "feature emit #%d ts=%dms hr_mean=%.1f gsr_mean=%.1f pred=%s",
+                        "feature emit #%d ts=%dms hr_mean=%.1f gsr_mean=%.1f "
+                        "pred=%s p_stress=%.3f smoothed=%.3f",
                         self._emit_count, sample.timestamp_ms,
                         features["hr_mean"], features["gsr_mean"],
                         getattr(pred, "smoothed_label", pred),
+                        pred.raw_proba.get("stress", 0.0),
+                        pred.smoothed_confidence,
                     )
 
                 # Persist every sample at full rate (no-op if no session is

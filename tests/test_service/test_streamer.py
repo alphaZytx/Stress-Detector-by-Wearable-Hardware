@@ -89,3 +89,16 @@ def test_buffer_seconds_caps_at_window():
     for i in range(10, 60):
         s.push(_sample(i))
     assert s.buffer_seconds == cfg.window_s
+
+
+def test_reset_requires_a_fresh_full_window():
+    cfg = get_service_config()
+    s = FeatureStreamer(cfg.window_s, cfg.stride_s, cfg.sampling_hz)
+    for i in range(cfg.window_s):
+        assert s.push(_sample(i)) is None or i == cfg.window_s - 1
+    assert s.buffer_seconds == cfg.window_s
+
+    s.reset()
+    assert s.buffer_seconds == 0
+    for i in range(cfg.window_s - 1):
+        assert s.push(_sample(100 + i)) is None

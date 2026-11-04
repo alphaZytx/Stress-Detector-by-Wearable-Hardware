@@ -171,11 +171,11 @@ describe("ModelInputPanel · raw sensor mode", () => {
     });
 
     // The frozen snapshot must not show the packet that arrived after it.
-    expect(screen.queryAllByText("999.0")).toHaveLength(0);
+    expect(screen.queryAllByText(/GSR: 999\.00/)).toHaveLength(0);
 
     // On resume the packet prints to the console.
     await user.click(screen.getByRole("button", { name: /Resume/i }));
-    expect(screen.getAllByText("999.0").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText(/GSR: 999\.00/).length).toBeGreaterThanOrEqual(1);
   });
 });
 

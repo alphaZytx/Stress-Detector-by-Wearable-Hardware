@@ -247,6 +247,38 @@ def test_serial_source_accepts_optional_tag():
     assert s.bpm == 80.0 and s.gsr == 100.0
 
 
+def test_serial_source_parses_current_nodemcu_line():
+    src = SerialSource(SerialConfig(port="/dev/null", baudrate=115200))
+    sample = src._parse_line(
+        "BPM: 76 | SPO2: 91.2 | ObjTemp: 34.99 | AmbTemp: 27.12 | "
+        "GSR: 100.76 | IR: 56564"
+    )
+    assert sample is not None
+    assert sample.bpm == 76.0
+    assert sample.avg_bpm == 76.0
+    assert sample.temp_c == 34.99
+    assert sample.ambient_temp_c == 27.12
+    assert sample.gsr == 100.76
+    assert sample.ir == 56564.0
+    assert sample.finger_present is True
+    assert sample.spo2 == 91.2
+
+
+def test_serial_source_no_finger_invalidates_bpm_and_spo2():
+    src = SerialSource(SerialConfig(port="/dev/null", baudrate=115200))
+    sample = src._parse_line(
+        "BPM: 0 | SPO2: 0.0 | ObjTemp: 24.99 | AmbTemp: 27.12 | "
+        "GSR: 100.76 | IR: 564 | No finger"
+    )
+    assert sample is not None
+    assert sample.bpm is None
+    assert sample.avg_bpm is None
+    assert sample.spo2 == 0.0
+    assert sample.temp_c is None
+    assert sample.ambient_temp_c is None
+    assert sample.finger_present is False
+
+
 def test_serial_source_skips_header_and_malformed():
     lines = [
         b"timestamp,bpm,avg_bpm,gsr,temp_c\n",

@@ -72,7 +72,7 @@ npm install
 npm run dev
 ```
 
-The default input is synthetic but still passes through the real 18-feature pipeline and trained model. To use hardware, set `input.source: serial` and the device port in `config/service.yaml`.
+The default input is the NodeMCU serial stream at `/dev/cu.usbserial-A5069RR4`. Close Arduino/PlatformIO serial monitors before starting the service because only one process can own the port. To run without hardware, set `input.source: synthetic` in `config/service.yaml`.
 
 ## Rebuild data and models
 
@@ -112,3 +112,17 @@ cd frontend && npm test && npm run build
 ```
 
 This is a research prototype, not a medical device. Its output is not a diagnosis.
+# Hardware-only live monitor
+
+To view your NodeMCU's live output separately from the main dashboard, first
+close any other serial monitor (Arduino IDE / PlatformIO) that has the port
+open, then run:
+
+```bash
+./scripts/run_hardware_monitor.sh
+```
+
+Open http://127.0.0.1:8765. The page reads
+`/dev/cu.usbserial-A5069RR4` at 115200 baud, displays every raw serial line,
+and updates cards for BPM, SpO2, object/ambient temperature, GSR, IR, and
+finger detection.

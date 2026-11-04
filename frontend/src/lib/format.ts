@@ -15,8 +15,8 @@ export function fmtTemp(value: number | null | undefined): string {
   return value.toFixed(1);
 }
 
-export function fmtPercent(fraction: number): string {
-  return `${Math.round(fraction * 100)}%`;
+export function fmtPercent(fraction: number, decimals = 0): string {
+  return `${(fraction * 100).toFixed(decimals)}%`;
 }
 
 /** Trend over a numeric series: "up" | "down" | "flat". */

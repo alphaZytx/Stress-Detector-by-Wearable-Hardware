@@ -10,6 +10,12 @@ Output: data/interim/wesad_sensors_clean.parquet
 
 Schema matches sensors_clean.parquet exactly, with an additional subject_id column:
   timestamp_ms, bpm, avg_bpm, temp_c, gsr, label, condition, subject_id, bpm_valid
+
+Two display-only compatibility columns are also added:
+  spo2          : fixed at 98.0 (WESAD has no SpO2 channel)
+  ambient_temp_c: deterministic neutral synthetic room temperature
+
+Neither column is used by build_wesad_features.py or by the classifier.
 """
 
 import logging
@@ -63,6 +69,16 @@ def process_subject(subject_id: str, cfg) -> pd.DataFrame | None:
     df["label"] = df["binary_label"].map(_LABEL_MAP)
     df["condition"] = df["label"]
 
+    # Auxiliary hardware-schema values only. Keep them independent of the
+    # stress label so they cannot introduce a synthetic shortcut. WESAD's real
+    # wrist TEMP remains the model's temp_c input.
+    df["spo2"] = 98.0
+    seconds = df["timestamp_ms"].to_numpy(dtype=float) / 1000.0
+    subject_number = int(subject_id.removeprefix("S"))
+    df["ambient_temp_c"] = (
+        24.0 + 0.25 * np.sin(seconds / 900.0 + subject_number)
+    )
+
     df = df.drop(columns=["label_code", "binary_label"])
 
     n_baseline = (df["label"] == "baseline").sum()
@@ -99,7 +115,7 @@ def main() -> None:
     # Reorder columns to match sensors_clean.parquet schema (+ subject_id at end)
     ordered_cols = [
         "timestamp_ms", "bpm", "avg_bpm", "temp_c", "gsr",
-        "label", "condition", "subject_id", "bpm_valid",
+        "spo2", "ambient_temp_c", "label", "condition", "subject_id", "bpm_valid",
     ]
     combined = combined[ordered_cols]
 

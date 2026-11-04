@@ -39,6 +39,15 @@ class FeatureStreamer:
         self._df = pd.DataFrame(columns=_BUFFER_COLUMNS)
         self._last_emit_ms: int | None = None
 
+    def reset(self) -> None:
+        """Discard the current window after contact loss.
+
+        A new prediction must be based on a fresh full window of valid contact,
+        not a mixture of readings captured before and after the finger moved.
+        """
+        self._df = pd.DataFrame(columns=_BUFFER_COLUMNS)
+        self._last_emit_ms = None
+
     @property
     def buffer_seconds(self) -> int:
         """Current buffer length in seconds, capped at window_s."""

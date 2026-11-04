@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import {
   Activity,
+  Radio,
   HeartPulse,
   History,
   LogOut,
@@ -18,6 +19,7 @@ import { useSettingsStore } from "@/stores/settingsStore";
 
 const NAV = [
   { to: "/live", label: "Live", Icon: Activity },
+  { to: "/sensors", label: "Sensors", Icon: Radio },
   { to: "/history", label: "History", Icon: History },
   { to: "/calibration", label: "Calibration", Icon: Target },
   { to: "/breathing", label: "Breathing", Icon: Wind },

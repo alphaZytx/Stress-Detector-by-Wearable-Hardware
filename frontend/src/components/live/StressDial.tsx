@@ -17,6 +17,9 @@ const STROKE = 18;
 
 export function StressDial() {
   const pred = useLiveStore((s) => s.latestPrediction);
+  const latestSample = useLiveStore((s) => s.latestSample);
+  const emitCount = useLiveStore((s) => s.emitCount);
+  const noContact = latestSample?.finger_present === false;
   const target = pred ? pred.raw_proba.stress : 0;
 
   const [display, setDisplay] = useState(0);
@@ -45,7 +48,7 @@ export function StressDial() {
 
   const level = stressLevel(display);
   const isStress = pred?.smoothed_label === "stress";
-  const label = pred ? pred.smoothed_label.toUpperCase() : "-";
+  const label = noContact ? "NO CONTACT" : pred ? pred.smoothed_label.toUpperCase() : "WAITING";
 
   const ACCENT: Record<string, string> = {
     calm: "var(--clinical-success)",
@@ -121,7 +124,14 @@ export function StressDial() {
           </div>
           <div className="eyebrow mt-2">P(stress)</div>
           <div className="tnum text-stat-lg font-bold leading-none text-clinical-text">
-            {pred ? fmtPercent(display) : "-"}
+            {pred ? fmtPercent(display, 1) : "-"}
+          </div>
+          <div className="mt-2 text-xs text-clinical-muted">
+            {noContact
+              ? "Place finger on sensor"
+              : pred
+                ? `Updated · emit #${emitCount}`
+                : "Collecting a fresh 30s window"}
           </div>
         </div>
       </div>

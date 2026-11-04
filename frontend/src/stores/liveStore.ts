@@ -68,6 +68,15 @@ export const useLiveStore = create<LiveState>((set) => ({
     set((state) => ({
       samples: capTail(state.samples, s, MAX_SAMPLES),
       latestSample: s,
+      // A prediction belongs to a valid contact window. Clear the displayed
+      // value immediately on contact loss instead of leaving a stale percent.
+      ...(s.finger_present === false
+        ? {
+            latestFeatures: null,
+            latestPrediction: null,
+            latestFeatureTs: null,
+          }
+        : {}),
       lastMessageMs: Date.now(),
     })),
 

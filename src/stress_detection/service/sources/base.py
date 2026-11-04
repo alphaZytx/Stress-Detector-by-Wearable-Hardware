@@ -25,6 +25,12 @@ class SensorSample:
     avg_bpm: float | None
     temp_c: float | None
     gsr: float
+    # Auxiliary live-only readings. They are shown on the dashboard but are
+    # deliberately excluded from the WESAD-trained feature vector.
+    spo2: float | None = None
+    ambient_temp_c: float | None = None
+    ir: float | None = None
+    finger_present: bool | None = None
     # source-specific metadata
     source_label: str | None = None   # only present from csv_replay
 

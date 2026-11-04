@@ -10,6 +10,11 @@ export interface SensorSample {
   avg_bpm: number | null;
   temp_c: number | null;
   gsr: number;
+  /** Display-only auxiliary readings; not supplied to the WESAD classifier. */
+  spo2?: number | null;
+  ambient_temp_c?: number | null;
+  ir?: number | null;
+  finger_present?: boolean | null;
   source_label: string | null;
 }
 

@@ -36,6 +36,21 @@ describe("liveStore", () => {
     expect(useLiveStore.getState().latestPrediction?.smoothed_label).toBe("stress");
   });
 
+  it("clears a stale prediction immediately when finger contact is lost", () => {
+    const s = useLiveStore.getState();
+    s.pushSample({ ...sample(1000), finger_present: true });
+    s.pushPrediction(prediction(1000));
+    s.pushSample({
+      ...sample(2000),
+      bpm: null,
+      avg_bpm: null,
+      temp_c: null,
+      finger_present: false,
+    });
+    expect(useLiveStore.getState().latestPrediction).toBeNull();
+    expect(useLiveStore.getState().latestFeatures).toBeNull();
+  });
+
   it("caps the prediction buffer at 24 emits", () => {
     const s = useLiveStore.getState();
     for (let i = 0; i < 50; i++) s.pushPrediction(prediction(i));
