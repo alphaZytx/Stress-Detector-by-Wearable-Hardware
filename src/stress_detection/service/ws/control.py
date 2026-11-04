@@ -162,8 +162,8 @@ async def set_calibration(
     """Store the authenticated user's resting baseline.
 
     Applied during inference for sessions started with use_calibration=True (see
-    Runtime.start_session). This is a heuristic personalisation, not formally
-    validated domain adaptation - see CalibrationOffsets docstring.
+    Runtime.start_session). The personalized v3 artifact was trained and
+    subject-independently evaluated with this same resting-baseline contract.
     """
     payload = {
         "gsr_baseline": body.gsr_baseline,

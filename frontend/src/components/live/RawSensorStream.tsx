@@ -61,7 +61,7 @@ const FORMATS: { id: Format; label: string }[] = [
 
 /** CSV column order, mirroring the service's SensorSample (see api/types.ts). */
 const CSV_HEADER =
-  "t,bpm,spo2,object_temp_c,ambient_temp_c,gsr,ir,finger_present";
+  "t,bpm,spo2,object_temp_c,ambient_temp_c,gsr,ir,finger_present,dropped";
 
 function fmtStreamClock(ms: number): string {
   const total = Math.floor(ms / 1000);
@@ -84,11 +84,12 @@ function pad(
 /** One packet as a plain-text line - also what the copy button writes out. */
 function toText(s: SensorSample, format: Format): string {
   const t = fmtStreamClock(s.timestamp_ms);
+  const dropped = s.finger_present === false || s.bpm == null;
   const visible =
     s.finger_present === false
-      ? { ...s, temp_c: null, ambient_temp_c: null }
+      ? { ...s, temp_c: null }
       : s;
-  if (format === "json") return JSON.stringify(visible);
+  if (format === "json") return JSON.stringify({ ...visible, dropped });
   if (format === "csv") {
     const n = (v: number | null | undefined, d: number) =>
       v == null || !Number.isFinite(v) ? "" : v.toFixed(d);
@@ -101,6 +102,7 @@ function toText(s: SensorSample, format: Format): string {
       n(s.gsr, 1),
       n(s.ir, 0),
       s.finger_present == null ? "" : String(s.finger_present),
+      String(dropped),
     ].join(",");
   }
   const bpm = s.finger_present === false ? "0" : pad(s.bpm, 0, 1).trim();
@@ -113,11 +115,8 @@ function toText(s: SensorSample, format: Format): string {
   return (
     `BPM: ${bpm || "--"} | SPO2: ${spo2} | ObjTemp: ${objectTemp} | ` +
     `AmbTemp: ${ambientTemp} | GSR: ${gsr} | IR: ${ir}` +
-    (s.finger_present === false
-      ? " | No finger"
-      : s.bpm == null
-        ? " | [DROP]"
-        : "")
+    (s.finger_present === false ? " | No finger" : "") +
+    ` | Dropped: ${dropped ? "Yes" : "No"}`
   );
 }
 
@@ -170,9 +169,12 @@ function Line({
           style={{ borderColor: T.rule, color: T.dim, background: "rgba(255,255,255,0.03)" }}
         >
           {JSON.stringify(
-            sample.finger_present === false
-              ? { ...sample, temp_c: null, ambient_temp_c: null }
-              : sample,
+            {
+              ...(sample.finger_present === false
+                ? { ...sample, temp_c: null }
+                : sample),
+              dropped: sample.finger_present === false || sample.bpm == null,
+            },
             null,
             2,
           )}

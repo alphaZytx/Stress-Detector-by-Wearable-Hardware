@@ -84,6 +84,13 @@ class FeatureStreamer:
         # Use the most recent window row, keeping the canonical feature order.
         row = feat_df.iloc[-1]
         feats = {col: float(row[col]) for col in FEATURE_COLUMNS}
+        # A valid contact window can still be incomplete when an individual
+        # sensor is unavailable (for example MLX90614 returning NA). None of
+        # the deployed classifiers accepts NaN, so suppress this emit and wait
+        # for a complete fresh window instead of raising inside inference.
+        if not all(np.isfinite(value) for value in feats.values()):
+            logger.warning("Feature window contains missing/non-finite sensor values; no prediction")
+            return None
         return feats
 
     def push(self, sample: SensorSample) -> dict | None:

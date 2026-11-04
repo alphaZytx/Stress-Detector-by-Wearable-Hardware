@@ -1,0 +1,304 @@
+{
+  "version": "v2",
+  "artifacts": {
+    "svm base model": "data/models/svm_wesad_hardware_v2.joblib",
+    "random_forest base model": "data/models/rf_wesad_hardware_v2.joblib",
+    "xgboost base model": "data/models/xgb_wesad_hardware_v2.joblib",
+    "mlp base model": "data/models/mlp_wesad_hardware_v2.joblib",
+    "soft-voting ensemble (equal weights)": "data/models/ensemble_soft_wesad_hardware_v2.joblib",
+    "stacking ensemble (LogisticRegression meta-model)": "data/models/ensemble_stack_wesad_hardware_v2.joblib"
+  },
+  "dataset": {
+    "description": "WESAD-only hardware-compatible dataset (15 subjects); 30 s windows at 5 s stride; BVP/heart rate, EDA/GSR and wrist temperature; features_wesad_v1.parquet",
+    "n_subjects": 15,
+    "n_windows": 5360,
+    "n_features": 18,
+    "feature_names": [
+      "hr_mean",
+      "hr_std",
+      "hr_min",
+      "hr_max",
+      "hr_range",
+      "hr_slope",
+      "hr_pnn_proxy",
+      "gsr_mean",
+      "gsr_std",
+      "gsr_min",
+      "gsr_max",
+      "gsr_range",
+      "gsr_slope",
+      "gsr_auc",
+      "gsr_peaks",
+      "temp_mean",
+      "temp_std",
+      "temp_slope"
+    ],
+    "class_counts": {
+      "baseline": 3444,
+      "stress": 1916
+    },
+    "windows_per_subject": {
+      "S10": 371,
+      "S11": 362,
+      "S13": 358,
+      "S14": 361,
+      "S15": 362,
+      "S16": 360,
+      "S17": 370,
+      "S2": 341,
+      "S3": 346,
+      "S4": 348,
+      "S5": 358,
+      "S6": 356,
+      "S7": 355,
+      "S8": 357,
+      "S9": 355
+    }
+  },
+  "base_model_params": {
+    "svm": {
+      "svc__C": 1,
+      "svc__gamma": "scale"
+    },
+    "random_forest": {
+      "max_depth": null,
+      "max_features": 0.5,
+      "min_samples_leaf": 1,
+      "min_samples_split": 10,
+      "n_estimators": 200
+    },
+    "xgboost": {
+      "colsample_bytree": 1.0,
+      "learning_rate": 0.05,
+      "max_depth": 3,
+      "min_child_weight": 5,
+      "n_estimators": 200,
+      "subsample": 0.8
+    },
+    "mlp": {
+      "mlp__alpha": 0.0001,
+      "mlp__learning_rate_init": 0.003
+    }
+  },
+  "base_model_grouped_cv_f1_macro": {
+    "svm": 0.8330507148408497,
+    "random_forest": 0.8101544589648071,
+    "xgboost": 0.8308217944853318,
+    "mlp": 0.8367822892122152
+  },
+  "soft_voting_weights": {
+    "svm": 0.25,
+    "random_forest": 0.25,
+    "xgboost": 0.25,
+    "mlp": 0.25
+  },
+  "soft_voting_derived_weights_experiment": {
+    "svm": 0.2592209795771656,
+    "random_forest": 0.24000369793635717,
+    "xgboost": 0.24836038024448343,
+    "mlp": 0.2524149422419938
+  },
+  "stacking_meta_coefficients": {
+    "svm": 1.9673715191834296,
+    "random_forest": 1.8331408799953528,
+    "xgboost": 0.8948432126850507,
+    "mlp": 1.2186082608785505
+  },
+  "soft_voting_metadata": {
+    "model_type": "soft_voting",
+    "model_version": "v2",
+    "feature_names": [
+      "hr_mean",
+      "hr_std",
+      "hr_min",
+      "hr_max",
+      "hr_range",
+      "hr_slope",
+      "hr_pnn_proxy",
+      "gsr_mean",
+      "gsr_std",
+      "gsr_min",
+      "gsr_max",
+      "gsr_range",
+      "gsr_slope",
+      "gsr_auc",
+      "gsr_peaks",
+      "temp_mean",
+      "temp_std",
+      "temp_slope"
+    ],
+    "feature_schema_version": "v1",
+    "label_map": {
+      "baseline": 0,
+      "stress": 1
+    },
+    "base_model_names": [
+      "svm",
+      "random_forest",
+      "xgboost",
+      "mlp"
+    ],
+    "base_model_params": {
+      "svm": {
+        "svc__C": 1,
+        "svc__gamma": "scale"
+      },
+      "random_forest": {
+        "max_depth": null,
+        "max_features": 0.5,
+        "min_samples_leaf": 1,
+        "min_samples_split": 10,
+        "n_estimators": 200
+      },
+      "xgboost": {
+        "colsample_bytree": 1.0,
+        "learning_rate": 0.05,
+        "max_depth": 3,
+        "min_child_weight": 5,
+        "n_estimators": 200,
+        "subsample": 0.8
+      },
+      "mlp": {
+        "mlp__alpha": 0.0001,
+        "mlp__learning_rate_init": 0.003
+      }
+    },
+    "meta_model": null,
+    "weights": {
+      "svm": 0.25,
+      "random_forest": 0.25,
+      "xgboost": 0.25,
+      "mlp": 0.25
+    },
+    "threshold": 0.5,
+    "random_seed": 42,
+    "dataset": "WESAD-only hardware-compatible dataset (15 subjects); 30 s windows at 5 s stride; BVP/heart rate, EDA/GSR and wrist temperature; features_wesad_v1.parquet",
+    "n_subjects": 15,
+    "n_windows": 5360,
+    "trained_at": "2026-11-04T11:57:52+00:00",
+    "library_versions": {
+      "scikit-learn": "1.6.1",
+      "numpy": "2.4.6",
+      "xgboost": "3.0.5"
+    },
+    "evaluation": {}
+  },
+  "stacking_metadata": {
+    "model_type": "stacking",
+    "model_version": "v2",
+    "feature_names": [
+      "hr_mean",
+      "hr_std",
+      "hr_min",
+      "hr_max",
+      "hr_range",
+      "hr_slope",
+      "hr_pnn_proxy",
+      "gsr_mean",
+      "gsr_std",
+      "gsr_min",
+      "gsr_max",
+      "gsr_range",
+      "gsr_slope",
+      "gsr_auc",
+      "gsr_peaks",
+      "temp_mean",
+      "temp_std",
+      "temp_slope"
+    ],
+    "feature_schema_version": "v1",
+    "label_map": {
+      "baseline": 0,
+      "stress": 1
+    },
+    "base_model_names": [
+      "svm",
+      "random_forest",
+      "xgboost",
+      "mlp"
+    ],
+    "base_model_params": {
+      "svm": {
+        "svc__C": 1,
+        "svc__gamma": "scale"
+      },
+      "random_forest": {
+        "max_depth": null,
+        "max_features": 0.5,
+        "min_samples_leaf": 1,
+        "min_samples_split": 10,
+        "n_estimators": 200
+      },
+      "xgboost": {
+        "colsample_bytree": 1.0,
+        "learning_rate": 0.05,
+        "max_depth": 3,
+        "min_child_weight": 5,
+        "n_estimators": 200,
+        "subsample": 0.8
+      },
+      "mlp": {
+        "mlp__alpha": 0.0001,
+        "mlp__learning_rate_init": 0.003
+      }
+    },
+    "meta_model": "LogisticRegression",
+    "weights": null,
+    "threshold": 0.5,
+    "random_seed": 42,
+    "dataset": "WESAD-only hardware-compatible dataset (15 subjects); 30 s windows at 5 s stride; BVP/heart rate, EDA/GSR and wrist temperature; features_wesad_v1.parquet",
+    "n_subjects": 15,
+    "n_windows": 5360,
+    "trained_at": "2026-11-04T11:57:59+00:00",
+    "library_versions": {
+      "scikit-learn": "1.6.1",
+      "numpy": "2.4.6",
+      "xgboost": "3.0.5"
+    },
+    "evaluation": {}
+  },
+  "inference_latency_ms": {
+    "svm": {
+      "mean_ms": 0.16709098483261187,
+      "median_ms": 0.16254149886663072,
+      "p95_ms": 0.19358720055606682,
+      "max_ms": 0.26450000586919487,
+      "n_repeats": 200
+    },
+    "random_forest": {
+      "mean_ms": 13.22846645500249,
+      "median_ms": 13.50510399788618,
+      "p95_ms": 13.72870835075446,
+      "max_ms": 37.0415419965866,
+      "n_repeats": 200
+    },
+    "xgboost": {
+      "mean_ms": 0.1105477947203326,
+      "median_ms": 0.10777050192700699,
+      "p95_ms": 0.13666605009348132,
+      "max_ms": 0.20791599672520533,
+      "n_repeats": 200
+    },
+    "mlp": {
+      "mean_ms": 0.279288665005879,
+      "median_ms": 0.1384584975312464,
+      "p95_ms": 0.42871635450865125,
+      "max_ms": 18.74566600599792,
+      "n_repeats": 200
+    },
+    "soft_voting": {
+      "mean_ms": 13.57176146007987,
+      "median_ms": 14.044396004464943,
+      "p95_ms": 14.228151448332937,
+      "max_ms": 14.660749999166,
+      "n_repeats": 200
+    },
+    "stacking": {
+      "mean_ms": 13.648407885302731,
+      "median_ms": 14.088145999266999,
+      "p95_ms": 14.304649998666719,
+      "max_ms": 14.492499998596031,
+      "n_repeats": 200
+    }
+  }
+}

@@ -1,8 +1,7 @@
 /**
  * Compute a per-user resting baseline from a window of 1 Hz samples, with quality
- * gates. This is a heuristic personalisation (see backend CalibrationOffsets) -
- * the captured means are subtracted from live features so the model sees
- * deviation-from-baseline.
+ * gates. The personalized v3 model was trained with the same resting-reference
+ * contract: HR/GSR become relative magnitudes and temperature becomes a delta.
  */
 
 import type { SensorSample } from "@/api/types";
@@ -32,6 +31,7 @@ function stat(values: number[]): BaselineStat {
 
 // Quality thresholds (documented heuristics).
 const MIN_VALID_HR = 100; // of ~120 samples in a 2-min window
+const MIN_VALID_TEMP = 100;
 const MIN_HR_STD = 0.5; // lower → sensor likely disconnected (unphysiological)
 
 export function computeCalibration(samples: SensorSample[]): CalibrationResult {
@@ -55,6 +55,12 @@ export function computeCalibration(samples: SensorSample[]): CalibrationResult {
     warnings.push(
       "Heart-rate variation was unusually low - the sensor may have been disconnected.",
     );
+  if (validTemp.length < MIN_VALID_TEMP)
+    warnings.push(
+      `Only ${validTemp.length} valid object-temperature samples (need ≥${MIN_VALID_TEMP}). Keep your finger still on the sensor.`,
+    );
+  if (!Number.isFinite(gsr.mean) || Math.abs(gsr.mean) < 1e-9)
+    warnings.push("GSR baseline was zero or invalid. Check the skin-contact sensor.");
 
   return { ok: warnings.length === 0, warnings, hr, gsr, temp };
 }

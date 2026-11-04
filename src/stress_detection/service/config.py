@@ -77,7 +77,7 @@ class InferenceConfig:
     model_path: Path
     smoothing: SmoothingConfig
     # Which classifier to serve: svm | random_forest | xgboost | mlp |
-    # soft_voting | stacking (ensemble_soft/ensemble_stack accepted as aliases).
+    # soft_voting | stacking | personalized_extra_trees.
     # Selecting a model is a config change, never a code change.
     model_type: str = "svm"
     # Used when model_path does not exist yet - e.g. an ensemble target set

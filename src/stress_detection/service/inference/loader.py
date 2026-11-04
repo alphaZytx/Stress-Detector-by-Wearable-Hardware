@@ -3,7 +3,7 @@
 The service is told *which kind* of model to serve (``inference.model_type``)
 and *where* it lives (``inference.model_path``). This module turns that pair
 into a loaded, validated estimator, and it is deliberately strict: a model
-whose feature contract does not match the canonical 22 columns is refused at
+whose feature contract does not match the canonical 18 columns is refused at
 startup rather than quietly served, because a silent mismatch produces
 plausible-looking probabilities computed from misaligned columns.
 
@@ -37,6 +37,8 @@ MODEL_TYPE_ALIASES: dict[str, str] = {
     "ensemble_soft": "soft_voting",
     "stacking": "stacking",
     "ensemble_stack": "stacking",
+    "personalized_extra_trees": "personalized_extra_trees",
+    "personalized": "personalized_extra_trees",
 }
 
 SUPPORTED_MODEL_TYPES = tuple(sorted(set(MODEL_TYPE_ALIASES.values())))
@@ -99,6 +101,10 @@ def _version_key(path: Path) -> tuple[int, str]:
 def detect_model_type(model) -> str:
     """Best-effort canonical type name for a loaded estimator."""
     from stress_detection.models.ensemble import SoftVotingEnsemble, StackingEnsemble
+    from stress_detection.models.personalized import PersonalizedStressModel
+
+    if isinstance(model, PersonalizedStressModel):
+        return "personalized_extra_trees"
 
     if isinstance(model, StackingEnsemble):
         return "stacking"
@@ -119,12 +125,13 @@ def detect_model_type(model) -> str:
         "RandomForestClassifier": "random_forest",
         "XGBClassifier": "xgboost",
         "MLPClassifier": "mlp",
+        "ExtraTreesClassifier": "personalized_extra_trees",
     }
     return by_class.get(type(estimator).__name__, "unknown")
 
 
 def validate_model_schema(model, feature_columns: list[str], *, label: str = "model") -> None:
-    """Refuse any model whose feature contract is not the canonical 22 columns.
+    """Refuse any model whose feature contract is not the canonical 18 columns.
 
     Checks, for the model and (recursively) for each base model of an ensemble:
 
@@ -182,6 +189,20 @@ def validate_model_schema(model, feature_columns: list[str], *, label: str = "mo
                     f"{label} meta-model expects {n_meta} inputs but the ensemble "
                     f"has {len(base_models)} base models."
                 )
+
+    personalized_model = getattr(model, "personalized_model", None)
+    fallback_model = getattr(model, "fallback_model", None)
+    if personalized_model is not None or fallback_model is not None:
+        if personalized_model is None or fallback_model is None:
+            raise ValueError(
+                f"{label} must contain both personalized and fallback models."
+            )
+        validate_model_schema(
+            personalized_model, feature_columns, label=f"{label}.personalized"
+        )
+        validate_model_schema(
+            fallback_model, feature_columns, label=f"{label}.fallback"
+        )
 
 
 def load_model(

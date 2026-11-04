@@ -26,7 +26,7 @@ import type { SensorVisibility } from "@/stores/settingsStore";
 import { useSettingsStore } from "@/stores/settingsStore";
 
 // Shown only until the first prediction arrives and names the live model.
-const MODEL_FALLBACK = "svm (baseline)";
+const MODEL_FALLBACK = "Personalized Extra Trees";
 const FEATURE_COUNT = 18;
 
 const SENSOR_LABELS: Record<keyof SensorVisibility, string> = {
@@ -78,7 +78,7 @@ export function Settings() {
               title="Calibration"
               prominent
               icon={<Target className="h-5 w-5" aria-hidden />}
-              description="Personalises inference by subtracting your resting baseline. Heuristic - may help or hurt; toggle per session."
+              description="A 120-second resting baseline enables the highest-accuracy personalized model. Without it, the service safely uses Soft Voting."
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -127,7 +127,7 @@ export function Settings() {
               <Switch
                 id="use-calibration"
                 label="Apply calibration to new sessions"
-                description="When on, recordings interpret signals relative to your baseline."
+                description="Keep this on to use the calibrated 95.6% LOSO model; otherwise recordings use the 91.2% Soft Voting fallback."
                 checked={useCal}
                 onCheckedChange={setUseCal}
               />

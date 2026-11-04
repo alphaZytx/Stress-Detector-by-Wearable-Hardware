@@ -264,7 +264,7 @@ def test_serial_source_parses_current_nodemcu_line():
     assert sample.spo2 == 91.2
 
 
-def test_serial_source_no_finger_invalidates_bpm_and_spo2():
+def test_serial_source_no_finger_hides_object_temperature_but_keeps_ambient():
     src = SerialSource(SerialConfig(port="/dev/null", baudrate=115200))
     sample = src._parse_line(
         "BPM: 0 | SPO2: 0.0 | ObjTemp: 24.99 | AmbTemp: 27.12 | "
@@ -275,7 +275,7 @@ def test_serial_source_no_finger_invalidates_bpm_and_spo2():
     assert sample.avg_bpm is None
     assert sample.spo2 == 0.0
     assert sample.temp_c is None
-    assert sample.ambient_temp_c is None
+    assert sample.ambient_temp_c == 27.12
     assert sample.finger_present is False
 
 

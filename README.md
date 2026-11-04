@@ -6,7 +6,7 @@ Real-time baseline-versus-stress classification from an ESP32 wearable using exa
 - **GSR sensor** — skin conductance (`gsr`)
 - **MLX90614** — contactless temperature (`temp_c`)
 
-The FastAPI service accepts samples at 1 Hz, builds a rolling 30-second window, extracts 18 features every 5 seconds, runs the configured classifier, smooths its probability, stores sessions in SQLite, and streams samples/features/predictions to the React dashboard.
+The FastAPI service accepts samples at 1 Hz, builds a rolling 30-second window, extracts 18 features every 5 seconds, runs a calibration-aware personalized Extra Trees model, smooths its probability, stores sessions in SQLite, and streams samples/features/predictions to the React dashboard. Without a complete personal baseline it automatically uses the previous Soft Voting model.
 
 ```mermaid
 flowchart LR
@@ -74,15 +74,36 @@ npm run dev
 
 The default input is the NodeMCU serial stream at `/dev/cu.usbserial-A5069RR4`. Close Arduino/PlatformIO serial monitors before starting the service because only one process can own the port. To run without hardware, set `input.source: synthetic` in `config/service.yaml`.
 
+## Final trained model
+
+The deployed v3 artifact contains two paths:
+
+| Path | When used | Accuracy | Macro-F1 | Stress F1 | ROC-AUC |
+|---|---|---:|---:|---:|---:|
+| Personalized Extra Trees | Complete 120 s resting calibration | **95.65%** | **0.953** | **0.940** | **0.994** |
+| Soft Voting fallback | No/incomplete calibration | 91.2% | 0.903 | 0.875 | 0.964 |
+
+The personalized result is from nested leave-one-subject-out evaluation over
+5,075 post-calibration WESAD windows from 15 subjects. In every outer fold,
+Extra Trees parameters were selected using training subjects only. The held-out
+person supplied only the same labelled two-minute resting baseline required by
+the live application; those calibration windows were excluded from scoring.
+
+These are held-out WESAD results, not clinical accuracy claims or a measured
+95.65% result on the physical wearable. Complete the dashboard calibration
+with a steady finger before starting a recording to enable the personalized
+path. See [reports/personalized_model_report.md](reports/personalized_model_report.md).
+
 ## Rebuild data and models
 
-The committed v4 artifacts were rebuilt for the 18-feature contract. After changing feature logic, rebuild everything in order:
+The final artifacts use the 18-feature contract. Rebuild them in order:
 
 ```bash
 .venv/bin/python scripts/build_interim.py
 .venv/bin/python scripts/build_features.py
 .venv/bin/python scripts/build_wesad_features.py
-.venv/bin/python scripts/train_all_models.py --version v4
+.venv/bin/python scripts/train_all_models.py --dataset wesad --version v2
+.venv/bin/python scripts/train_personalized_model.py --version v3
 ```
 
 The WESAD adapter uses only its wrist BVP, EDA, and temperature signals so public-data training matches the three-sensor hardware contract.

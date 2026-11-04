@@ -1,6 +1,6 @@
-"""Small MLP base model: StandardScaler -> 22 -> 64 -> 32 -> 16 -> 2.
+"""Small MLP base model: StandardScaler -> 18 -> 64 -> 32 -> 16 -> 2.
 
-Scaling is mandatory here, not optional as it is for the forest. The 22
+Scaling is mandatory here, not optional as it is for the forest. The 18
 features span raw-ADC GSR (~10^2), BPM (~10^1) and per-sample slopes (~10^-2);
 an unscaled network would spend its first epochs undoing that spread. The same
 ``StandardScaler`` step the SVM baseline uses is reused, so the two models see

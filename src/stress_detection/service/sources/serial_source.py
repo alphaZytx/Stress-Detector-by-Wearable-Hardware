@@ -130,14 +130,14 @@ class SerialSource(SensorSource):
                 timestamp_ms=ts_ms,
                 bpm=bpm,
                 avg_bpm=bpm,
-                # Temperature is meaningful for this device only when the
-                # finger/contact gate is satisfied. Do not leak a room/object
-                # reading into either the dashboard or the model buffer.
+                # Object temperature is a contact-dependent skin reading, so
+                # never send it without a finger. Ambient temperature is a
+                # separate room reading and remains useful without contact.
                 temp_c=object_temp if finger_present else None,
                 gsr=self._to_float(groups["gsr"]),
                 # Display the live firmware value. SpO2 is not a model feature.
                 spo2=raw_spo2,
-                ambient_temp_c=ambient_temp if finger_present else None,
+                ambient_temp_c=ambient_temp,
                 ir=self._to_float(groups["ir"]),
                 finger_present=finger_present,
                 source_label=None,

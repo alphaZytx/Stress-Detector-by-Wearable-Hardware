@@ -47,7 +47,8 @@ export type ModelType =
   | "xgboost"
   | "mlp"
   | "soft_voting"
-  | "stacking";
+  | "stacking"
+  | "personalized_extra_trees";
 
 export interface Prediction {
   timestamp_ms: number;

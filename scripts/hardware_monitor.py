@@ -52,14 +52,15 @@ def parse_sensor_line(line: str) -> dict[str, Any] | None:
     if not match:
         return None
     groups = match.groupdict()
+    finger_present = not bool(groups["no_finger"])
     return {
         "bpm": _number(groups["bpm"]),
         "spo2": _number(groups["spo2"]),
-        "object_temp_c": _number(groups["object_temp"]),
+        "object_temp_c": _number(groups["object_temp"]) if finger_present else None,
         "ambient_temp_c": _number(groups["ambient_temp"]),
         "gsr_us": _number(groups["gsr"]),
         "ir": _number(groups["ir"]),
-        "finger_present": not bool(groups["no_finger"]),
+        "finger_present": finger_present,
     }
 
 

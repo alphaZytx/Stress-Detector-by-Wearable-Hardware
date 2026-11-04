@@ -22,7 +22,7 @@ def model_path():
 
 @pytest.fixture
 def feature_dict():
-    """One real feature row from the WESAD feature parquet, as a 22-key dict."""
+    """One real feature row from the WESAD feature parquet, as an 18-key dict."""
     cfg = get_service_config()
     parquet = get_config().paths.data_features / "features_wesad_v1.parquet"
     df = pd.read_parquet(parquet)

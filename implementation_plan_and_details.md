@@ -1,6 +1,6 @@
-# Hardware-Aligned WESAD Retraining Plan
+ # Hardware-Aligned WESAD Retraining Plan
 
-## First implementation status
+## Final implementation status
 
 The low-complexity first pass is implemented:
 
@@ -10,9 +10,18 @@ The low-complexity first pass is implemented:
 - `No finger` prevents a new stress prediction;
 - WESAD retains its real wrist temperature and has fixed SpO2 plus neutral synthetic ambient-temperature compatibility columns;
 - those two compatibility columns are not model inputs;
-- only `svm_wesad_hardware_v1.joblib` was trained and configured for serving.
+- SVM, Random Forest, XGBoost, MLP, soft voting, and stacking were trained on
+  the same WESAD-only 18-feature contract;
+- the v2 soft-voting ensemble remains the no-calibration fallback;
+- a v3 Extra Trees model was trained on relative-to-resting-baseline features;
+- nested leave-one-subject-out evaluation selected
+  `personalized_extra_trees_wesad_v3.joblib` for calibrated serving.
 
-The trained SVM used 5,360 windows from 15 WESAD subjects. Leave-one-subject-out evaluation produced macro-F1 0.861 and stress recall 0.818. These are WESAD results, not proof of accuracy on the physical wearable.
+The calibrated comparison used 5,075 scored windows from 15 WESAD subjects
+after excluding each person's 120-second resting setup. Personalized Extra
+Trees produced 95.65% accuracy, macro-F1 0.953, stress F1 0.940, and ROC-AUC
+0.994. Hyperparameters were selected inside each outer training fold. These
+are held-out WESAD results, not proof of accuracy on the physical wearable.
 
 ## Goal
 
@@ -93,8 +102,10 @@ The new work should produce a clearly versioned model, for example `svm_wesad_ha
    - GSR: mean, variation, range, trend, area, response peaks
    - Object/skin temperature: mean, variation, trend (only if Step 3 passes)
 
-6. **Train one model first.**
-   Start with only the existing SVM pipeline. Use subject-held-out macro-F1, stress recall, and false-positive rate; do not judge it by training accuracy. Train a second model only after the full physical-device path works reliably, and leave the remaining models/ensembles for a later comparison.
+6. **Train and compare all candidate models.**
+   The initial SVM-first phase is complete. The final phase trains all four base
+   models plus soft-voting and stacking ensembles, then selects deployment from
+   subject-held-out macro-F1 rather than training accuracy.
 
 7. **Evaluate honestly.**
    Use leave-one-subject-out evaluation on WESAD. All windows from one person must remain together in the test fold. Report the number of subjects, windows, selected fields, feature names, confusion matrix, macro-F1, stress recall, and calibration/threshold used.

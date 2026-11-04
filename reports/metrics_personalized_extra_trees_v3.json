@@ -1,0 +1,80 @@
+{
+  "version": "v3",
+  "dataset": {
+    "description": "WESAD personalized relative-baseline dataset (15 subjects); 120 s resting calibration excluded; 30 s windows at 5 s stride; relative HR/GSR and temperature delta",
+    "n_subjects": 15,
+    "n_windows": 5075,
+    "n_features": 18,
+    "feature_names": [
+      "hr_mean",
+      "hr_std",
+      "hr_min",
+      "hr_max",
+      "hr_range",
+      "hr_slope",
+      "hr_pnn_proxy",
+      "gsr_mean",
+      "gsr_std",
+      "gsr_min",
+      "gsr_max",
+      "gsr_range",
+      "gsr_slope",
+      "gsr_auc",
+      "gsr_peaks",
+      "temp_mean",
+      "temp_std",
+      "temp_slope"
+    ],
+    "class_counts": {
+      "baseline": 3159,
+      "stress": 1916
+    },
+    "windows_per_subject": {
+      "S10": 352,
+      "S11": 343,
+      "S13": 339,
+      "S14": 342,
+      "S15": 343,
+      "S16": 341,
+      "S17": 351,
+      "S2": 322,
+      "S3": 327,
+      "S4": 329,
+      "S5": 339,
+      "S6": 337,
+      "S7": 336,
+      "S8": 338,
+      "S9": 336
+    }
+  },
+  "nested_loso": {
+    "accuracy": 0.9564532019704434,
+    "macro_f1": 0.9529544022947153,
+    "stress_f1": 0.9401246274722298,
+    "roc_auc": 0.9937520693435795,
+    "confusion_matrix": [
+      [
+        3119,
+        40
+      ],
+      [
+        181,
+        1735
+      ]
+    ],
+    "n_windows": 5075,
+    "evaluation": "nested_leave_one_subject_out",
+    "n_subjects": 15,
+    "calibration_seconds": 120,
+    "threshold": 0.5,
+    "fit_seconds": 102.48728066700278
+  },
+  "final_grouped_cv_macro_f1": 0.9538761631485448,
+  "final_params": {
+    "max_depth": 16,
+    "max_features": 1.0,
+    "min_samples_leaf": 1
+  },
+  "artifact": "data/models/personalized_extra_trees_wesad_v3.joblib",
+  "fallback_model_type": "soft_voting"
+}

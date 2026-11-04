@@ -1,11 +1,11 @@
 """One-command reproduction of the whole multi-model pipeline.
 
 Usage:
-    python3 scripts/train_all_models.py [--version v3] [--full-grid] [--skip-loso]
+    python3 scripts/train_all_models.py --dataset wesad --version v2
 
 Does, in order:
     1. verify the required feature data exists
-    2. load the same combined dataset the deployed SVM was trained on
+    2. load either the WESAD-only hardware dataset or the legacy combined data
     3. tune and fit the four base models (subject-grouped GroupKFold)
     4. build the soft-voting and leakage-safe stacking artifacts
     5. benchmark single-window inference latency
@@ -35,7 +35,12 @@ from evaluate_models import evaluation_payload, print_summary  # noqa: E402
 from stress_detection.config import get_config  # noqa: E402
 from stress_detection.eval.ensemble_report import ReportInputs, generate_reports  # noqa: E402
 from stress_detection.models.common import BASE_MODEL_NAMES  # noqa: E402
-from stress_detection.models.dataset import load_combined_dataset, missing_feature_data  # noqa: E402
+from stress_detection.models.dataset import (  # noqa: E402
+    load_combined_dataset,
+    load_wesad_dataset,
+    missing_feature_data,
+    missing_wesad_feature_data,
+)
 from stress_detection.models.evaluation import run_loso_evaluation  # noqa: E402
 from stress_detection.models.training import (  # noqa: E402
     benchmark_latency,
@@ -78,6 +83,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Train and evaluate every model and ensemble.")
     parser.add_argument("--version", default="v3", help="Artifact/report version tag (default: v3).")
     parser.add_argument(
+        "--dataset",
+        choices=("wesad", "combined"),
+        default="combined",
+        help="Training data contract: WESAD-only hardware models or legacy combined data.",
+    )
+    parser.add_argument(
         "--no-tune", action="store_true",
         help="Use module default hyperparameters for the deployed artifacts.",
     )
@@ -106,7 +117,8 @@ def main() -> None:
     version = args.version
 
     # 1. verify the feature data exists ------------------------------------
-    missing = missing_feature_data()
+    wesad_only = args.dataset == "wesad"
+    missing = missing_wesad_feature_data() if wesad_only else missing_feature_data()
     if missing:
         for path in missing:
             logger.error("Missing: %s", path)
@@ -114,7 +126,19 @@ def main() -> None:
         sys.exit(1)
 
     # 2. load the dataset ---------------------------------------------------
-    dataset = load_combined_dataset()
+    dataset = load_wesad_dataset() if wesad_only else load_combined_dataset()
+    artifact_stems = (
+        {
+            "svm": "svm_wesad_hardware",
+            "random_forest": "rf_wesad_hardware",
+            "xgboost": "xgb_wesad_hardware",
+            "mlp": "mlp_wesad_hardware",
+        }
+        if wesad_only
+        else ARTIFACT_STEMS
+    )
+    ensemble_prefix = "_wesad_hardware" if wesad_only else ""
+    report_prefix = "wesad_hardware_" if wesad_only else ""
     print(f"\n{'=' * 70}")
     print(f"Dataset: {dataset.n_windows:,} windows | {dataset.n_subjects} subjects | "
           f"{len(dataset.feature_names)} features")
@@ -131,7 +155,7 @@ def main() -> None:
         print(f"  {name:15s} grouped-CV f1_macro={score}  params={model.params or '(defaults)'}")
         path = save_single_model(
             model, dataset,
-            cfg.paths.data_models / f"{ARTIFACT_STEMS[name]}_{version}.joblib",
+            cfg.paths.data_models / f"{artifact_stems[name]}_{version}.joblib",
             model_version=version,
         )
         artifacts[f"{name} base model"] = str(path.relative_to(_REPO_ROOT))
@@ -139,12 +163,18 @@ def main() -> None:
     # 4. build the ensembles -------------------------------------------------
     print("\n[2/5] Building ensembles...")
     soft = fit_soft_voting(dataset, fitted, model_version=version)
-    soft_path = save_ensemble(soft, cfg.paths.data_models / f"ensemble_soft_{version}.joblib")
+    soft_path = save_ensemble(
+        soft,
+        cfg.paths.data_models / f"ensemble_soft{ensemble_prefix}_{version}.joblib",
+    )
     artifacts["soft-voting ensemble (equal weights)"] = str(soft_path.relative_to(_REPO_ROOT))
     print(f"  soft voting     weights={ {k: round(v, 3) for k, v in soft.weights.items()} }")
 
     stack = fit_stacking(dataset, fitted, n_oof_splits=args.inner_splits, model_version=version)
-    stack_path = save_ensemble(stack, cfg.paths.data_models / f"ensemble_stack_{version}.joblib")
+    stack_path = save_ensemble(
+        stack,
+        cfg.paths.data_models / f"ensemble_stack{ensemble_prefix}_{version}.joblib",
+    )
     artifacts["stacking ensemble (LogisticRegression meta-model)"] = str(
         stack_path.relative_to(_REPO_ROOT)
     )
@@ -179,7 +209,10 @@ def main() -> None:
         "stacking_metadata": stack.metadata.to_dict(),
         "inference_latency_ms": latency,
     }
-    write_json(artifact_record, cfg.paths.reports / f"metrics_ensemble_artifacts_{version}.json")
+    write_json(
+        artifact_record,
+        cfg.paths.reports / f"metrics_{report_prefix}ensemble_artifacts_{version}.json",
+    )
 
     if args.skip_loso:
         print("\nSkipping the nested LOSO comparison (--skip-loso). Artifacts written.")
@@ -195,7 +228,7 @@ def main() -> None:
         compact_grid=not args.full_grid,
     )
 
-    metrics_path = cfg.paths.reports / f"metrics_ensemble_{version}.json"
+    metrics_path = cfg.paths.reports / f"metrics_{report_prefix}ensemble_{version}.json"
     write_json(evaluation_payload(result, dataset, version), metrics_path)
 
     # 7. tables, figures, report --------------------------------------------

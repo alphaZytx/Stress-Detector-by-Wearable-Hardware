@@ -16,6 +16,7 @@ export const MODEL_LABELS: Record<string, string> = {
   mlp: "MLP · 64/32/16",
   soft_voting: "Soft Voting",
   stacking: "Stacking",
+  personalized_extra_trees: "Personalized Extra Trees",
 };
 
 /** Short names for the per-base-model readout inside an ensemble. */

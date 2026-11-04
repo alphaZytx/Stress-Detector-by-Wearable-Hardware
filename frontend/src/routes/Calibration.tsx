@@ -239,7 +239,12 @@ export function Calibration() {
           <Button variant="secondary" onClick={begin}>
             Try again
           </Button>
-          <Button variant="wellness" onClick={save} loading={setCalibration.isPending}>
+          <Button
+            variant="wellness"
+            onClick={save}
+            loading={setCalibration.isPending}
+            disabled={!result.ok && captureS >= DEFAULT_CAPTURE_S}
+          >
             Save baseline
           </Button>
         </div>

@@ -6,7 +6,7 @@ alternative. Smoothing lives here and only here - no model implements its own.
 
 Model contract (deviation from the prompt, documented):
   The Phase 1 SVM pipelines were fitted on a NumPy array, so they expose
-  ``n_features_in_`` (=22) and integer ``classes_`` ([0, 1]) but NOT
+  ``n_features_in_`` (=18) and integer ``classes_`` ([0, 1]) but NOT
   ``feature_names_in_``. We therefore validate ``n_features_in_`` against the
   canonical FEATURE_COLUMNS length and feed the model a NumPy row ordered by
   FEATURE_COLUMNS (the exact training order). If a model DOES carry
@@ -16,9 +16,9 @@ Model contract (deviation from the prompt, documented):
 
 Which model is served is a config question, not a code question: any of
 ``svm``, ``random_forest``, ``xgboost``, ``mlp``, ``soft_voting`` or
-``stacking`` loads through the same path (see ``loader.py``) and hands back the
-same :class:`Prediction`. Everything downstream - EMA, the WebSocket envelope,
-the dashboard - is unchanged.
+``stacking`` or ``personalized_extra_trees`` loads through the same path (see
+``loader.py``) and hands back the same :class:`Prediction`. Everything
+downstream - EMA, the WebSocket envelope, the dashboard - is unchanged.
 """
 
 from __future__ import annotations
@@ -31,6 +31,11 @@ from typing import Literal
 import numpy as np
 from pydantic import BaseModel
 
+from stress_detection.features.calibration import (
+    apply_relative_baseline,
+    has_complete_baseline,
+)
+
 from ..features.schema import FEATURE_COLUMNS
 from .loader import load_model
 
@@ -41,12 +46,11 @@ _CLASS_NAMES = {0: "baseline", 1: "stress"}
 
 
 class CalibrationOffsets(BaseModel):
-    """Per-user resting baselines, subtracted from live features before inference.
+    """Per-user resting means captured by the two-minute calibration screen.
 
-    Heuristic personalisation, NOT formally validated domain adaptation. The
-    Phase 2 model was trained on absolute features, so subtracting a per-user
-    baseline is itself a domain shift - it may help some users and hurt others.
-    Opt-in per session (see /session/start use_calibration).
+    The personalized model was explicitly trained on the matching relative
+    representation. Older model artifacts retain their backward-compatible
+    subtraction heuristic when selected directly.
     """
 
     hr_baseline: float | None = None
@@ -57,6 +61,11 @@ class CalibrationOffsets(BaseModel):
         return any(
             v is not None
             for v in (self.hr_baseline, self.gsr_baseline, self.temp_baseline)
+        )
+
+    def is_complete(self) -> bool:
+        return has_complete_baseline(
+            self.hr_baseline, self.gsr_baseline, self.temp_baseline
         )
 
 
@@ -195,20 +204,46 @@ class InferenceEngine:
         """Predict + smooth for one feature vector.
 
         Args:
-            features: 22-key feature dict from FeatureStreamer (any key order).
+            features: 18-key feature dict from FeatureStreamer (any key order).
             timestamp_ms: stream time of the window (carried into the Prediction).
             calibration: optional per-user baselines. When present and non-null,
                 the relevant features are shifted by the user's baseline before
                 inference (deviation-from-baseline). Otherwise pass-through.
         """
         calibration_applied = False
-        if calibration is not None and calibration.is_active():
+        personalized_active = False
+        is_personalized_bundle = hasattr(
+            self.model, "predict_proba_personalized"
+        )
+        if is_personalized_bundle:
+            if calibration is not None and calibration.is_complete():
+                features = apply_relative_baseline(
+                    features,
+                    hr_baseline=float(calibration.hr_baseline),
+                    gsr_baseline=float(calibration.gsr_baseline),
+                    temp_baseline=float(calibration.temp_baseline),
+                )
+                calibration_applied = True
+                personalized_active = True
+        elif calibration is not None and calibration.is_active():
+            # Preserve the older heuristic for legacy absolute-value artifacts.
             features, calibration_applied = self._apply_calibration(
                 features, calibration
             )
 
         row = self._to_row(features)
-        proba = self.model.predict_proba(row)[0]
+        if personalized_active:
+            proba = self.model.predict_proba_personalized(row)[0]
+            active_model = self.model.personalized_model
+            active_model_type = "personalized_extra_trees"
+        elif is_personalized_bundle:
+            proba = self.model.predict_proba(row)[0]
+            active_model = self.model.fallback_model
+            active_model_type = self.model.fallback_model_type
+        else:
+            proba = self.model.predict_proba(row)[0]
+            active_model = self.model
+            active_model_type = self.model_type
         classes = list(self.model.classes_)
 
         raw_proba = {
@@ -223,11 +258,11 @@ class InferenceEngine:
         # effort: a broken base model must not take the live stream down when
         # the ensemble itself already produced a usable probability.
         base_probabilities: dict[str, float] | None = None
-        if self._expose_base_probabilities:
+        if hasattr(active_model, "base_probabilities"):
             try:
                 base_probabilities = {
                     name: float(p[0])
-                    for name, p in self.model.base_probabilities(row).items()
+                    for name, p in active_model.base_probabilities(row).items()
                 }
             except Exception:  # noqa: BLE001
                 logger.exception("Could not read per-base-model probabilities")
@@ -242,6 +277,6 @@ class InferenceEngine:
             smoothed_confidence=smoothed_conf,
             raw_proba=raw_proba,
             calibration_applied=calibration_applied,
-            model_type=self.model_type,
+            model_type=active_model_type,
             base_probabilities=base_probabilities,
         )

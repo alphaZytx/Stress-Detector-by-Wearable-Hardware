@@ -56,6 +56,13 @@ def test_all_invalid_bpm_no_emit_no_crash():
     assert all(o is None for o in outs)
 
 
+def test_missing_temperature_no_emit_no_crash():
+    cfg = get_service_config()
+    s = FeatureStreamer(cfg.window_s, cfg.stride_s, cfg.sampling_hz)
+    outs = [s.push(_sample(i, temp=None)) for i in range(60)]
+    assert all(o is None for o in outs)
+
+
 def test_emitted_dict_has_18_keys_in_canonical_order():
     cfg = get_service_config()
     s = FeatureStreamer(cfg.window_s, cfg.stride_s, cfg.sampling_hz)

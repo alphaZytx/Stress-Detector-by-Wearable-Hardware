@@ -1,4 +1,4 @@
-"""Train and evaluate the MLP stress classifier (22 -> 64 -> 32 -> 16 -> 2).
+"""Train and evaluate the MLP stress classifier (18 -> 64 -> 32 -> 16 -> 2).
 
 Usage:
     python3 scripts/train_mlp.py [--version v3] [--no-tune] [--skip-loso]

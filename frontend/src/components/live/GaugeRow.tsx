@@ -154,7 +154,7 @@ export function GaugeRow({ forceAll = false }: { forceAll?: boolean }) {
       key="ambient-temp"
       icon={<Thermometer className="h-3.5 w-3.5" aria-hidden />}
       label="Ambient temperature"
-      value={fmtTemp(contactValid ? latest?.ambient_temp_c : null)}
+      value={fmtTemp(latest?.ambient_temp_c)}
       unit="°C"
     />,
   );

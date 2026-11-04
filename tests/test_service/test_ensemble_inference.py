@@ -166,7 +166,10 @@ class TestSchemaGuard:
 
 class TestLoader:
     def test_supports_every_required_model_type(self):
-        for wanted in ("svm", "random_forest", "xgboost", "mlp", "soft_voting", "stacking"):
+        for wanted in (
+            "svm", "random_forest", "xgboost", "mlp", "soft_voting",
+            "stacking", "personalized_extra_trees",
+        ):
             assert wanted in SUPPORTED_MODEL_TYPES
 
     def test_config_aliases_normalise(self):

@@ -31,19 +31,19 @@ input:
 inference:
   # Which classifier to serve. Switching models is a config change, never a
   # code change. Supported: svm | random_forest | xgboost | mlp | soft_voting |
-  # stacking (ensemble_soft / ensemble_stack are accepted aliases).
+  # stacking | personalized_extra_trees.
   #   svm      - the Phase 1 baseline, always available
   #   stacking - the proposed ensemble (4 base models → LogisticRegression)
   # See reports/ensemble_report.md for the LOSO comparison behind this choice.
-  model_type: svm
+  model_type: personalized_extra_trees
 
-  # Low-complexity first deployment: serve only the WESAD wrist-signal SVM.
-  # A glob resolves to the highest _v<N> present, so later SVM versions do not
-  # require a config edit.
-  model_path: data/models/svm_wesad_hardware_v*.joblib
+  # Final model: 120-second personal resting calibration followed by relative
+  # HR/GSR/temperature features and Extra Trees. The artifact contains the
+  # previous soft-voting model as its automatic no-calibration fallback.
+  model_path: data/models/personalized_extra_trees_wesad_v*.joblib
 
-  # Exact fallback for environments where glob expansion is unavailable.
-  fallback_model_path: data/models/svm_wesad_hardware_v1.joblib
+  # Startup fallback used only if the personalized artifact is absent.
+  fallback_model_path: data/models/ensemble_soft_wesad_hardware_v2.joblib
 
   smoothing:
     method: ema              # ema | majority

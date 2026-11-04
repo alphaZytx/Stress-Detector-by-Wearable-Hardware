@@ -134,7 +134,7 @@ describe("ModelInputPanel · raw sensor mode", () => {
     expect(screen.getByText("hr_mean")).toBeInTheDocument();
   });
 
-  it("marks PPG dropouts rather than interpolating them", async () => {
+  it("marks whether each sensor reading is dropped", async () => {
     const user = userEvent.setup();
 
     act(() => {
@@ -148,11 +148,39 @@ describe("ModelInputPanel · raw sensor mode", () => {
     render(<ModelInputPanel />);
     await user.click(screen.getByRole("button", { name: /Raw sensors/i }));
 
-    // The line prints the dropout flag and an em-dash placeholder, never a value.
-    expect(screen.getByText(/\[DROP\]/)).toBeInTheDocument();
+    // The line prints an explicit dropped column and never interpolates BPM.
+    expect(screen.getByText(/BPM: --.*Dropped: Yes/)).toBeInTheDocument();
     // 1 dropout over the 33 buffered packets (32 seeded + this one).
     expect(
       screen.getByText((_, el) => el?.textContent === "dropouts 1/33"),
+    ).toBeInTheDocument();
+  });
+
+  it("keeps ambient temperature visible when finger contact is absent", async () => {
+    const user = userEvent.setup();
+
+    act(() => {
+      useLiveStore.getState().pushSample({
+        timestamp_ms: 99000,
+        bpm: null,
+        avg_bpm: null,
+        temp_c: null,
+        ambient_temp_c: 27.12,
+        spo2: 0,
+        gsr: 100.76,
+        ir: 564,
+        finger_present: false,
+        source_label: null,
+      });
+    });
+
+    render(<ModelInputPanel />);
+    await user.click(screen.getByRole("button", { name: /Raw sensors/i }));
+
+    expect(
+      screen.getByText(
+        /ObjTemp: -- \| AmbTemp: 27\.12.*No finger \| Dropped: Yes/,
+      ),
     ).toBeInTheDocument();
   });
 

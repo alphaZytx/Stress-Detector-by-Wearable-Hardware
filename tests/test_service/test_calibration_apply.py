@@ -12,6 +12,7 @@ import pandas as pd
 import pytest
 
 from stress_detection.config import get_config
+from stress_detection.features.calibration import apply_relative_baseline
 from stress_detection.service.config import get_service_config
 from stress_detection.service.inference.loader import resolve_model_path
 from stress_detection.service.features.schema import FEATURE_COLUMNS
@@ -56,28 +57,35 @@ def test_empty_calibration_is_passthrough(model_path, feature_dict):
 
 
 def test_calibration_shifts_features(model_path, feature_dict):
-    """predict(features, calibration=offsets) must equal predict(manually-offset)."""
+    """Calibration must use the exact representation expected by the artifact."""
     offsets = CalibrationOffsets(hr_baseline=10.0, gsr_baseline=5.0, temp_baseline=1.0)
 
-    # Manually offset the exact feature groups the engine targets.
-    manual = dict(feature_dict)
-    for k in ("hr_mean", "hr_min", "hr_max"):
-        manual[k] -= 10.0
-    for k in ("gsr_mean", "gsr_min", "gsr_max"):
-        manual[k] -= 5.0
-    manual["temp_mean"] -= 1.0
+    engine = InferenceEngine(model_path)
+    via_calibration = engine.predict(feature_dict, calibration=offsets)
 
-    engine_a = InferenceEngine(model_path)
-    via_calibration = engine_a.predict(feature_dict, calibration=offsets)
-
-    engine_b = InferenceEngine(model_path)
-    via_manual = engine_b.predict(manual)
+    if hasattr(engine.model, "predict_proba_personalized"):
+        manual = apply_relative_baseline(
+            feature_dict,
+            hr_baseline=10.0,
+            gsr_baseline=5.0,
+            temp_baseline=1.0,
+        )
+        expected = engine.model.predict_proba_personalized(
+            engine._to_row(manual)
+        )[0, 1]
+        assert via_calibration.model_type == "personalized_extra_trees"
+    else:
+        # Backward-compatible transform for legacy absolute-feature artifacts.
+        manual = dict(feature_dict)
+        for k in ("hr_mean", "hr_min", "hr_max"):
+            manual[k] -= 10.0
+        for k in ("gsr_mean", "gsr_min", "gsr_max"):
+            manual[k] -= 5.0
+        manual["temp_mean"] -= 1.0
+        expected = engine.model.predict_proba(engine._to_row(manual))[0, 1]
 
     assert via_calibration.calibration_applied is True
-    assert via_calibration.raw_proba["stress"] == pytest.approx(
-        via_manual.raw_proba["stress"]
-    )
-    assert via_calibration.label == via_manual.label
+    assert via_calibration.raw_proba["stress"] == pytest.approx(expected)
 
 
 def test_calibration_changes_the_prediction_proba(model_path, feature_dict):

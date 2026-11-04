@@ -19,7 +19,7 @@ import pandas as pd
 from scipy.stats import wilcoxon
 
 from stress_detection.models.common import BASE_MODEL_NAMES, RANDOM_SEED
-from stress_detection.models.dataset import Dataset
+from stress_detection.models.dataset import PROJECT_SUBJECT_ID, Dataset
 from stress_detection.models.evaluation import SOFT_EQUAL, SOFT_WEIGHTED, STACKING, LosoResult
 
 from .ensemble_reports import (
@@ -59,9 +59,9 @@ class ReportInputs:
 def _paired_comparison(result: LosoResult, candidate: str, metric: str = "macro_f1") -> dict:
     """Per-subject paired comparison of ``candidate`` against the SVM baseline.
 
-    A Wilcoxon signed-rank test over the 16 per-subject scores. With n=16 it is
-    underpowered for small effects - it is reported to keep the comparison
-    honest about uncertainty, not to certify a winner.
+    A Wilcoxon signed-rank test over the per-subject scores. With this small
+    subject count it is underpowered for small effects - it is reported to keep
+    the comparison honest about uncertainty, not to certify a winner.
     """
     base = {f["subject_id"]: f[metric] for f in result.fold_metrics[BASELINE]}
     other = {f["subject_id"]: f[metric] for f in result.fold_metrics[candidate]}
@@ -651,12 +651,20 @@ def _build_markdown(
     # 11 --------------------------------------------------------------------
     add("## 11. Limitations")
     add("")
-    add(
-        f"- **{summary['n_subjects']} subjects, one of them the project's own "
-        "hardware.** 15 WESAD wrist recordings plus a single project subject. "
-        "Per-subject variance dominates every aggregate, and 16 paired samples "
-        "give any statistical test little power."
-    )
+    if PROJECT_SUBJECT_ID in set(dataset.groups):
+        add(
+            f"- **Only {summary['n_subjects']} subjects, including one project "
+            "hardware subject.** Per-subject variance dominates every aggregate, "
+            f"and {summary['n_subjects']} paired folds give any statistical test "
+            "little power."
+        )
+    else:
+        add(
+            f"- **Only {summary['n_subjects']} WESAD subjects.** Per-subject "
+            "variance dominates every aggregate, and "
+            f"{summary['n_subjects']} paired folds give any statistical test "
+            "little power."
+        )
     add(
         "- **Cross-device domain shift.** WESAD EDA is in µS; the project rig "
         "reports raw ADC counts. `StandardScaler` normalises each training set, "

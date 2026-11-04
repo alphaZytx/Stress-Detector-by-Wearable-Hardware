@@ -69,7 +69,7 @@ class EnsembleMetadata:
 
     model_type: str                      # "soft_voting" | "stacking"
     model_version: str                   # e.g. "v3"
-    feature_names: list[str]             # canonical 22, in training order
+    feature_names: list[str]             # canonical 18, in training order
     feature_schema_version: str = "v1"
     label_map: dict[str, int] = field(default_factory=lambda: dict(LABEL_MAP))
     base_model_names: list[str] = field(default_factory=lambda: list(BASE_MODEL_NAMES))
@@ -84,6 +84,9 @@ class EnsembleMetadata:
     trained_at: str = ""
     library_versions: dict[str, str] = field(default_factory=dict)
     evaluation: dict[str, Any] = field(default_factory=dict)
+    requires_calibration: bool = False
+    calibration_seconds: int | None = None
+    calibration_transform: str | None = None
 
     def to_dict(self) -> dict:
         return asdict(self)
