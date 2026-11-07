@@ -127,9 +127,9 @@ export function GaugeRow({ forceAll = false }: { forceAll?: boolean }) {
       <GaugeCard
         key="temp"
         icon={<Thermometer className="h-3.5 w-3.5" aria-hidden />}
-        label="Object temperature"
+        label="Body temperature"
         value={fmtTemp(contactValid ? displayTemp : null)}
-        unit="°C"
+        unit="°F"
       >
         <div className="flex items-center gap-1 text-xs text-clinical-muted">
           <TrendArrow dir={tempTrend} /> 30s
@@ -153,9 +153,9 @@ export function GaugeRow({ forceAll = false }: { forceAll?: boolean }) {
     <GaugeCard
       key="ambient-temp"
       icon={<Thermometer className="h-3.5 w-3.5" aria-hidden />}
-      label="Ambient temperature"
+      label="Surrounding temperature"
       value={fmtTemp(latest?.ambient_temp_c)}
-      unit="°C"
+      unit="°F"
     />,
   );
 

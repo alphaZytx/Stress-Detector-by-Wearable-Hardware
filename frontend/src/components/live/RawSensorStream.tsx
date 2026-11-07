@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { ArrowDownToLine, Circle, Copy, Eraser, Check } from "lucide-react";
 import type { SensorSample } from "@/api/types";
 import { cn } from "@/lib/cn";
+import { celsiusToFahrenheit } from "@/lib/format";
 import { useLiveStore } from "@/stores/liveStore";
 
 /**
@@ -61,13 +62,16 @@ const FORMATS: { id: Format; label: string }[] = [
 
 /** CSV column order, mirroring the service's SensorSample (see api/types.ts). */
 const CSV_HEADER =
-  "t,bpm,spo2,object_temp_c,ambient_temp_c,gsr,ir,finger_present,dropped";
+  "timestamp,bpm,spo2,body_temp_f,surrounding_temp_f,gsr,ir,finger_present,dropped";
 
-function fmtStreamClock(ms: number): string {
-  const total = Math.floor(ms / 1000);
-  const m = Math.floor(total / 60);
-  const s = total % 60;
-  return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+function fmtTimestamp(receivedAtMs: number | undefined): string {
+  if (receivedAtMs == null) return "--:--:--";
+  return new Intl.DateTimeFormat(undefined, {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  }).format(receivedAtMs);
 }
 
 /** Fixed-width numeric field - alignment is what makes a console readable. */
@@ -81,24 +85,41 @@ function pad(
   return text.padStart(width);
 }
 
+function tempF(value: number | null | undefined): number | null {
+  return value == null || !Number.isFinite(value)
+    ? null
+    : celsiusToFahrenheit(value);
+}
+
+function displayPacket(sample: SensorSample, dropped: boolean) {
+  const { timestamp_ms: _streamTimestampMs, received_at_ms, temp_c, ambient_temp_c, ...rest } = sample;
+  return {
+    timestamp: fmtTimestamp(received_at_ms),
+    ...rest,
+    body_temp_f: tempF(temp_c),
+    surrounding_temp_f: tempF(ambient_temp_c),
+    dropped,
+  };
+}
+
 /** One packet as a plain-text line - also what the copy button writes out. */
 function toText(s: SensorSample, format: Format): string {
-  const t = fmtStreamClock(s.timestamp_ms);
+  const timestamp = fmtTimestamp(s.received_at_ms);
   const dropped = s.finger_present === false || s.bpm == null;
   const visible =
     s.finger_present === false
       ? { ...s, temp_c: null }
       : s;
-  if (format === "json") return JSON.stringify({ ...visible, dropped });
+  if (format === "json") return JSON.stringify(displayPacket(visible, dropped));
   if (format === "csv") {
     const n = (v: number | null | undefined, d: number) =>
       v == null || !Number.isFinite(v) ? "" : v.toFixed(d);
     return [
-      t,
+      timestamp,
       s.finger_present === false ? "0" : n(s.bpm, 0),
       n(s.spo2, 1),
-      n(visible.temp_c, 2),
-      n(visible.ambient_temp_c, 2),
+      n(tempF(visible.temp_c), 2),
+      n(tempF(visible.ambient_temp_c), 2),
       n(s.gsr, 1),
       n(s.ir, 0),
       s.finger_present == null ? "" : String(s.finger_present),
@@ -107,14 +128,13 @@ function toText(s: SensorSample, format: Format): string {
   }
   const bpm = s.finger_present === false ? "0" : pad(s.bpm, 0, 1).trim();
   const spo2 = s.spo2 == null ? "--" : s.spo2.toFixed(1);
-  const objectTemp = visible.temp_c == null ? "--" : visible.temp_c.toFixed(2);
-  const ambientTemp =
-    visible.ambient_temp_c == null ? "--" : visible.ambient_temp_c.toFixed(2);
+  const bodyTemp = tempF(visible.temp_c)?.toFixed(2) ?? "--";
+  const surroundingTemp = tempF(visible.ambient_temp_c)?.toFixed(2) ?? "--";
   const gsr = Number.isFinite(s.gsr) ? s.gsr.toFixed(2) : "--";
   const ir = s.ir == null ? "--" : s.ir.toFixed(0);
   return (
-    `BPM: ${bpm || "--"} | SPO2: ${spo2} | ObjTemp: ${objectTemp} | ` +
-    `AmbTemp: ${ambientTemp} | GSR: ${gsr} | IR: ${ir}` +
+    `[${timestamp}] BPM: ${bpm || "--"} | SPO2: ${spo2} | BodyTemp: ${bodyTemp} °F | ` +
+    `SurroundingTemp: ${surroundingTemp} °F | GSR: ${gsr} | IR: ${ir}` +
     (s.finger_present === false ? " | No finger" : "") +
     ` | Dropped: ${dropped ? "Yes" : "No"}`
   );
@@ -142,7 +162,7 @@ function Line({
         type="button"
         onClick={onToggle}
         aria-expanded={open}
-        aria-label={`Packet at ${fmtStreamClock(sample.timestamp_ms)}`}
+        aria-label={`Packet at ${fmtTimestamp(sample.received_at_ms)}`}
         className={cn(
           "block w-full cursor-pointer whitespace-pre text-left leading-[18px] outline-none",
           "hover:bg-white/[0.04] focus-visible:bg-white/[0.07]",
@@ -169,12 +189,12 @@ function Line({
           style={{ borderColor: T.rule, color: T.dim, background: "rgba(255,255,255,0.03)" }}
         >
           {JSON.stringify(
-            {
-              ...(sample.finger_present === false
+            displayPacket(
+              sample.finger_present === false
                 ? { ...sample, temp_c: null }
-                : sample),
-              dropped: sample.finger_present === false || sample.bpm == null,
-            },
+                : sample,
+              sample.finger_present === false || sample.bpm == null,
+            ),
             null,
             2,
           )}
@@ -302,7 +322,7 @@ export function RawSensorStream({
           </span>
           <span style={{ color: T.dim }}>1 Hz</span>
           <span style={{ color: T.dim }}>
-            t={latest ? fmtStreamClock(latest.timestamp_ms) : "--:--"}
+            timestamp={latest ? fmtTimestamp(latest.received_at_ms) : "--:--:--"}
           </span>
           <span style={{ color: dropouts > 0 ? T.warn : T.dim }}>
             dropouts {dropouts}/{recent.length}

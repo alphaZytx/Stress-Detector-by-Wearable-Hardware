@@ -28,6 +28,7 @@ import {
 } from "@/explain/primitives";
 import { usePipelineClock } from "@/explain/usePipelineClock";
 import { BASE_MODEL_LABELS, BASE_MODEL_ORDER } from "@/lib/modelMeta";
+import { celsiusToFahrenheit } from "@/lib/format";
 import { Pause, Play, RotateCcw } from "lucide-react";
 
 const MODEL_BLURB: Record<string, string> = {
@@ -120,10 +121,12 @@ export function Explain() {
               series={c.samplesSoFar.slice(-60).map((x) => x.gsr)}
             />
             <SensorTile
-              label="Skin temp"
-              unit="°C"
-              value={s?.temp_c ?? null}
-              series={c.samplesSoFar.slice(-60).map((x) => x.temp_c ?? NaN)}
+              label="Body temperature"
+              unit="°F"
+              value={s?.temp_c == null ? null : celsiusToFahrenheit(s.temp_c)}
+              series={c.samplesSoFar.slice(-60).map((x) =>
+                x.temp_c == null ? NaN : celsiusToFahrenheit(x.temp_c),
+              )}
             />
           </div>
           <Note>

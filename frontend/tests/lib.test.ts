@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { isTokenExpired } from "@/lib/jwt";
-import { fmtTemp, trend } from "@/lib/format";
+import { celsiusToFahrenheit, fmtTemp, fmtTempDelta, trend } from "@/lib/format";
 import { formatElapsed, formatMmSs } from "@/lib/time";
 import { stressLevel } from "@/design/tokens";
 
@@ -24,8 +24,10 @@ describe("jwt expiry", () => {
 });
 
 describe("format helpers", () => {
-  it("renders temp, hiding zero/null sensor warmup", () => {
-    expect(fmtTemp(36.49)).toBe("36.5");
+  it("renders Celsius sensor temperatures in Fahrenheit", () => {
+    expect(celsiusToFahrenheit(0)).toBe(32);
+    expect(fmtTemp(36.49)).toBe("97.7");
+    expect(fmtTempDelta(2)).toBe("3.6");
     expect(fmtTemp(0)).toBe("-");
     expect(fmtTemp(null)).toBe("-");
   });

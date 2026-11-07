@@ -114,8 +114,8 @@ PAGE = r'''<!doctype html>
 </style></head><body><main><h1>Wearable hardware monitor</h1><p class="sub">NodeMCU 1.0 · <code>/dev/cu.usbserial-A5069RR4</code> · 115200 baud</p><span id="state" class="state">Starting serial reader…</span><div class="grid">
 <div class="card"><div class="label">Heart rate</div><div class="value" id="bpm">— <span class="unit">BPM</span></div></div>
 <div class="card"><div class="label">Blood oxygen</div><div class="value" id="spo2">— <span class="unit">%</span></div></div>
-<div class="card"><div class="label">Object temperature</div><div class="value" id="object_temp_c">— <span class="unit">°C</span></div></div>
-<div class="card"><div class="label">Ambient temperature</div><div class="value" id="ambient_temp_c">— <span class="unit">°C</span></div></div>
+<div class="card"><div class="label">Body temperature</div><div class="value" id="object_temp_c">— <span class="unit">°F</span></div></div>
+<div class="card"><div class="label">Surrounding temperature</div><div class="value" id="ambient_temp_c">— <span class="unit">°F</span></div></div>
 <div class="card"><div class="label">GSR</div><div class="value" id="gsr_us">— <span class="unit">µS</span></div></div>
 <div class="card"><div class="label">PPG infrared</div><div class="value" id="ir">—</div></div>
 <div class="card"><div class="label">Finger detection</div><div class="value" id="finger_present">—</div></div>
@@ -123,8 +123,9 @@ PAGE = r'''<!doctype html>
 <script>
 const log=document.querySelector('#log'),state=document.querySelector('#state');let first=true;
 const fmt=(v,d=2)=>v==null?'—':Number(v).toFixed(d);
+const tempF=v=>v==null?null:Number(v)*1.8+32;
 function append(line){if(first){log.textContent='';first=false}log.textContent+=line+'\n';if(log.textContent.length>24000)log.textContent=log.textContent.slice(-18000);log.scrollTop=log.scrollHeight}
-function connect(){const ws=new WebSocket(`ws://${location.host}/ws`);ws.onopen=()=>{state.textContent='Dashboard connected';state.className='state on'};ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.type==='status'){state.textContent=m.message;state.className='state '+(m.connected?'on':'')}if(m.type==='serial')append(m.line);if(m.type==='sample'){const d=m.data;for(const k of ['bpm','spo2','object_temp_c','ambient_temp_c','gsr_us'])document.getElementById(k).innerHTML=fmt(d[k])+' <span class="unit">'+({bpm:'BPM',spo2:'%',object_temp_c:'°C',ambient_temp_c:'°C',gsr_us:'µS'}[k])+'</span>';document.getElementById('ir').textContent=fmt(d.ir,0);document.getElementById('finger_present').textContent=d.finger_present?'Present':'Not detected'}};ws.onclose=()=>{state.textContent='Dashboard reconnecting…';state.className='state';setTimeout(connect,1000)}}connect();
+function connect(){const ws=new WebSocket(`ws://${location.host}/ws`);ws.onopen=()=>{state.textContent='Dashboard connected';state.className='state on'};ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.type==='status'){state.textContent=m.message;state.className='state '+(m.connected?'on':'')}if(m.type==='serial')append(m.line);if(m.type==='sample'){const d=m.data;for(const k of ['bpm','spo2','object_temp_c','ambient_temp_c','gsr_us']){const value=(k==='object_temp_c'||k==='ambient_temp_c')?tempF(d[k]):d[k];document.getElementById(k).innerHTML=fmt(value)+' <span class="unit">'+({bpm:'BPM',spo2:'%',object_temp_c:'°F',ambient_temp_c:'°F',gsr_us:'µS'}[k])+'</span>'}document.getElementById('ir').textContent=fmt(d.ir,0);document.getElementById('finger_present').textContent=d.finger_present?'Present':'Not detected'}};ws.onclose=()=>{state.textContent='Dashboard reconnecting…';state.className='state';setTimeout(connect,1000)}}connect();
 </script></body></html>'''
 
 

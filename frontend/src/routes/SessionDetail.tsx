@@ -139,7 +139,7 @@ export function SessionDetail() {
         icon={<Thermometer className="h-4 w-4" aria-hidden />}
         label="Mean temp"
         value={fmtTemp(averages.temp)}
-        unit="°C"
+        unit="°F"
       />
     </div>
   );
@@ -193,7 +193,7 @@ export function SessionDetail() {
           {[
             { l: "HR", v: fmtBpm(atPlayhead.sample?.bpm), u: "bpm" },
             { l: "GSR", v: fmt(atPlayhead.sample?.gsr, 0), u: "" },
-            { l: "Temp", v: fmtTemp(atPlayhead.sample?.temp_c), u: "°C" },
+            { l: "Temp", v: fmtTemp(atPlayhead.sample?.temp_c), u: "°F" },
             {
               l: "P(stress)",
               v: atPlayhead.pStress != null ? fmtPercent(atPlayhead.pStress) : "-",

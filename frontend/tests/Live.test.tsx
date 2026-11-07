@@ -63,10 +63,13 @@ describe("Live view", () => {
     expect(screen.getByText("88")).toBeInTheDocument(); // latest bpm
     expect(screen.getByText("GSR")).toBeInTheDocument();
     expect(screen.getByText("142")).toBeInTheDocument(); // latest gsr
-    // Like "Heart rate", "Temperature" now appears on the gauge AND in the
-    // ModelInputPanel (filter chip + group header) - all are expected.
+    expect(screen.getByText("Body temperature")).toBeInTheDocument();
+    expect(screen.getByText("Surrounding temperature")).toBeInTheDocument();
+    // The model input panel still names its internal Celsius feature group
+    // "Temperature"; the live sensor card presents the converted value.
     expect(screen.getAllByText("Temperature").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText("34.2")).toBeInTheDocument();
+    expect(screen.getByText("93.6")).toBeInTheDocument();
+    expect(screen.getAllByText("°F").length).toBeGreaterThanOrEqual(2);
 
     // HRV proxy value - shown on the HrvPanel and again as the panel's
     // hr_pnn_proxy row, so match on at least one.

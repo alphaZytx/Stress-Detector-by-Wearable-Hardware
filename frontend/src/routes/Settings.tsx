@@ -118,7 +118,7 @@ export function Settings() {
                   <div>
                     <div className="text-xs text-clinical-muted">Temp</div>
                     <div className="tnum text-sm font-semibold text-clinical-text">
-                      {fmtTemp(calibration.temp_baseline)} °C
+                      {fmtTemp(calibration.temp_baseline)} °F
                     </div>
                   </div>
                 </div>

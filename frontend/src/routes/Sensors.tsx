@@ -30,8 +30,8 @@ export function Sensors() {
               Live serial packets
             </h2>
             <p className="mt-1 text-xs text-clinical-muted">
-              Object temperature and SpO2 are hidden whenever finger contact is not detected.
-              Ambient temperature remains visible.
+              Body temperature and SpO2 are hidden whenever finger contact is not detected.
+              Surrounding temperature remains visible.
             </p>
           </div>
           <RawSensorStream frozen={false} snapshot={null} />

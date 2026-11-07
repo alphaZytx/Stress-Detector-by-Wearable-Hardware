@@ -6,6 +6,9 @@ export type StressLabel = "baseline" | "stress";
 
 export interface SensorSample {
   timestamp_ms: number;
+  /** Browser receipt time for the live monitor's wall-clock timestamp. This is
+   * intentionally display-only; `timestamp_ms` remains the pipeline clock. */
+  received_at_ms?: number;
   bpm: number | null;
   avg_bpm: number | null;
   temp_c: number | null;

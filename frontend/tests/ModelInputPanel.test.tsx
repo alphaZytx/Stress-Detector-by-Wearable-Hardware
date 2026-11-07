@@ -156,7 +156,7 @@ describe("ModelInputPanel · raw sensor mode", () => {
     ).toBeInTheDocument();
   });
 
-  it("keeps ambient temperature visible when finger contact is absent", async () => {
+  it("keeps surrounding temperature visible in Fahrenheit without finger contact", async () => {
     const user = userEvent.setup();
 
     act(() => {
@@ -179,7 +179,7 @@ describe("ModelInputPanel · raw sensor mode", () => {
 
     expect(
       screen.getByText(
-        /ObjTemp: -- \| AmbTemp: 27\.12.*No finger \| Dropped: Yes/,
+        /BodyTemp: -- °F \| SurroundingTemp: 80\.82 °F.*No finger \| Dropped: Yes/,
       ),
     ).toBeInTheDocument();
   });

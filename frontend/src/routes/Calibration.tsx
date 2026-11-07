@@ -16,7 +16,7 @@ import { ProgressRing } from "@/components/wellness/ProgressRing";
 import { AuroraBackground } from "@/components/decorative/AuroraBackground";
 import { useSetCalibration } from "@/hooks/useSessions";
 import { computeCalibration, type CalibrationResult } from "@/lib/calibration";
-import { fmt, fmtBpm, fmtTemp } from "@/lib/format";
+import { fmt, fmtBpm, fmtTemp, fmtTempDelta } from "@/lib/format";
 import { formatMmSs } from "@/lib/time";
 import { useLiveStore } from "@/stores/liveStore";
 
@@ -185,7 +185,7 @@ export function Calibration() {
             icon={<Thermometer className="h-3.5 w-3.5" aria-hidden />}
             label="Temp"
             value={fmtTemp(latest?.temp_c)}
-            unit="°C"
+            unit="°F"
           />
         </div>
       </WellnessShell>
@@ -230,8 +230,8 @@ export function Calibration() {
           <MiniStat
             icon={<Thermometer className="h-3.5 w-3.5" aria-hidden />}
             label="Temp"
-            value={result.temp ? `${result.temp.mean.toFixed(1)}±${result.temp.std.toFixed(1)}` : "-"}
-            unit="°C"
+            value={result.temp ? `${fmtTemp(result.temp.mean)}±${fmtTempDelta(result.temp.std)}` : "-"}
+            unit="°F"
           />
         </div>
 

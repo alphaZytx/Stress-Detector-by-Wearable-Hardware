@@ -65,9 +65,14 @@ export const useLiveStore = create<LiveState>((set) => ({
   setStatus: (status) => set({ status }),
 
   pushSample: (s) =>
-    set((state) => ({
-      samples: capTail(state.samples, s, MAX_SAMPLES),
-      latestSample: s,
+    set((state) => {
+      // The service timestamp is deliberately stream-relative for feature
+      // alignment. Stamp the packet at receipt so the serial monitor can show
+      // a real local clock time without changing model/session semantics.
+      const liveSample = { ...s, received_at_ms: Date.now() };
+      return {
+      samples: capTail(state.samples, liveSample, MAX_SAMPLES),
+      latestSample: liveSample,
       // A prediction belongs to a valid contact window. Clear the displayed
       // value immediately on contact loss instead of leaving a stale percent.
       ...(s.finger_present === false
@@ -78,7 +83,8 @@ export const useLiveStore = create<LiveState>((set) => ({
           }
         : {}),
       lastMessageMs: Date.now(),
-    })),
+      };
+    }),
 
   pushFeatures: (f, timestampMs) =>
     set((state) => ({

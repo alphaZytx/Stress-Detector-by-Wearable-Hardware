@@ -10,9 +10,20 @@ export function fmtBpm(value: number | null | undefined): string {
   return fmt(value, 0);
 }
 
+/** Convert a sensor/API temperature from Celsius to Fahrenheit for display. */
+export function celsiusToFahrenheit(value: number): number {
+  return value * 1.8 + 32;
+}
+
 export function fmtTemp(value: number | null | undefined): string {
   if (value == null || Number.isNaN(value) || value === 0) return "-";
-  return value.toFixed(1);
+  return celsiusToFahrenheit(value).toFixed(1);
+}
+
+/** Convert a Celsius temperature difference/spread to Fahrenheit degrees. */
+export function fmtTempDelta(value: number | null | undefined): string {
+  if (value == null || Number.isNaN(value)) return "-";
+  return (value * 1.8).toFixed(1);
 }
 
 export function fmtPercent(fraction: number, decimals = 0): string {
